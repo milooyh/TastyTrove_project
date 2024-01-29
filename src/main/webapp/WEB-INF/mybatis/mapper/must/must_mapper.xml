@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mustEatPlace_mapper">
+	<insert id="saveMustEatPlace" parameterType="com.app.dto.mustEatPlace.MustEatPlace">
+		INSERT INTO MUST_EAT_PLACE VALUES(NVL((SELECT MAX(id) + 1 FROM MUST_EAT_PLACE),1), #{place}, #{restaurant_name}, #{review}, #{asterion})
+	</insert>
+	
+	<select id="findMustEatPlace" resultType="com.app.dto.mustEatPlace.MustEatPlace">
+		SELECT * FROM MUST_EAT_PLACE
+	</select>
+</mapper>
