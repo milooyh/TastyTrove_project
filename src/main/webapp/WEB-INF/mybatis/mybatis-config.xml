@@ -6,15 +6,15 @@
 
 <configuration>
 
-	<!-- <settings>
+	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true"/>	
-	</settings> -->
+	</settings>
 		
 	
-	<!-- <typeAliases>
-		<typeAlias type="com.rsrvapp.dto.user.User" alias="User"/>
-		<typeAlias type="com.rsrvapp.dto.user.UserSearchCondition" alias="UserSearchCondition"/>
-	</typeAliases> -->
+	<typeAliases>		
+		<!-- user -->
+		<typeAlias type="com.app.dto.user.User" alias="User"></typeAlias>
+	</typeAliases>
 
 
 </configuration>
