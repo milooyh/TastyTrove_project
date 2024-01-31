@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>메인페이지</h1>
+<h1>결제 관리 페이지</h1>
 </body>
 </html>
