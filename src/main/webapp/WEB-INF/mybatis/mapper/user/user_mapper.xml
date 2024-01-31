@@ -1,7 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="user_mapper">
-	<select id="findUserByLoginId" parameterType="User" resultType="User">
-	SELECT * FROM MEMBER_INFO WHERE user_id = #{userId} AND user_password = #{userPassword} AND user_type = #{userType}
+	<select id="findUserByLoginId" parameterType="User"
+		resultType="User">
+		SELECT * FROM MEMBERS
+		WHERE user_id = #{userId} AND user_password = #{userPassword}
 	</select>
+
+	<insert id="saveUser" parameterType="User">
+    INSERT INTO MEMBERS (
+        member_id,
+        user_id,
+        user_password,
+        user_name,
+        user_nickname,
+        user_birthdate,
+        user_tel,
+        user_address,
+        user_email,
+        user_type
+    )
+    VALUES (
+        (SELECT NVL(MAX(member_id), 0) + 1 AS member_id FROM members),
+        #{userId},
+        #{userPassword},
+        #{userName},
+        #{userNickname},
+        #{userBirthdate},
+        #{userTel},
+        #{userAddress},
+        #{userEmail},
+        'CUS'
+    )
+</insert>
+
+
 </mapper>

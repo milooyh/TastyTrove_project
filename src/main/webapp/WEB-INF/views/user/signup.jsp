@@ -19,7 +19,9 @@
 			name="userName"><br> <label>별명 : </label><input
 			type="text" id="userNickname" name="userNickname">
 		<button type="button" id="nicknameChk_btn" name="nicknameChk_btn">확인</button>
-		<br> <label>출생연도 : </label><input type="text" name="birthYear">
+		<br> 
+		
+		<label>출생연도 : </label><input type="text" name="birthYear">
 		<label>출생월 : </label> <select name="birthMonth">
 			<option disabled selected>월</option>
 			<option value="1">1</option>
@@ -34,7 +36,9 @@
 			<option value="10">10</option>
 			<option value="11">11</option>
 			<option value="12">12</option>
-		</select> <label>출생일 : </label> <select name="birthDate">
+		</select> 
+		
+		<label>출생일 : </label> <select name="birthDate">
 			<option disabled selected>일</option>
 			<option value="1">1</option>
 			<option value="2">2</option>
@@ -68,13 +72,17 @@
 			<option value="30">30</option>
 			<option value="31">31</option>
 		</select><br> 
-		<label>전화번호 : </label><input type="text" id="userTel" name="userTel"><input type="text" id="userTel" name="userTel"><input type="text" id="userTel" name="userTel">
+		<label>전화번호 : </label><input type="text" id="tel1" name="tel1">
+		<input type="text" id="tel2" name="tel2">
+		<input type="text" id="tel3" name="tel3">
 		<button type="button" id="telChk_btn" name="telChk_btn">확인</button>
-		<br> <label>주소 : </label><input type="text" id="userAddress"
-			name="userAddress">
+		<br> 
+		
+		<label>주소 : </label><input type="text" id="userAddress" name="userAddress">
 		<button type="button" id="addressChk_btn" name="addressChk_btn">확인</button>
-		<br> <label>이메일 : </label><input type="text" id="userEmail"
-			name="userEmail">
+		<br> 
+		
+		<label>이메일 : </label><input type="text" id="userEmail" name="userEmail">
 		<button type="button" id="emailChk_btn" name="emailChk_btn">확인</button>
 		<br>
 		

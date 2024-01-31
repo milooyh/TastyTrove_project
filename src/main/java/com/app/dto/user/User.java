@@ -8,10 +8,10 @@ public class User {
 	String userId;
 	String userPassword;
 	String userName;
-	String userNickName;
+	String userNickname;
 	String userBirthdate;
 	String userTel;
-	String useAddress;
+	String userAddress;
 	String userEmail;
 	String userType;
 }
