@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.app.dto.mustEatPlace.MustEatPlace;
 import com.app.service.mustEatPlace.MustEatPlaceService;
@@ -27,10 +29,15 @@ public class MustEatPlaceController {
 		return "/mustEatPlace/must";
 	}
 	
+	@ResponseBody
 	@PostMapping("/must")
-	public String addRoomProcess(@ModelAttribute MustEatPlace mustEatPlace) {
+	public String addRoomProcess(@ModelAttribute MustEatPlace mustEatPlace, @RequestBody String place) {
 			
 			int result = mustEatPlaceService.saveMustEatPlace(mustEatPlace);
+			
+			MustEatPlace mep = new MustEatPlace();
+			
+			mep.setPlace(place);
 			
 			if(result > 0) { //저장이 성공
 				return "redirect:/must";  //main 요청 경로
