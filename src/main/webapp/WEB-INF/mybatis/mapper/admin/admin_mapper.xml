@@ -2,77 +2,64 @@
 
 <mapper namespace="admin_mapper">
 
-	<!--회원 정보 찾기-->
+	<!--회원 정보 찾기 -->
 	<select id="findUserList" resultType="User">
 		SELECT * FROM MEMBERS
 	</select>
-	
-	
-	<select id="findUserListBySearchCondition" parameterType="User" resultType="UserSerachCondition">
+
+	<select id="findUserListBySearchCondition" parameterType="User"
+		resultType="UserSearchCondition">
 		SELECT * FROM MEMBERS
-		WHERE 1 = 1
+		WHERE 1 = 1 AND USER_TYPE = 'CUS'
 		<if test="memberId != null and memberId != ''">
-			AND member_id = #{searchKeyword}
+			AND member_id LIKE '%' || #{searchKeyword} || '%'
 		</if>
-		
+
 		<if test="userId != null and userId!= ''">
-			AND user_id = #{searchKeyword}
+			AND user_id LIKE '%' || #{searchKeyword} || '%'
 		</if>
-		
+
 		<if test="userPassword != null and userPassword!= ''">
-			AND user_password = #{searchKeyword}
+			AND user_password LIKE '%' || #{searchKeyword} || '%'
 		</if>
-		
+
 		<if test="userName != null and userName!= ''">
-			AND user_name = #{searchKeyword}
+			AND user_name LIKE '%' || #{searchKeyword} || '%'
 		</if>
-		
+
 		<if test="userNickname != null and userNickname!= ''">
-			AND user_nickname = #{searchKeyword}
+			AND user_nickname LIKE '%' || #{searchKeyword} || '%'
+		</if>
+
+		<if test="userTel != null and userTel!= ''">
+			AND user_tel LIKE '%' || #{searchKeyword} || '%'
+		</if>
+
+		<if test="userEmail != null and userEmail!= ''">
+			AND user_email LIKE '%' || #{searchKeyword} || '%'
+		</if>
+
+		<if test="userBirthdate != null and userBirthdate!= ''">
+			AND substr(user_birthdate, 1, 4) LIKE '%' || #{searchKeyword} || '%'
 		</if>
 		
-		<if test="birthYear != null and birthYear!= ''">
-			AND substr(user_birthdate, 1, 4) = #{searchKeyword}
-		</if>
 		
 		<if test="birthMonth != null and birthMonth!= ''">
-			AND substr(user_birthdate, 6, 2) = #{searchKeyword}
+			AND substr(user_birthdate, 6, 2) = #{birthMonth}
 		</if>
 		
 		<if test="birthDate != null and birthDate!= ''">
-			AND substr(user_birthdate, 9, 2) = #{searchKeyword}
-		</if>
-		
-		<if test="tel1 != null and tel1!= ''">
-			AND substr(user_tel, 1,3 ) =  #{searchKeyword}
-		</if>
-		
-		<if test="tel2 != null and tel2!= ''">
-			AND substr(user_tel, 5,4 ) =  #{searchKeyword}
-		</if>
-		
-		<if test="tel3 != null and tel3!= ''">
-			AND substr(user_tel, 10, 4) =  #{searchKeyword}
+			AND substr(user_birthdate, 9, 2) = #{birthDate}
 		</if>
 		
 		<if test="addressSystem != null and addressSystem!= ''">
-			AND substr(user_address, 1, instr(user_address, ' ') -1) = #{searchKeyword}
+			AND SUBSTR(user_address , 1, INSTR(user_address, ' ') - 1) = #{addressSystem}
 		</if>
 		
-		<if test="myAddress != null and myAddress!= ''">
-			AND SUBSTR(user_address, INSTR(user_address, ' ') + 1) = #{searchKeyword}
-		</if>
-		
-		<if test="myEmail != null and myEmail != ''">
-			AND SUBSTR(user_email, 1, INSTR(user_email, '@') - 1) = #{searchKeyword}
-		</if>
-		
-		<if test="emailSystem != null and emailSystem != ''">
-			AND SUBSTR(user_email, INSTR(user_email, '@') + 1) = #{searchKeyword}
-		</if>
-		
-		<if test="etcEmail != null and etcEmail != ''">
-			AND SUBSTR(user_email, INSTR(user_email, '@') + 1) = #{searchKeyword}
+		<if test="emailSystem!= null and emailSystem!= ''">
+			AND  SUBSTR(user_email, INSTR(user_email, '@')) = #{emailSystem}
 		</if>
 	</select>
+
+
 </mapper>

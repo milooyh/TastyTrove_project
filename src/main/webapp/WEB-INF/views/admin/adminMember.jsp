@@ -38,6 +38,7 @@ th, td {
 		<tbody>
 			<c:forEach var="user" items="${userList}">
 				<tr>
+					<td>${user.memberId}</td>
 					<td>${user.userId}</td>
 					<td>${user.userPassword}</td>
 					<td>${user.userName}</td>
@@ -46,13 +47,13 @@ th, td {
 					<td>${user.userTel}</td>
 					<td>${user.userAddress}</td>
 					<td>${user.userEmail}</td>
-					<td><button>회원정보수정</button>
-					<td><button>회원정보삭제</button>
+					<td><button>회원정보수정</button></td>
+					<td><button>회원정보삭제</button></td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table> <br>
 	<button>회원추가</button>
-	<button onclick="href='/admin/findMember.jsp'">회원검색</button>
+	<button onclick="location.href='/admin/member/search'">회원검색</button>
 </body>
 </html>

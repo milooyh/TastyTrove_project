@@ -9,16 +9,14 @@ public class UserSearchCondition {
     String userPassword;
     String userName;
     String userNickname;
-    String birthYear;
+    String userBirthdate;
+    String userTel;
+    String userAddress;
+    String userEmail;
+    String searchKeyword;
+    
     String birthMonth;
     String birthDate;
-    String tel1;
-    String tel2;
-    String tel3;
     String addressSystem;
-    String myAddress;
-    String myEmail;
     String emailSystem;
-    String etcEmail;
-    String searchKeyword;
 }
