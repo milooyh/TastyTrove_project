@@ -9,15 +9,15 @@
 <body>
 	<h1>로그인 페이지</h1>
 	<hr>
-	<form action="" method="post">
+	<form action="/login" method="post">
 		<label>아이디 : </label><input type="text" id="userId" name="userId"><br>
 		<label>비밀번호 : </label><input type="password" id="userPassword" name="userPassword"><br>
 		<button type="submit" onclick="isNull()">로그인하기</button>
 	</form>
 	
-	<script>
-		let inputUserId = documet.querySelector("#userId");
-		let inputUserPw = documet.querySelector("#userPw");
+	<!-- <script>
+		let inputUserId = document.querySelector("#userId");
+		let inputUserPw = document.querySelector("#userPw");
 		
 		function isNull(inputUserId, inputUserPw){
 			if(inputUserId == null || inputUsePw == null){
@@ -25,6 +25,6 @@
 				location.href = "/user/login";
 			}
 		}
-	</script>
+	</script> -->
 </body>
 </html>

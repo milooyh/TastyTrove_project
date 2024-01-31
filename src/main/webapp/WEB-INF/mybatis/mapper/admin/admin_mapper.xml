@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="admin_mapper">
+
+	<!--회원 정보 찾기 -->
+	<select id="findUserList" resultType="User">
+		SELECT * FROM MEMBERS
+	</select>
+
+	<select id="findUserListBySearchCondition" parameterType="User"
+		resultType="UserSearchCondition">
+		SELECT * FROM MEMBERS
+		WHERE 1 = 1 AND USER_TYPE = 'CUS'
+		<if test="memberId != null and memberId != ''">
+			AND member_id LIKE '%' || #{searchKeyword} || '%'
+		</if>
+
+		<if test="userId != null and userId!= ''">
+			AND user_id LIKE '%' || #{searchKeyword} || '%'
+		</if>
+
+		<if test="userPassword != null and userPassword!= ''">
+			AND user_password LIKE '%' || #{searchKeyword} || '%'
+		</if>
+
+		<if test="userName != null and userName!= ''">
+			AND user_name LIKE '%' || #{searchKeyword} || '%'
+		</if>
+
+		<if test="userNickname != null and userNickname!= ''">
+			AND user_nickname LIKE '%' || #{searchKeyword} || '%'
+		</if>
+
+		<if test="userTel != null and userTel!= ''">
+			AND user_tel LIKE '%' || #{searchKeyword} || '%'
+		</if>
+
+		<if test="userEmail != null and userEmail!= ''">
+			AND user_email LIKE '%' || #{searchKeyword} || '%'
+		</if>
+
+		<if test="userBirthdate != null and userBirthdate!= ''">
+			AND substr(user_birthdate, 1, 4) LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		
+		
+		<if test="birthMonth != null and birthMonth!= ''">
+			AND substr(user_birthdate, 6, 2) = #{birthMonth}
+		</if>
+		
+		<if test="birthDate != null and birthDate!= ''">
+			AND substr(user_birthdate, 9, 2) = #{birthDate}
+		</if>
+		
+		<if test="addressSystem != null and addressSystem!= ''">
+			AND SUBSTR(user_address , 1, INSTR(user_address, ' ') - 1) = #{addressSystem}
+		</if>
+		
+		<if test="emailSystem!= null and emailSystem!= ''">
+			AND  SUBSTR(user_email, INSTR(user_email, '@')) = #{emailSystem}
+		</if>
+	</select>
+
+
+</mapper>
