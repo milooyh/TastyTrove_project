@@ -6,9 +6,9 @@
 
 <configuration>
 
-	<settings>
+	<!-- <settings>
 		<setting name="mapUnderscoreToCamelCase" value="true"/>	
-	</settings>
+	</settings> -->
 		
 	
 	<typeAliases>		
