@@ -12,6 +12,7 @@
 	${postRecipe.recipeContent}
 	<br>
 	<button>레시피내용수정</button>
+	<button onclick="location.href='/admin/recipeboard'">레세피 목록 보기</button>
 	
 </body>
 </html>

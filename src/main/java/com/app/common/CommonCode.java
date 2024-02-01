@@ -10,4 +10,7 @@ public interface CommonCode {
 	public String RECIPE_RECIPETYPE_WESTERN= "WST";
 	public String RECIPE_RECIPETYPE_DESSERT= "DRT";
 	public String RECIPE_RECIPETYPE_ETC= "ETC";
+	
+	public String PRODUCT_PRODUCTTYPE_UTENSIL = "UTN";
+	public String PROEUCT_PRODUCTTYPE_FOOD = "FOOD";
 }

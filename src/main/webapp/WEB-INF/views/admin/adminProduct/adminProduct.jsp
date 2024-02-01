@@ -19,7 +19,7 @@ th, td {
 </style>
 </head>
 <body>
-	<h1>회원 목록</h1>
+	<h1>상품 목록</h1>
 	<a href="/admin/recipeboard">레시피게시판관리</a>
 	<br>
 	<a href="/admin/musteatplace">맛집관리</a>
@@ -36,42 +36,35 @@ th, td {
 	<table>
 		<thead>
 			<tr>
-				<th>회원번호</th>
-				<th>아이디</th>
-				<th>비밀번호</th>
-				<th>이름</th>
-				<th>별명</th>
-				<th>생년월일</th>
-				<th>전화번호</th>
-				<th>주소</th>
-				<th>이메일</th>
-				<th>유형</th>
+				<th>상품번호</th>
+				<th>상품명</th>
+				<th>가격</th>
+				<th>재고수량</th>
+				<th>이미지</th>
+				<th>카테고리</th>
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="user" items="${userList}">
+			<c:forEach var="product" items="${productList}">
 				<tr>
-					<td>${user.memberId}</td>
-					<td>${user.userId}</td>
-					<td>${user.userPassword}</td>
-					<td>${user.userName}</td>
-					<td>${user.userNickname}</td>
-					<td>${user.userBirthdate}</td>
-					<td>${user.userTel}</td>
-					<td>${user.userAddress}</td>
-					<td>${user.userEmail}</td>
-					<td>${user.userType}</td>
+					<td>${product.productId}</td>
+					<td><a href="/admin/product/content?productId=${product.productId}">${product.productName}</a></td>
+					<td>${product.productPrice}</td>
+					<td>${product.productCount}</td>
+					<td>${product.productImage}</td>
+					<td>${product.productType}</td>
+					
 					<td><button
-							onclick="location.href='/admin/member/update?memberId=${user.memberId}'">회원정보수정</button></td>
+							onclick="location.href='/admin/member/update?memberId=${user.memberId}'"> 상품정보수정</button></td>
 					<td><button
-							onclick="confirmDelete(${user.memberId})">회원정보삭제</button></td>
+							onclick="confirmDelete(${user.memberId})">상품삭제</button></td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
 	<br>
-	<button onclick="location.href='/admin/member/add'">회원추가</button>
-	<button onclick="location.href='/admin/member/search'">회원검색</button>
+	<button onclick="location.href='/admin/product/add'">상품추가</button>
+	<button onclick="location.href='/admin/product/search'">상품검색</button>
 
 	<script>
 		function confirmDelete(memberId) {

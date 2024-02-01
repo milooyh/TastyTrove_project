@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.app.common.CommonCode;
 import com.app.dto.postRecipe.PostRecipe;
 import com.app.dto.postRecipe.PostRecipeUpdateRecipeType;
+import com.app.dto.product.Product;
 import com.app.dto.user.User;
 import com.app.dto.user.UserSearchCondition;
 import com.app.service.admin.AdminService;
@@ -180,12 +181,6 @@ public class AdminController {
 	}
 
 //	======================
-//	레시피게시판 관리 
-	@RequestMapping("/recipeboard")
-	public String adminRecipeBoard() {
-		return "/admin/adminPostRecipe/adminRecipeBoard";
-	}
-
 //	레시피 목록
 	@GetMapping("/recipeboard")
 	public String findRecipeList(Model model) {
@@ -212,7 +207,7 @@ public class AdminController {
 		return "/admin/adminPostRecipe/recipeContent";
 	}
 
-//	레시피 카테고리 수정
+//	레시피 카테고리 수정 >>>>>>>>>> 안 됨 ㅜㅜ
 	@PostMapping("/recipeboard/update/recipeType")
 	public String updateRecipeTypeProcess(PostRecipeUpdateRecipeType postRecipeUpdateRecipeType,
 			@RequestParam String recipeId, @RequestParam String selectedRecipeType, Model model) {
@@ -245,11 +240,51 @@ public class AdminController {
 		
 		if (result > 0) {
 			System.out.println("레세피 삭제 성공");
-			return "redirect:/admin/recipeboard";
+			return "redirect:/admin/recipeboard"; //이상해
 		} else {
 			System.out.println("회원 삭제 실패");
 			return "admin/adminPostRecipe/adminRecipeBoard";
 		}
 	}
+//	상품 ==============================================================
+//	상품 목록
+	@GetMapping("/product")
+	public String findProductList(Model model) {
+		List<Product> productList = adminService.findProductList();
+		model.addAttribute("productList", productList);
+		
+		return "admin/adminProduct/adminProduct";
+	}
+	
+	@RequestMapping("/product/content")
+	public String productReview(@RequestParam String productId, Model model, Product product) {
+		int intProductId = Integer.parseInt(productId);
+		product = adminService.findProductByProductId(intProductId);
+		
+		model.addAttribute("product", product);
+				
+		return "admin/adminProduct/productContent";
+	}
+	
+//	상품 추가
+	@GetMapping("/product/add")
+	public String addProduct() {
+		return  "/admin/adminProduct/saveProduct";
+	}
+	
+//	@PostMapping("/product/add") // 이미지 업로드 하는 거 땜에 추후할 예정 ...
+//	public String addProductProcess(Product product ) {
+//		
+//		return "redirect:/admin/product";
+//	}
+	
+//	상품 검색
+	@GetMapping("/product/search")
+	public String searchProduct() {
+		return  "/admin/adminProduct/findProduct";
+	}
+	
+	
+	
 
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.app.dao.admin.AdminDAO;
 import com.app.dto.postRecipe.PostRecipe;
 import com.app.dto.postRecipe.PostRecipeUpdateRecipeType;
+import com.app.dto.product.Product;
 import com.app.dto.user.User;
 import com.app.dto.user.UserSearchCondition;
 
@@ -130,6 +131,38 @@ public class AdminDAOImpl implements AdminDAO {
 		return result;
 	}
 
+//	상품 =================================================
+//	상품 찾기
+	@Override
+	public List<Product> findProductList() {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findProductList 불림");
 
+		List<Product> productList = sqlSessionTemplate.selectList("admin_mapper.findProductList");
+
+		return productList;
+	}
+
+//	상품번호로 상품 찾기
+	@Override
+	public Product findProductByProductId(int productId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findProductByProductId 불림");
+
+		Product product = sqlSessionTemplate.selectOne("admin_mapper.findProductByProductId", productId);
+
+		return product;
+	}
+
+//	상품 등록
+	@Override
+	public int saveProduct(Product product) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO saveProduct 불림");
+
+		int result = sqlSessionTemplate.selectOne("admin_mapper.saveProduct", product);
+
+		return result;
+	}
 
 }

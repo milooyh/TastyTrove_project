@@ -2,7 +2,7 @@
 
 <mapper namespace="admin_mapper">
 
-	<!--회원 정보 찾기 -->
+	<!--회원 정보 찾기 ================================================================-->
 	<select id="findUserList" resultType="User">
 		SELECT * FROM MEMBERS ORDER
 		BY member_id
@@ -109,10 +109,11 @@
 		WHERE member_id = #{memberId}
 	</delete>
 
-	<!--레시피 찾기 -->
+	<!--레시피 찾기 ============================================================== -->
 	<select id="findPostRecipeList" resultType="PostRecipe">
 		SELECT * FROM
 		RECIPE_BOARD
+		ORDER BY recipe_id
 	</select>
 
 	<select id="findPostRecipeById" resultType="PostRecipe"
@@ -134,7 +135,25 @@
 		WHERE recipe_id = #{recipeId}
 	</delete>
 
-
-
+	<!--상품 정보 찾기 ================================================================-->
+	<select id="findProductList" resultType="Product">
+		SELECT * FROM PRODUCT
+		ORDER BY product_id
+	</select>
+	
+	<select id="findProductByProductId" resultType="Product">
+		SELECT * FROM PRODUCT
+		WHERE product_id = #{productId}
+	</select>
+	
+	<insert id="saveProduct" parameterType="Product">
+		INSERT INTO PRODUCT
+		(product_id, product_name, product_price, product_count, productImage,
+		productType)
+		VALUES
+		((select NVL(max(product_id), 0)+1 as product_id from product),
+		#{productName} , #{productPrice} , #{productCount} , #{productImage} ,
+		#{productType})
+	</insert>
 
 </mapper>

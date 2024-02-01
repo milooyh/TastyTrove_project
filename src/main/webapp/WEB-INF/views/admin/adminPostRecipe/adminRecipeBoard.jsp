@@ -71,6 +71,7 @@ th, td {
 		</tbody>
 	</table>
 	<br>
+	<button onclick="location.href='/admin/member/search'">게시물검색</button>
 
 	<script>
     function confirmModify(recipeId) {

@@ -26,6 +26,7 @@
 		<typeAlias
 			type="com.app.dto.postRecipe.PostRecipeUpdateRecipeType"
 			alias="PostRecipeUpdateRecipeType" />
+		<typeAlias type="com.app.dto.product.Product" alias="Product"></typeAlias>
 	</typeAliases>
 
 

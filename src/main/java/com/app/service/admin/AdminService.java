@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.app.dto.postRecipe.PostRecipe;
 import com.app.dto.postRecipe.PostRecipeUpdateRecipeType;
+import com.app.dto.product.Product;
 import com.app.dto.user.User;
 import com.app.dto.user.UserSearchCondition;
 
@@ -28,5 +29,10 @@ public interface AdminService {
 	
 	public int removePostRecipe(int recipeId);
 
-
+//	상품 ========================================
+	public List<Product> findProductList();
+	public Product findProductByProductId(int productId);
+	
+	public int saveProduct(Product product);
 }
+

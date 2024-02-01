@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.app.dao.admin.AdminDAO;
 import com.app.dto.postRecipe.PostRecipe;
 import com.app.dto.postRecipe.PostRecipeUpdateRecipeType;
+import com.app.dto.product.Product;
 import com.app.dto.user.User;
 import com.app.dto.user.UserSearchCondition;
 import com.app.service.admin.AdminService;
@@ -97,6 +98,7 @@ public class AdminServiceImpl implements AdminService {
 
 		return postRecipeList;
 	}
+
 //	레시피 번호로 레시피 찾기
 	@Override
 	public PostRecipe findPostRecipeById(int recipeId) {
@@ -107,7 +109,7 @@ public class AdminServiceImpl implements AdminService {
 
 		return postRecipe;
 	}
-	
+
 //	레시피 카테고리 수정
 	@Override
 	public int modifyRecipeType(PostRecipeUpdateRecipeType postRecipeUpdateRecipeType) {
@@ -117,7 +119,7 @@ public class AdminServiceImpl implements AdminService {
 		int result = adminDAO.modifyRecipeType(postRecipeUpdateRecipeType);
 		return result;
 	}
-	
+
 //	레시피 삭제
 	@Override
 	public int removePostRecipe(int recipeId) {
@@ -129,5 +131,35 @@ public class AdminServiceImpl implements AdminService {
 		return result;
 	}
 
+//	상품==========================
+//	상품 목록 조회
+	@Override
+	public List<Product> findProductList() {
+		// TODO Auto-generated method stub
+		System.out.println("adminService findProductList 불림");
+
+		List<Product> productList = adminDAO.findProductList();
+		return productList;
+	}
+
+//	상품번호도 상품 조회
+	@Override
+	public Product findProductByProductId(int productId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminService findProductByproductId 불림");
+
+		Product product = adminDAO.findProductByProductId(productId);
+		return product;
+	}
+
+//	상품 저장
+	@Override
+	public int saveProduct(Product product) {
+		// TODO Auto-generated method stub
+		System.out.println("adminService saveProduct 불림");
+
+		int result = adminDAO.saveProduct(product);
+		return result;
+	}
 
 }
