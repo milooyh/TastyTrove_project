@@ -5,44 +5,59 @@
 <html>
 <head>
 	<style>
-		
-		
 		.modal{
             position:absolute;
             display:none;
-            
             justify-content: center;
             top:0;
             left:0;
-
             width:100%;
             height:100%;
-
             background-color: rgba(0,0,0,0.4);
         }
         
         .modal_body{
-            position:absolute; 
+            position:absolute;
         	margin-top:50px;
-
             width:400px;   
             height:600px; 
-
             padding:40px;  
-
             text-align: center;
-
             background-color: rgb(255,255,255);
             border-radius:10px;
             box-shadow:0 2px 3px 0 rgba(34,36,38,0.15);
-
-            transform:translateY(-50%);
+			z-index : 1050;
+        }
+        
+        .add_mustEatPlace {
+            margin-top: 10px;
+        	width: 500px;
+        	heigt: 400px;
+        	border: 1px solid black;
+        	display:flex;
+            border-radius: 5px;
         }
         
         #map {
-        
+        	display:flex;
+            border: 2px solid black;
+            border-radius: 5px;
         }
-		
+
+        input {
+            border-radius: 5px;
+            border: 1.5px solid black;
+            margin: 5px;
+            padding: 5px;
+        }
+
+        .button {
+            background-color: #ff153c;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            padding: 5px;
+        }
 	</style>
 	
 <meta charset="UTF-8">
@@ -55,32 +70,47 @@
 	<div id="map" style="width:40%;height:400px;"></div>
 
     <!-- 주소를 입력받는 폼 -->
-    <form id="addressForm" action="" method="post">
-        <label>주소 입력:</label><input type="text" id="address" name="place" required>   
-
-        <!-- <button type="button" onclick="searchAddress()">주소 검색</button><br> -->
-        <input type="button" onclick="search_address()" value="주소 검색"><br>
-        <label>식당 입력:</label><input type="text" id="nickname" name="restaurant_name" required>  
-        <!-- <button type="button" onclick="searchAddress()">별명 설정</button> -->
-        <label>자신만의 리뷰 등록하세요</label><input type="text" id="review" name="review" required>  
-        <label>자신만의 별점</label><input type="number" id="asterion" name="asterion" required>  
-        <button type="submit" id="addBtn" disabled='disabled'>추가하기</button>
-    </form>
     
-    <!-- <input type="text" id="sample5_address" placeholder="주소">
-	<input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"><br> -->
+    <div class="add_mustEatPlace">
+    <form id="addressForm" action="" method="post">
+        <input type="text" id="address" name="place" required placeholder="주소입력">   
+        <input type="button" onclick="search_address()" value="주소 검색" class="button"><br>
+        <input type="text" id="nickname" name="restaurant_name" required placeholder="식당이름"><br>
+        <input type="text" id="review" name="review" required placeholder="한줄평"><br>  
+        <input type="number" id="asterion" name="asterion" required placeholder="제 점수는요"><br> 
+        <input type="text" id="telephone_number" name="telephone_number" required placeholder="전화번호"><br>
+        <input type="text" id="representative_menu" name="representative_menu" required placeholder="대표메뉴">
+        <button type="submit" id="addBtn" disabled='disabled' class="button">추가하기</button>
+    </form>
+    </div>
+    
 	
-	<c:forEach var="mustEatPlaceItem" items="${mustEatPlaces}">
-		<label>주소 : </label><span>${mustEatPlaceItem.place}</span><br>
-		<label>식당 이름 : </label><span>${mustEatPlaceItem.restaurant_name}</span><br>
-		<label>나만의 리뷰 : </label><span>${mustEatPlaceItem.review}</span><br>
-		<label>나만의 별점 : </label><span>${mustEatPlaceItem.asterion}</span><br>
-	</c:forEach>
-	
+    <table>
+        <tr>
+            <th>Address</th>
+            <th>restaurant</th>
+            <th>Riview</th>
+            <th>Rating</th>
+        </tr>
+		<c:forEach var="mustEatPlaceItem" items="${mustEatPlaces}">
+            <tr>
+			<td><span>${mustEatPlaceItem.place}</span></td>
+			<td><span>${mustEatPlaceItem.restaurant_name}</span></td>
+			<td><span>${mustEatPlaceItem.review}</span></td>
+			<td><span>${mustEatPlaceItem.asterion}</span></td>
+        </tr>
+		</c:forEach>
+	</table>
+
 	<div class="modal">
         <div class="modal_body">
-            <h2>모달창 제목</h2>
-            <p>모달창 내용 </p>
+        	<span style="margin-left:15px; cursor:pointer; float:right;" onclick="closeModal()">✖</span>
+        	<c:forEach var="mustEatPlaceItem" items="${mustEatPlaces}">
+        		<h2>${mustEatPlaceItem.restaurant_name}</h2>
+        		<span>${mustEatPlaceItem.place}</span>
+        		<span>${mustEatPlaceItem.review}</span>
+        		<span>${mustEatPlaceItem.asterion}</span>
+        	</c:forEach>
         </div>
     </div>
     
@@ -237,7 +267,15 @@ var markers = [];
                 // 마커 이미지를 생성합니다    
                 var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
                 
-                var iwContent = '<div style="width:150px;text-align:center;padding:6px 0;">' + '${mustEatPlaceItem.restaurant_name}' + '<br><button class="btn-open-modal" onclick="openModal()">정보보기</button></div>',
+                var iwContent = '<div style="width:150px;text-align:center;padding:6px 0;">' +
+                '<c:out value="${mustEatPlaceItem.restaurant_name}" />' +
+                '<br><button class="btn-open-modal" onclick="openModal(\'' +
+                '<c:out value="${mustEatPlaceItem.restaurant_name}" />\',' +
+                '\'<c:out value="${mustEatPlaceItem.place}" />\',' +
+                '\'<c:out value="${mustEatPlaceItem.review}" />\',' +
+                '\'<c:out value="${mustEatPlaceItem.telephone_number}" />\',' +
+                '\'<c:out value="${mustEatPlaceItem.representative_menu}" />\',' +
+                '\'<c:out value="${mustEatPlaceItem.asterion}" />\')">정보보기</button></div>';
                 iwRemoveable = true;
 
                 // 마커를 생성하고 지도에 표시합니다
@@ -251,7 +289,7 @@ var markers = [];
                 markers.push(marker); // markers 배열에 마커 추가
                 
                 var infowindow = new kakao.maps.InfoWindow({
-                	
+                	position: coords,
                     content: iwContent,
                     removable : iwRemoveable
                 });
@@ -275,12 +313,40 @@ var markers = [];
 </c:forEach>
 
 	<script>
+	function openModal(name, place, review, telephone_number, representative_menu, asterion) {
+        // 모달 열고 데이터 표시
         const modal = document.querySelector('.modal');
-        const btnOpenModal = document.querySelector('.btn-open-modal');
-        
-        function openModal(){
-        	modal.style.display="flex";
+        const modalBody = document.querySelector('.modal_body');
+
+        modalBody.innerHTML = '<span style="margin-left:15px; cursor:pointer; float:right;" onclick="closeModal()">✖</span>' +
+            '<h2>' + name + '</h2>' +
+            '<p>' + place + '</p>' +
+            '<p>' + review + '</p>' +
+            '<p>' + telephone_number + '</p>' +
+            '<p>' + representative_menu + '</p>' +
+            '<p>' + getStarRating(asterion) + '</p>';
+
+        modal.style.display = "flex";
+    }
+	
+	function getStarRating(asterion) {
+        let stars = '';
+        for (let i = 1; i <= 5; i++) {
+            if (i <= asterion) {
+                stars += '⭐';
+            } else {
+                stars += '☆';
+            }
         }
+        return stars;
+    }
+
+
+    function closeModal() {
+        // 모달 닫기
+        const modal = document.querySelector('.modal');
+        modal.style.display = "none";
+    }
     </script>
 	
 	

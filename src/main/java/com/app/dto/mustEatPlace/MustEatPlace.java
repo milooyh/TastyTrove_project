@@ -9,4 +9,8 @@ public class MustEatPlace {
 	String restaurant_name;
 	String review;
 	int asterion;
+	String telephone_number;
+	String representative_menu;
+	String representative_menu_image;
+	String user_id;
 }
