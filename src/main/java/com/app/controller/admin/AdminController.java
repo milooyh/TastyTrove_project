@@ -1,5 +1,6 @@
 package com.app.controller.admin;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +9,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.app.common.CommonCode;
+import com.app.dto.postRecipe.PostRecipe;
+import com.app.dto.postRecipe.PostRecipeUpdateRecipeType;
 import com.app.dto.user.User;
 import com.app.dto.user.UserSearchCondition;
 import com.app.service.admin.AdminService;
@@ -38,7 +43,7 @@ public class AdminController {
 		List<User> userList = adminService.findUserList();
 		model.addAttribute("userList", userList);
 
-		return "/admin/adminMember";
+		return "/admin/adminMember/adminMember";
 	}
 
 //	조건에 따른 회원 검색
@@ -82,13 +87,13 @@ public class AdminController {
 		List<User> userList = adminService.findUserListBySearchCondition(userSearchCondition);
 		model.addAttribute("userList", userList);
 
-		return "/admin/findMember";
+		return "/admin/adminMember/findMember";
 	}
 
 //	관리자 추가
 	@GetMapping("/member/add")
 	public String saveMember() {
-		return "/admin/saveMember";
+		return "/admin/adminMember/saveMember";
 	}
 
 	@PostMapping("/member/add")
@@ -127,10 +132,10 @@ public class AdminController {
 		int result = adminService.saveMember(user);
 		if (result > 0) {
 			System.out.println("관리자 등록 성공");
-			return "redirect:/admin/member";
+			return "redirect:/admin/adminMember/member";
 		} else {
 			System.out.println("관리자 등록 실패");
-			return "/admin/saveMember";
+			return "/admin/adminMember/saveMember";
 		}
 
 	}
@@ -143,7 +148,7 @@ public class AdminController {
 		user = adminService.findUserByMemberId(intMemberId);
 		model.addAttribute("user", user);
 
-		return "/admin/modifyMember";
+		return "/admin/adminMember/modifyMember";
 	}
 
 	@PostMapping("/member/update")
@@ -155,59 +160,96 @@ public class AdminController {
 		if (result > 0) {
 			return "redirect:/admin/member";
 		} else {
-			return "/admin";
+			return "/admin/adminMember/member";
 		}
 	}
-	
+
 //	회원 삭제
 	@GetMapping("/member/remove")
 	public String removeMember(@RequestParam String memberId) {
 		int intMemberId = Integer.parseInt(memberId);
-		
+
 		int result = adminService.removeMember(intMemberId);
-		if(result > 0) {
+		if (result > 0) {
 			System.out.println("회원 삭제 성공");
 			return "redirect:/admin/member";
 		} else {
 			System.out.println("회원 삭제 실패");
-			return "admin/member";
+			return "admin/adminMember/member";
 		}
 	}
 
-//	레시피게시판 관리 ======================
+//	======================
+//	레시피게시판 관리 
 	@RequestMapping("/recipeboard")
 	public String adminRecipeBoard() {
-		return "/admin/adminRecipeBoard";
+		return "/admin/adminPostRecipe/adminRecipeBoard";
 	}
 
-//	맛집 관리 ======================
-	@RequestMapping("/musteatplace")
-	public String adminMustEatPlace() {
-		return "/admin/adminMustEatPlace";
+//	레시피 목록
+	@GetMapping("/recipeboard")
+	public String findRecipeList(Model model) {
+		System.out.println("adminController 레시피 정보 부르기");
+
+		List<PostRecipe> postRecipeList = adminService.findPostRecipeList();
+		model.addAttribute("postRecipeList", postRecipeList);
+
+		// 컨트롤러에서 allRecipeTypes를 추가하는 부분
+		model.addAttribute("allRecipeTypes", Arrays.asList("KOR", "CHI", "JPN", "WST", "DRT", "ETC"));
+
+		return "/admin/adminPostRecipe/adminRecipeBoard";
 	}
 
-//	상품 관리 ======================
-	@RequestMapping("/product")
-	public String adminProduct() {
-		return "/admin/adminProduct";
+//	레시피 세부 내용 
+	@GetMapping("/recipeboard/content")
+	public String findRecipeContent(Model model, @RequestParam String recipeId, PostRecipe postRecipe) {
+		int intRecipeId = Integer.parseInt(recipeId);
+
+		postRecipe = adminService.findPostRecipeById(intRecipeId);
+
+		model.addAttribute("postRecipe", postRecipe);
+
+		return "/admin/adminPostRecipe/recipeContent";
 	}
 
-//	주문 관리 ======================
-	@RequestMapping("/order")
-	public String adminOrder() {
-		return "/admin/adminOrder";
+//	레시피 카테고리 수정
+	@PostMapping("/recipeboard/update/recipeType")
+	public String updateRecipeTypeProcess(PostRecipeUpdateRecipeType postRecipeUpdateRecipeType,
+			@RequestParam String recipeId, @RequestParam String selectedRecipeType, Model model) {
+	
+		System.out.println("adminController 레시피 카테고리 수정하기");
+		
+		int intRecipeId = Integer.parseInt(recipeId);
+		
+		postRecipeUpdateRecipeType.setRecipeId(intRecipeId);
+		postRecipeUpdateRecipeType.setRecipeType(selectedRecipeType);
+		
+		int result = adminService.modifyRecipeType(postRecipeUpdateRecipeType);
+		if (result > 0) {
+			System.out.println("레시피 카테고리 변경 성공");
+			return "redirect:/admin/recipeboard";
+		} else {
+			System.out.println("레시피 카레토리 변경 실패");
+			return "admin/recipeboard";
+		}
 	}
 
-//	결제 관리 ======================
-	@RequestMapping("/payment")
-	public String adminPayment() {
-		return "/admin/adminPayment";
-	}
+//	레시피 삭제
+	@GetMapping("/recipe/remove")
+	public String removePostRecipe(@RequestParam String recipeId) {
+		System.out.println("adminController 레시피 삭제하기");
+		
+		int intRecipeId = Integer.parseInt(recipeId);
 
-//	배송 관리 ======================
-	@RequestMapping("/delivery")
-	public String adminDelivery() {
-		return "/admin/adminDelivery";
+		int result = adminService.removePostRecipe(intRecipeId);
+		
+		if (result > 0) {
+			System.out.println("레세피 삭제 성공");
+			return "redirect:/admin/recipeboard";
+		} else {
+			System.out.println("회원 삭제 실패");
+			return "admin/adminPostRecipe/adminRecipeBoard";
+		}
 	}
 
 }

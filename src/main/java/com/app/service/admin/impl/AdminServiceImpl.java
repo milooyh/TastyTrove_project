@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.dao.admin.AdminDAO;
+import com.app.dto.postRecipe.PostRecipe;
+import com.app.dto.postRecipe.PostRecipeUpdateRecipeType;
 import com.app.dto.user.User;
 import com.app.dto.user.UserSearchCondition;
 import com.app.service.admin.AdminService;
@@ -83,5 +85,49 @@ public class AdminServiceImpl implements AdminService {
 
 		return result;
 	}
+
+//	====================================================
+//	레시피 전체 조회
+	@Override
+	public List<PostRecipe> findPostRecipeList() {
+		// TODO Auto-generated method stub
+		System.out.println("adminService findPostRecipeList 불림");
+
+		List<PostRecipe> postRecipeList = adminDAO.findPostRecipeList();
+
+		return postRecipeList;
+	}
+//	레시피 번호로 레시피 찾기
+	@Override
+	public PostRecipe findPostRecipeById(int recipeId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminService findPostRecipeById 불림");
+
+		PostRecipe postRecipe = adminDAO.findPostRecipeById(recipeId);
+
+		return postRecipe;
+	}
+	
+//	레시피 카테고리 수정
+	@Override
+	public int modifyRecipeType(PostRecipeUpdateRecipeType postRecipeUpdateRecipeType) {
+		// TODO Auto-generated method stub
+		System.out.println("adminService modifyRecipeType 불림");
+
+		int result = adminDAO.modifyRecipeType(postRecipeUpdateRecipeType);
+		return result;
+	}
+	
+//	레시피 삭제
+	@Override
+	public int removePostRecipe(int recipeId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminService removePostRecipe 불림");
+
+		int result = adminDAO.removePostRecipe(recipeId);
+
+		return result;
+	}
+
 
 }

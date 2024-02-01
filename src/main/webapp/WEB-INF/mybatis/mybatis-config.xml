@@ -2,28 +2,30 @@
 
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 					"http://mybatis.org/dtd/mybatis-3-config.dtd">
-					
+
 
 <configuration>
 
 
 
 	<settings>
-		<setting name="mapUnderscoreToCamelCase" value="true"/>	
+		<setting name="mapUnderscoreToCamelCase" value="true" />
 	</settings>
-		
-	
-	<typeAliases>		
+
+
+	<typeAliases>
 		<!-- user -->
 		<typeAlias type="com.app.dto.user.User" alias="User"></typeAlias>
-		<typeAlias type="com.app.dto.user.UserSearchCondition" alias="UserSearchCondition"></typeAlias>
-	<!-- <typeAliases>
-		<typeAlias type="com.rsrvapp.dto.user.User" alias="User"/>
-		<typeAlias type="com.rsrvapp.dto.user.UserSearchCondition" alias="UserSearchCondition"/>
-	</typeAliases> -->
-	
-	<typeAliases>
-		<typeAlias type="com.app.dto.postRecipe.PostRecipe" alias="PostRecipe"/>
+		<typeAlias type="com.app.dto.user.UserSearchCondition"
+			alias="UserSearchCondition"></typeAlias>
+		<!-- <typeAliases> <typeAlias type="com.rsrvapp.dto.user.User" alias="User"/> 
+			<typeAlias type="com.rsrvapp.dto.user.UserSearchCondition" alias="UserSearchCondition"/> 
+			</typeAliases> -->
+		<typeAlias type="com.app.dto.postRecipe.PostRecipe"
+			alias="PostRecipe" />
+		<typeAlias
+			type="com.app.dto.postRecipe.PostRecipeUpdateRecipeType"
+			alias="PostRecipeUpdateRecipeType" />
 	</typeAliases>
 
 

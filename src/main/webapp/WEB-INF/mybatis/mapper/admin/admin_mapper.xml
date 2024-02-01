@@ -4,10 +4,12 @@
 
 	<!--회원 정보 찾기 -->
 	<select id="findUserList" resultType="User">
-		SELECT * FROM MEMBERS
+		SELECT * FROM MEMBERS ORDER
+		BY member_id
 	</select>
-	
-	<select id="findUserByMemberId" resultType="User" parameterType="int">
+
+	<select id="findUserByMemberId" resultType="User"
+		parameterType="int">
 		SELECT * FROM MEMBERS
 		WHERE member_id = #{memberId}
 	</select>
@@ -67,7 +69,7 @@
 			AND SUBSTR(user_email, INSTR(user_email, '@')) =
 			#{emailSystem}
 		</if>
-		
+
 		<if test="userType!= null and userType!= ''">
 			AND user_type = #{userType}
 		</if>
@@ -83,26 +85,56 @@
 		#{userBirthdate} , #{userTel} , #{userAddress} , #{userEmail} ,
 		'ADM')
 	</insert>
-	
+
 	<update id="modifyMember" parameterType="User">
 		UPDATE MEMBERS
-		SET member_id = #{memberId},
-			user_id = #{userId},
-			user_password = #{userPassword},
-			user_name = #{userName},
-			user_nickname = #{userNickname},
-			user_birthdate = #{userBirthdate},
-			user_address = #{userAddress},
-			user_email = #{userEmail}
+		SET
+		member_id = #{memberId},
+		user_id = #{userId},
+		user_password =
+		#{userPassword},
+		user_name = #{userName},
+		user_nickname =
+		#{userNickname},
+		user_birthdate = #{userBirthdate},
+		user_address =
+		#{userAddress},
+		user_email = #{userEmail}
 		WHERE
-			member_id = #{memberId}
+		member_id = #{memberId}
 	</update>
-	
+
 	<delete id="removeMember" parameterType="int">
-		DELETE FROM MEMBERS WHERE member_id = #{memberId}
+		DELETE FROM MEMBERS
+		WHERE member_id = #{memberId}
 	</delete>
-	
-	<!-- 레시피 찾기 -->
+
+	<!--레시피 찾기 -->
+	<select id="findPostRecipeList" resultType="PostRecipe">
+		SELECT * FROM
+		RECIPE_BOARD
+	</select>
+
+	<select id="findPostRecipeById" resultType="PostRecipe"
+		parameterType="int">
+		SELECT * FROM RECIPE_BOARD WHERE recipe_id = #{recipeId}
+	</select>
+
+	<update id="modifyRecipeType"
+		parameterType="PostRecipeUpdateRecipeType">
+		UPDATE RECIPE_BOARD
+		SET
+		recipe_type = #{selectedRecipeType}
+		WHERE
+		recipe_id = #{recipeId
+	</update>
+
+	<delete id="removePostRecipe" parameterType="int">
+		DELETE FROM RECIPE_BOARD
+		WHERE recipe_id = #{recipeId}
+	</delete>
+
+
 
 
 </mapper>

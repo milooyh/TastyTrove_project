@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.app.dao.admin.AdminDAO;
+import com.app.dto.postRecipe.PostRecipe;
+import com.app.dto.postRecipe.PostRecipeUpdateRecipeType;
 import com.app.dto.user.User;
 import com.app.dto.user.UserSearchCondition;
 
@@ -82,5 +84,52 @@ public class AdminDAOImpl implements AdminDAO {
 		int result = sqlSessionTemplate.update("admin_mapper.removeMember", memberId);
 		return result;
 	}
+
+//	==================================================================================
+//	레시피 전체목록조회
+	@Override
+	public List<PostRecipe> findPostRecipeList() {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findPostRecipeList 불림");
+
+		List<PostRecipe> postRecipeList = sqlSessionTemplate.selectList("admin_mapper.findPostRecipeList");
+
+		return postRecipeList;
+	}
+
+//	레시피번호로 레세피 찾기
+	@Override
+	public PostRecipe findPostRecipeById(int recipeId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findPostRecipeById 불림");
+
+		PostRecipe postRecipe = sqlSessionTemplate.selectOne("admin_mapper.findPostRecipeById", recipeId);
+
+		return postRecipe;
+	}
+
+//	레시피 카테고리 수정
+	@Override
+	public int modifyRecipeType(PostRecipeUpdateRecipeType postRecipeUpdateRecipeType) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO modifyRecipeType 불림");
+
+		int result = sqlSessionTemplate.selectOne("admin_mapper.findPostRecipeById", postRecipeUpdateRecipeType);
+
+		return result;
+	}
+
+//	레시피 삭제
+	@Override
+	public int removePostRecipe(int recipeId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO removePostRecipe 불림");
+
+		int result = sqlSessionTemplate.selectOne("admin_mapper.removePostRecipe", recipeId);
+
+		return result;
+	}
+
+
 
 }
