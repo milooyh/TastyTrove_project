@@ -21,9 +21,8 @@
 		<typeAlias type="com.rsrvapp.dto.user.User" alias="User"/>
 		<typeAlias type="com.rsrvapp.dto.user.UserSearchCondition" alias="UserSearchCondition"/>
 	</typeAliases> -->
-	
-
 		<typeAlias type="com.app.dto.postRecipe.PostRecipe" alias="PostRecipe"/>
+		<typeAlias type="com.app.dto.util.RecipeFileInfo" alias="RecipeFileInfo"/>
 	</typeAliases>
 
 

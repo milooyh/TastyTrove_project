@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="recipeFile_mapper">
+
+	<insert id="saveRecipeFileInfo" parameterType="RecipeFileInfo">
+		INSERT INTO RECIPE_FILE_INFO
+		VALUES ( NVL((SELECT MAX(recipe_file_id) + 1 FROM recipe_file_info),1), #{recipeFileName}, #{originalRecipeFileName}, #{recipeFilePath}
+				,#{recipeFileExtension}, #{recipeFileSize})
+	</insert>
+	
+	<select id="findRecipeFileInfoByFileName" parameterType="String" resultType="RecipeFileInfo">
+		SELECT * 
+		FROM RECIPE_FILE_INFO
+		WHERE recipe_file_name = #{recipeFileName}
+	</select>
+
+
+</mapper>
