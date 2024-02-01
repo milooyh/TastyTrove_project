@@ -6,6 +6,8 @@
 
 <configuration>
 
+
+
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true"/>	
 	</settings>
