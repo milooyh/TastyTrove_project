@@ -6,15 +6,21 @@
 
 <configuration>
 
+
+
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true"/>	
 	</settings>
 		
 	
-	<typeAliases>		
+<typeAliases>		
 		<!-- user -->
 		<typeAlias type="com.app.dto.user.User" alias="User"></typeAlias>
 		<typeAlias type="com.app.dto.user.UserSearchCondition" alias="UserSearchCondition"></typeAlias>
+	</typeAliases>
+
+	<typeAliases>
+		<typeAlias type="com.app.dto.postRecipe.PostRecipe" alias="PostRecipe"/>
 	</typeAliases>
 
 
