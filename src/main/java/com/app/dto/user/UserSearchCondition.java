@@ -13,6 +13,7 @@ public class UserSearchCondition {
     String userTel;
     String userAddress;
     String userEmail;
+    String userType;
     String searchKeyword;
     
     String birthMonth;

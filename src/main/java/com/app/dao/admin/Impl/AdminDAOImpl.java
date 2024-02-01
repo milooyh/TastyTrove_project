@@ -41,4 +41,46 @@ public class AdminDAOImpl implements AdminDAO {
 		return userList;
 	}
 
+//	회원 저장
+	@Override
+	public int saveMember(User user) {
+		// TODO Auto-generated method stub
+
+		System.out.println("adminDAO saveUser 불림");
+
+		int result = sqlSessionTemplate.insert("admin_mapper.saveMember", user);
+
+		return result;
+	}
+
+//	아이디로 회원 조회
+	@Override
+	public User findUserByMemberId(int memberId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findUserByMemberId 불림");
+
+		User user = sqlSessionTemplate.selectOne("admin_mapper.findUserByMemberId", memberId);
+		return user;
+	}
+
+//	회원 정보 수정
+	@Override
+	public int modifyMember(User user) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO modifyMember 불림");
+
+		int result = sqlSessionTemplate.update("admin_mapper.modifyMember", user);
+		return result;
+	}
+
+//	회원 삭제
+	@Override
+	public int removeMember(int memberId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO removeMember 불림");
+
+		int result = sqlSessionTemplate.update("admin_mapper.removeMember", memberId);
+		return result;
+	}
+
 }

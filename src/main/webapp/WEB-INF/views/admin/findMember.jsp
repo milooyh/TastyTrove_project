@@ -70,6 +70,13 @@ th, td {
          <option value="경상남도">경상남도</option>
          <option value="제주특별자치도">제주특별자치도</option>
       </select><br>
+      
+      <label>유형</label>
+      <select name="userType">
+      	<option disabled selected>회원구분</option>
+      	<option value="cus">CUS</option>
+      	<option value="AMD">ADM</option>
+      </select>
 		
 		<button type="submit">검색하기</button>
 	</form>
@@ -86,6 +93,7 @@ th, td {
 				<th>전화번호</th>
 				<th>주소</th>
 				<th>이메일</th>
+				<th>유형</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -100,6 +108,7 @@ th, td {
 					<td>${user.userTel}</td>
 					<td>${user.userAddress}</td>
 					<td>${user.userEmail}</td>
+					<th>${user.userType}</th>
 					<td><button>회원정보수정</button>
 					<td><button>회원정보삭제</button>
 				</tr>

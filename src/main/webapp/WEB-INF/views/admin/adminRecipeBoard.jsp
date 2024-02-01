@@ -8,5 +8,7 @@
 </head>
 <body>
 <h1>레시피게시판 관리 페이지</h1>
+<hr>
+
 </body>
 </html>

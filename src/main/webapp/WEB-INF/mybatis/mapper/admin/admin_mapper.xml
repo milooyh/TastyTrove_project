@@ -6,11 +6,16 @@
 	<select id="findUserList" resultType="User">
 		SELECT * FROM MEMBERS
 	</select>
+	
+	<select id="findUserByMemberId" resultType="User" parameterType="int">
+		SELECT * FROM MEMBERS
+		WHERE member_id = #{memberId}
+	</select>
 
 	<select id="findUserListBySearchCondition" parameterType="User"
 		resultType="UserSearchCondition">
 		SELECT * FROM MEMBERS
-		WHERE 1 = 1 AND USER_TYPE = 'CUS'
+		WHERE 1 = 1
 		<if test="memberId != null and memberId != ''">
 			AND member_id LIKE '%' || #{searchKeyword} || '%'
 		</if>
@@ -40,26 +45,64 @@
 		</if>
 
 		<if test="userBirthdate != null and userBirthdate!= ''">
-			AND substr(user_birthdate, 1, 4) LIKE '%' || #{searchKeyword} || '%'
+			AND substr(user_birthdate, 1, 4) LIKE '%' ||
+			#{searchKeyword} || '%'
 		</if>
-		
-		
+
+
 		<if test="birthMonth != null and birthMonth!= ''">
 			AND substr(user_birthdate, 6, 2) = #{birthMonth}
 		</if>
-		
+
 		<if test="birthDate != null and birthDate!= ''">
 			AND substr(user_birthdate, 9, 2) = #{birthDate}
 		</if>
-		
+
 		<if test="addressSystem != null and addressSystem!= ''">
-			AND SUBSTR(user_address , 1, INSTR(user_address, ' ') - 1) = #{addressSystem}
+			AND SUBSTR(user_address , 1, INSTR(user_address, ' ') - 1)
+			= #{addressSystem}
+		</if>
+
+		<if test="emailSystem!= null and emailSystem!= ''">
+			AND SUBSTR(user_email, INSTR(user_email, '@')) =
+			#{emailSystem}
 		</if>
 		
-		<if test="emailSystem!= null and emailSystem!= ''">
-			AND  SUBSTR(user_email, INSTR(user_email, '@')) = #{emailSystem}
+		<if test="userType!= null and userType!= ''">
+			AND user_type = #{userType}
 		</if>
 	</select>
+
+	<insert id="saveMember" parameterType="User">
+		INSERT INTO members
+		(member_id, user_id, user_password, user_name, user_nickname,
+		user_birthdate, user_tel, user_address, user_email, user_type)
+		VALUES
+		((select NVL(max(member_id), 0)+1 as member_id from members),
+		#{userId} , #{userPassword} , #{userName} , #{userNickname} ,
+		#{userBirthdate} , #{userTel} , #{userAddress} , #{userEmail} ,
+		'ADM')
+	</insert>
+	
+	<update id="modifyMember" parameterType="User">
+		UPDATE MEMBERS
+		SET member_id = #{memberId},
+			user_id = #{userId},
+			user_password = #{userPassword},
+			user_name = #{userName},
+			user_nickname = #{userNickname},
+			user_birthdate = #{userBirthdate},
+			user_address = #{userAddress},
+			user_email = #{userEmail}
+		WHERE
+			member_id = #{memberId}
+	</update>
+	
+	<delete id="removeMember" parameterType="int">
+		DELETE FROM MEMBERS WHERE member_id = #{memberId}
+	</delete>
+	
+	<!-- 레시피 찾기 -->
 
 
 </mapper>

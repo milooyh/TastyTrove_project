@@ -20,6 +20,18 @@ th, td {
 </head>
 <body>
 	<h1>회원 목록</h1>
+	<a href="/admin/recipeboard">레시피게시판관리</a>
+	<br>
+	<a href="/admin/musteatplace">맛집관리</a>
+	<br>
+	<a href="/admin/product">상품관리</a>
+	<br>
+	<a href="/admin/order">주문관리</a>
+	<br>
+	<a href="/admin/payment">결제관리</a>
+	<br>
+	<a href="/admin/delivery">배송관리</a>
+	<br>
 	<hr>
 	<table>
 		<thead>
@@ -33,6 +45,7 @@ th, td {
 				<th>전화번호</th>
 				<th>주소</th>
 				<th>이메일</th>
+				<th>유형</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -47,13 +60,27 @@ th, td {
 					<td>${user.userTel}</td>
 					<td>${user.userAddress}</td>
 					<td>${user.userEmail}</td>
-					<td><button>회원정보수정</button></td>
-					<td><button>회원정보삭제</button></td>
+					<td>${user.userType}</td>
+					<td><button
+							onclick="location.href='/admin/member/update?memberId=${user.memberId}'">회원정보수정</button></td>
+					<td><button
+							onclick="confirmDelete(${user.memberId})">회원정보삭제</button></td>
 				</tr>
 			</c:forEach>
 		</tbody>
-	</table> <br>
-	<button>회원추가</button>
+	</table>
+	<br>
+	<button onclick="location.href='/admin/member/add'">회원추가</button>
 	<button onclick="location.href='/admin/member/search'">회원검색</button>
+
+	<script>
+		function confirmDelete(memberId) {
+			var result = confirm("정말 삭제하시겠습니까?");
+
+			if (result) {
+				location.href = '/admin/member/remove=' + memberId;
+			}
+		}
+	</script>
 </body>
 </html>

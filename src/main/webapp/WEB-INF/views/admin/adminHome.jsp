@@ -11,8 +11,8 @@
 	관리자 ${userId}님 로그인 중
 	<hr>
 	<a href="/admin/member">회원관리</a><br>
-	<a href="/admin/recipeBoard">레시피게시판관리</a><br>
-	<a href="/admin/mustEatPlace">맛집관리</a><br>
+	<a href="/admin/recipeboard">레시피게시판관리</a><br>
+	<a href="/admin/musteatplace">맛집관리</a><br>
 	<a href="/admin/product">상품관리</a><br>
 	<a href="/admin/order">주문관리</a><br>
 	<a href="/admin/payment">결제관리</a><br>
