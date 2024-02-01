@@ -2,7 +2,7 @@
 
 <mapper namespace="admin_mapper">
 
-	<!--회원 정보 찾기 ================================================================-->
+	<!--회원 정보 찾기 ================================================================ -->
 	<select id="findUserList" resultType="User">
 		SELECT * FROM MEMBERS ORDER
 		BY member_id
@@ -125,35 +125,94 @@
 		parameterType="PostRecipeUpdateRecipeType">
 		UPDATE RECIPE_BOARD
 		SET
-		recipe_type = #{selectedRecipeType}
+		recipe_type =
+		#{selectedRecipeType}
 		WHERE
 		recipe_id = #{recipeId
 	</update>
 
 	<delete id="removePostRecipe" parameterType="int">
-		DELETE FROM RECIPE_BOARD
+		DELETE FROM
+		RECIPE_BOARD
 		WHERE recipe_id = #{recipeId}
 	</delete>
 
-	<!--상품 정보 찾기 ================================================================-->
+	<!--상품 정보 찾기 ================================================================ -->
 	<select id="findProductList" resultType="Product">
 		SELECT * FROM PRODUCT
 		ORDER BY product_id
 	</select>
-	
+
 	<select id="findProductByProductId" resultType="Product">
-		SELECT * FROM PRODUCT
+		SELECT * FROM
+		PRODUCT
 		WHERE product_id = #{productId}
 	</select>
-	
+
 	<insert id="saveProduct" parameterType="Product">
 		INSERT INTO PRODUCT
 		(product_id, product_name, product_price, product_count, productImage,
 		productType)
 		VALUES
-		((select NVL(max(product_id), 0)+1 as product_id from product),
-		#{productName} , #{productPrice} , #{productCount} , #{productImage} ,
+		((select NVL(max(product_id), 0)+1 as product_id
+		from product),
+		#{productName} , #{productPrice} , #{productCount} ,
+		#{productImage} ,
 		#{productType})
 	</insert>
+
+	<!--맛집 정보 찾기 ================================================================ -->
+	<select id="findMustEatPlaceList" resultType="MustEatPlace">
+		SELECT * FROM
+		MUST_EAT_PLACE
+		ORDER BY place_id
+	</select>
+
+	<select id="findMustEatPlaceByPlaceId" resultType="MustEatPlace">
+		SELECT * FROM
+		MUST_EAT_PLACE
+		WHERE place_id = #{placeId}
+	</select>
+
+	<select id="findMustEatPlaceListBySearchCondition"
+		parameterType="MustEatPlace" resultType="MustEatPlaceSearchCondition">
+		SELECT * FROM MUST_EAT_PLACE
+		WHERE 1 = 1
+		<if test="placeId != null and placeId!= ''">
+			AND place_id LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="restaurantName != null and restaurantName!= ''">
+			AND restaurant_name LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="place != null and place!= ''">
+			AND place LIKE '%' || #{searchKeyword} || '%'
+		</if>
+	</select>
+
+
+	<insert id="saveMustEatPlace" parameterType="MustEatPlace">
+		INSERT INTO
+		MUST_EAT_PLACE
+		(place_id, restaurant_name, place)
+		VALUES
+		((select
+		NVL(max(place_id), 0)+1 as place_id
+		from MUST_EAT_PLACE),
+		#{restaurantName}, #{place})
+	</insert>
+
+	<update id="modifyMustEatPlace" parameterType="MustEatPlace">
+		UPDATE
+		MUST_EAT_PLACE
+		SET
+		restaurant_name = #{restaurantName},
+		place = #{place}
+		WHERE place_id = #{placeId}
+	</update>
+	
+	<delete id="removeMustEatPlace" parameterType="int">
+		DELETE FROM MUST_EAT_PLACE
+		WHERE place_id = #{placeId}
+	</delete>
 
 </mapper>

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.app.dao.admin.AdminDAO;
+import com.app.dto.mustEatPlace.MustEatPlace;
+import com.app.dto.mustEatPlace.MustEatPlaceSearchCondition;
 import com.app.dto.postRecipe.PostRecipe;
 import com.app.dto.postRecipe.PostRecipeUpdateRecipeType;
 import com.app.dto.product.Product;
@@ -82,7 +84,7 @@ public class AdminDAOImpl implements AdminDAO {
 		// TODO Auto-generated method stub
 		System.out.println("adminDAO removeMember 불림");
 
-		int result = sqlSessionTemplate.update("admin_mapper.removeMember", memberId);
+		int result = sqlSessionTemplate.delete("admin_mapper.removeMember", memberId);
 		return result;
 	}
 
@@ -115,7 +117,7 @@ public class AdminDAOImpl implements AdminDAO {
 		// TODO Auto-generated method stub
 		System.out.println("adminDAO modifyRecipeType 불림");
 
-		int result = sqlSessionTemplate.selectOne("admin_mapper.findPostRecipeById", postRecipeUpdateRecipeType);
+		int result = sqlSessionTemplate.update("admin_mapper.findPostRecipeById", postRecipeUpdateRecipeType);
 
 		return result;
 	}
@@ -126,7 +128,7 @@ public class AdminDAOImpl implements AdminDAO {
 		// TODO Auto-generated method stub
 		System.out.println("adminDAO removePostRecipe 불림");
 
-		int result = sqlSessionTemplate.selectOne("admin_mapper.removePostRecipe", recipeId);
+		int result = sqlSessionTemplate.delete("admin_mapper.removePostRecipe", recipeId);
 
 		return result;
 	}
@@ -160,8 +162,72 @@ public class AdminDAOImpl implements AdminDAO {
 		// TODO Auto-generated method stub
 		System.out.println("adminDAO saveProduct 불림");
 
-		int result = sqlSessionTemplate.selectOne("admin_mapper.saveProduct", product);
+		int result = sqlSessionTemplate.insert("admin_mapper.saveProduct", product);
 
+		return result;
+	}
+
+//	======================================
+//	맛집목록조회
+	@Override
+	public List<MustEatPlace> findMustEatPlaceList() {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findMustEatPlaceList 불림");
+
+		List<MustEatPlace> placeList = sqlSessionTemplate.selectList("admin_mapper.findMustEatPlaceList");
+
+		return placeList;
+	}
+
+//	맛집번호로 맛집 조회
+	@Override
+	public MustEatPlace findMustEatPlaceByPlaceId(int placeId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findMustEatPlaceByPlaceId 불림");
+
+		MustEatPlace mustEatPlace = sqlSessionTemplate.selectOne("admin_mapper.findMustEatPlaceByPlaceId", placeId);
+
+		return mustEatPlace;
+	}
+
+//	맛집 저장
+	@Override
+	public int saveMustEatPlace(MustEatPlace mustEatPlace) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO saveMustEatPlace 불림");
+
+		int result = sqlSessionTemplate.insert("admin_mapper.saveMustEatPlace", mustEatPlace);
+		return result;
+	}
+
+//	맛집 검색하기
+	@Override
+	public List<MustEatPlace> findMustEatPlaceListBySearchCondition(
+			MustEatPlaceSearchCondition mustEatPlaceSearchCondition) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findMustEatPlaceListBySearchCondition 불림");
+
+		List<MustEatPlace> placeList = sqlSessionTemplate
+				.selectList("admin_mapper.findMustEatPlaceListBySearchCondition", mustEatPlaceSearchCondition);
+		return placeList;
+	}
+	
+//	맛집 수정
+	@Override
+	public int modifyMustEatPlace(MustEatPlace mustEatPlace) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO modifyMustEatPlace 불림");
+
+		int result = sqlSessionTemplate.update("admin_mapper.modifyMustEatPlace", mustEatPlace);
+		return result;
+	}
+
+//	맛집 삭제
+	@Override
+	public int removeMustEatPlace(int placeId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO removeMustEatPlace 불림");
+		int result = sqlSessionTemplate.delete("admin_mapper.removeMustEatPlace", placeId);
 		return result;
 	}
 

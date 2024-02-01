@@ -3,6 +3,8 @@ package com.app.controller.admin;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.app.common.CommonCode;
+import com.app.dto.mustEatPlace.MustEatPlace;
+import com.app.dto.mustEatPlace.MustEatPlaceSearchCondition;
 import com.app.dto.postRecipe.PostRecipe;
 import com.app.dto.postRecipe.PostRecipeUpdateRecipeType;
 import com.app.dto.product.Product;
@@ -211,14 +215,14 @@ public class AdminController {
 	@PostMapping("/recipeboard/update/recipeType")
 	public String updateRecipeTypeProcess(PostRecipeUpdateRecipeType postRecipeUpdateRecipeType,
 			@RequestParam String recipeId, @RequestParam String selectedRecipeType, Model model) {
-	
+
 		System.out.println("adminController 레시피 카테고리 수정하기");
-		
+
 		int intRecipeId = Integer.parseInt(recipeId);
-		
+
 		postRecipeUpdateRecipeType.setRecipeId(intRecipeId);
 		postRecipeUpdateRecipeType.setRecipeType(selectedRecipeType);
-		
+
 		int result = adminService.modifyRecipeType(postRecipeUpdateRecipeType);
 		if (result > 0) {
 			System.out.println("레시피 카테고리 변경 성공");
@@ -233,58 +237,143 @@ public class AdminController {
 	@GetMapping("/recipe/remove")
 	public String removePostRecipe(@RequestParam String recipeId) {
 		System.out.println("adminController 레시피 삭제하기");
-		
+
 		int intRecipeId = Integer.parseInt(recipeId);
 
 		int result = adminService.removePostRecipe(intRecipeId);
-		
+
 		if (result > 0) {
 			System.out.println("레세피 삭제 성공");
-			return "redirect:/admin/recipeboard"; //이상해
+			return "redirect:/admin/recipeboard"; // 이상해
 		} else {
 			System.out.println("회원 삭제 실패");
 			return "admin/adminPostRecipe/adminRecipeBoard";
 		}
 	}
+
 //	상품 ==============================================================
 //	상품 목록
 	@GetMapping("/product")
 	public String findProductList(Model model) {
 		List<Product> productList = adminService.findProductList();
 		model.addAttribute("productList", productList);
-		
+
 		return "admin/adminProduct/adminProduct";
 	}
-	
+
 	@RequestMapping("/product/content")
 	public String productReview(@RequestParam String productId, Model model, Product product) {
 		int intProductId = Integer.parseInt(productId);
 		product = adminService.findProductByProductId(intProductId);
-		
+
 		model.addAttribute("product", product);
-				
+
 		return "admin/adminProduct/productContent";
 	}
-	
+
 //	상품 추가
 	@GetMapping("/product/add")
 	public String addProduct() {
-		return  "/admin/adminProduct/saveProduct";
+		return "/admin/adminProduct/saveProduct";
 	}
-	
+
 //	@PostMapping("/product/add") // 이미지 업로드 하는 거 땜에 추후할 예정 ...
 //	public String addProductProcess(Product product ) {
 //		
 //		return "redirect:/admin/product";
 //	}
-	
+
 //	상품 검색
 	@GetMapping("/product/search")
 	public String searchProduct() {
-		return  "/admin/adminProduct/findProduct";
+		return "/admin/adminProduct/findProduct";
+	}
+
+//	맛집 ===========================
+//	맛집 모록
+	@GetMapping("/musteatplace")
+	public String findMustEatPlaceList(Model model) {
+		List<MustEatPlace> placeList = adminService.findMustEatPlaceList();
+		model.addAttribute("placeList", placeList);
+
+		return "/admin/adminMustEatPlace/adminMustEatPlace";
+	}
+
+//	맛집별 리뷰
+	@RequestMapping("/musteatplace/content")
+	public String mustEatPlaceReview(@RequestParam String placeId, Model model, MustEatPlace mustEatPlace) {
+		int intPlaceId = Integer.parseInt(placeId);
+		mustEatPlace = adminService.findMustEatPlaceByPlaceId(intPlaceId);
+
+		model.addAttribute("place", mustEatPlace);
+
+		return "/admin/adminMustEatPlace/mustEatPlaceContent";
+	}
+
+//	맛집 추가
+	@GetMapping("/musteatplace/add")
+	public String saveMustEatPlace() {
+		return "/admin/adminMustEatPlace/saveMustEatPlace";
+	}
+
+	@PostMapping("/musteatplace/add")
+	public String saveMustEatPlaceProcess(MustEatPlace mustEatPlace, HttpSession session) {
+
+		int result = adminService.saveMustEatPlace(mustEatPlace);
+		System.out.println("adminController result : " + result);
+
+		if (result > 0) {
+			System.out.println("맛집 저장 성공");
+			return "redirect:/admin/musteatplace"; // 경로에 nullpoint예외가 .. ?
+		} else {
+			return "/admin/adminMustEatPlace/saveMustEatPlace";
+		}
+	}
+
+//	맛집 검색
+	@GetMapping("/musteatplace/search")
+	public String findMustEatPlaceBySearchCondition(MustEatPlaceSearchCondition mustEatPlaceSearchCondition,
+			Model model) {
+		System.out.println("adminController findMustEatPlaceListBySearchCondition 불림");
+
+		List<MustEatPlace> placeList = adminService.findMustEatPlaceListBySearchCondition(mustEatPlaceSearchCondition);
+		model.addAttribute("placeList", placeList);
+
+		return "/admin/adminMustEatPlace/findMustEatPlace";
+	}
+
+//	맛집 수정
+	@GetMapping("/musteatplace/update")
+	public String modifyMustEatPlace(@RequestParam String placeId, Model model, MustEatPlace mustEatPlace) {
+		int intPlaceId = Integer.parseInt(placeId);
+		mustEatPlace = adminService.findMustEatPlaceByPlaceId(intPlaceId);
+		model.addAttribute("mustEatPlace", mustEatPlace);
+		
+		return "/admin/adminMustEatPlace/modifyMustEatPlace";
 	}
 	
-	
-	
-
+	@PostMapping("/musteatplace/update")
+	public String modifyMustEatPlaceProcess(MustEatPlace mustEatPlace) {
+		int result = adminService.modifyMustEatPlace(mustEatPlace);
+		if(result > 0) {
+			System.out.println("맛집 수정 성공");
+			return "redirect:/admin/musteatplace";
+		} else {
+			System.out.println("맛집 수정 실패");
+			return "/admin/musteatplace/modify";
+		}
+	}
+//	맛집 삭제
+	@GetMapping("/musteatplace/remove")
+	public String removeMustEatPlace(@RequestParam String placeId) {
+		int intPlaceId = Integer.parseInt(placeId);
+		int result = adminService.removeMustEatPlace(intPlaceId);
+		if(result > 0) {
+			System.out.println("맛집 삭제 성공");
+			return "redirect:/admin/musteatplace";
+		} else {
+			System.out.println("맛집 삭제 실패");
+			return "/admin/musteatplace";
+		}
+	}
 }

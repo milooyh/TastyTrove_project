@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.dao.admin.AdminDAO;
+import com.app.dto.mustEatPlace.MustEatPlace;
+import com.app.dto.mustEatPlace.MustEatPlaceSearchCondition;
 import com.app.dto.postRecipe.PostRecipe;
 import com.app.dto.postRecipe.PostRecipeUpdateRecipeType;
 import com.app.dto.product.Product;
@@ -159,6 +161,68 @@ public class AdminServiceImpl implements AdminService {
 		System.out.println("adminService saveProduct 불림");
 
 		int result = adminDAO.saveProduct(product);
+		return result;
+	}
+
+//	맛집 =============
+//	맛집목록조회
+	@Override
+	public List<MustEatPlace> findMustEatPlaceList() {
+		// TODO Auto-generated method stub
+		System.out.println("adminService findMustEatPlaceList 불림");
+
+		List<MustEatPlace> placeList = adminDAO.findMustEatPlaceList();
+		return placeList;
+	}
+
+//	맛집번호로 맛집조회
+	@Override
+	public MustEatPlace findMustEatPlaceByPlaceId(int placeId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminService findMustEatPlaceByPlaceId 불림");
+
+		MustEatPlace mustEatPlace = adminDAO.findMustEatPlaceByPlaceId(placeId);
+		return mustEatPlace;
+	}
+
+//	맛집 저장
+	@Override
+	public int saveMustEatPlace(MustEatPlace mustEatPlace) {
+		// TODO Auto-generated method stub
+		System.out.println("adminService saveMustEatPlace 불림");
+
+		int result = adminDAO.saveMustEatPlace(mustEatPlace);
+		System.out.println("adminService result : " + result);
+		return result;
+	}
+
+//	맛집 검색
+	@Override
+	public List<MustEatPlace> findMustEatPlaceListBySearchCondition(
+			MustEatPlaceSearchCondition mustEatPlaceSeartchCondition) {
+		// TODO Auto-generated method stub
+		System.out.println("adminService findMustEatPlaceListBySearchCondition 불림");
+		
+		List<MustEatPlace> placeList = adminDAO.findMustEatPlaceListBySearchCondition(mustEatPlaceSeartchCondition);
+		return placeList;
+	}
+
+//	맛집 수정
+	@Override
+	public int modifyMustEatPlace(MustEatPlace mustEatPlace) {
+		// TODO Auto-generated method stub
+		System.out.println("adminService modifyMustEatPlace 불림");
+		
+		int result = adminDAO.modifyMustEatPlace(mustEatPlace);
+		return result;
+	}
+
+//	맛집 삭제
+	@Override
+	public int removeMustEatPlace(int placeId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminService removeMustEatPlace 불림");
+		int result  = adminDAO.removeMustEatPlace(placeId);
 		return result;
 	}
 

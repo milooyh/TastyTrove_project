@@ -23,6 +23,8 @@
 		</select><br>
 		<button type="submit">상품등록하기</button>
 	</form>
+	<br>
+    <button onclick="location.href='/admin/member'">뒤로 가기</button>
 </body>
 </html>
 </body>

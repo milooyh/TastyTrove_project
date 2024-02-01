@@ -2,6 +2,8 @@ package com.app.service.admin;
 
 import java.util.List;
 
+import com.app.dto.mustEatPlace.MustEatPlace;
+import com.app.dto.mustEatPlace.MustEatPlaceSearchCondition;
 import com.app.dto.postRecipe.PostRecipe;
 import com.app.dto.postRecipe.PostRecipeUpdateRecipeType;
 import com.app.dto.product.Product;
@@ -34,5 +36,16 @@ public interface AdminService {
 	public Product findProductByProductId(int productId);
 	
 	public int saveProduct(Product product);
+	
+//	맛집 ==============================
+	public List<MustEatPlace> findMustEatPlaceList();
+	public MustEatPlace findMustEatPlaceByPlaceId(int placeId);
+	public List<MustEatPlace> findMustEatPlaceListBySearchCondition(MustEatPlaceSearchCondition mustEatPlaceSeartchCondition);
+	
+	public int saveMustEatPlace(MustEatPlace mustEatPlace);
+	
+	public int modifyMustEatPlace(MustEatPlace mustEatPlace);
+	
+	public int removeMustEatPlace(int placeId);
 }
 
