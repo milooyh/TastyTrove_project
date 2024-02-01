@@ -22,7 +22,7 @@
 		<typeAlias type="com.rsrvapp.dto.user.UserSearchCondition" alias="UserSearchCondition"/>
 	</typeAliases> -->
 	
-	<typeAliases>
+
 		<typeAlias type="com.app.dto.postRecipe.PostRecipe" alias="PostRecipe"/>
 	</typeAliases>
 
