@@ -3,7 +3,7 @@
 <mapper namespace="postRecipe_mapper">
 
 	<insert id="saveRecipePost" parameterType="com.app.dto.postRecipe.PostRecipe">
-		INSERT INTO recipe_board VALUES(NVL((SELECT MAX(recipe_id) + 1 FROM recipe_board),1), #{recipe_title}, #{recipe_content}, #{user_id}, #{created_at})
+		INSERT INTO recipe_board VALUES(NVL((SELECT MAX(recipe_id) + 1 FROM recipe_board),1), #{recipe_title}, #{recipe_content}, #{user_id}, to_char(sysdate,'YYYY-MM-DD HH24:MI:SS'))
 	</insert>
 
 

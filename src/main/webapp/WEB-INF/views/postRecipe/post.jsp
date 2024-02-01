@@ -17,7 +17,6 @@
 	<form action="" method="post">
 	작성자 <input type="text" name="user_id">
 	제목 <input type="text" name="recipe_title">
-	작성일자 <input type="text" name="created_at">
 	카테고리
 	<select id="category">
 		<option name="category" value="1">한식</option>
@@ -39,46 +38,48 @@
 					lang : "ko-KR", // 한글 설정
 					focus: true
 					
-// 					callbacks: {
-// 		                onImageUpload: function (files, editor, welEditable) {
-// 		                    // 파일 업로드 (다중 업로드를 위해 반복문 사용)
-// 		                    for (var i = files.length - 1; i >= 0; i--) {
-// 		                        var fileName = files[i].name
+					//--------------------테스트용-----------------------------------------------------
+					callbacks: {
+		                onImageUpload: function (files, editor, welEditable) {
+		                    // 파일 업로드 (다중 업로드를 위해 반복문 사용)
+		                    for (var i = files.length - 1; i >= 0; i--) {
+		                        var fileName = files[i].name
 
-// 		                        // 이미지 alt 속성 삽일을 위한 설정
-// 		                        var caption = prompt('이미지 설명 :', fileName)
-// 		                        if (caption == '') {
-// 		                            caption = '이미지'
-// 		                        }
-// 		                        uploadSummernoteImageFile(files[i], this, caption)
-// 		                    }
-// 		                },
-// 		            },
-// 		        })
-// 		    })
+		                        // 이미지 alt 속성 삽일을 위한 설정
+		                        var caption = prompt('이미지 설명 :', fileName)
+		                        if (caption == '') {
+		                            caption = '이미지'
+		                        }
+		                        uploadSummernoteImageFile(files[i], this, caption)
+		                    }
+		                },
+		            },
+		        })
+		    })
 
-// 		    // 이미지 업로드 함수 ajax 활용
-// 		    function uploadSummernoteImageFile(file, el, caption) {
-// 		        data = new FormData()
-// 		        data.append('file', file)
-// 		        $.ajax({
-// 		            data: data,
-// 		            type: 'POST',
-// 		            url: 'uploadSummernoteImageFile',
-// 		            contentType: false,
-// 		            enctype: 'multipart/form-data',
-// 		            processData: false,
-// 		            success: function (data) {
-// 		                $(el).summernote(
-// 		                    'editor.insertImage',
-// 		                    data.url,
-// 		                    function ($image) {
-// 		                        $image.attr('alt', caption) // 캡션 정보를 이미지의 alt 속성에 설정
-// 		                    }
-// 		                )
-// 		            },
-// 		        })
-// 		    }
+		    // 이미지 업로드 함수 ajax 활용
+		    function uploadSummernoteImageFile(file, el, caption) {
+		        data = new FormData()
+		        data.append('file', file)
+		        $.ajax({
+		            data: data,
+		            type: 'POST',
+		            url: 'uploadSummernoteImageFile',
+		            contentType: false,
+		            enctype: 'multipart/form-data',
+		            processData: false,
+		            success: function (data) {
+		                $(el).summernote(
+		                    'editor.insertImage',
+		                    data.url,
+		                    function ($image) {
+		                        $image.attr('alt', caption) // 캡션 정보를 이미지의 alt 속성에 설정
+		                    }
+		                )
+		            },
+		        })
+		    }
+		  //-------------------------------------------------------------------------
 		});
 		
 
