@@ -33,7 +33,10 @@
 		<typeAlias
 			type="com.app.dto.mustEatPlace.MustEatPlaceSearchCondition"
 			alias="MustEatPlaceSearchCondition"></typeAlias>
-	</typeAliases>
+		<typeAlias type="com.app.dto.order.Order" alias="Order"></typeAlias>
+		<typeAlias type="com.app.dto.order.OrderItem" alias="OrderItem"></typeAlias>
+		<typeAlias type="com.app.dto.order.OrderSearchCondition" alias="OrderSearchCondition"></typeAlias>
+	</typeAliases> 
 
 
 </configuration>

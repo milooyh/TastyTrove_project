@@ -209,10 +209,90 @@
 		place = #{place}
 		WHERE place_id = #{placeId}
 	</update>
-	
+
 	<delete id="removeMustEatPlace" parameterType="int">
-		DELETE FROM MUST_EAT_PLACE
+		DELETE FROM
+		MUST_EAT_PLACE
 		WHERE place_id = #{placeId}
+	</delete>
+
+	<!--주문 정보 찾기 ================================================================ -->
+	<select id="findOrderList" resultType="Order">
+		SELECT * FROM
+		ORDERS
+		ORDER
+		BY order_id
+	</select>
+
+	<select id="findOrderItemListByMemberId" resultType="OrderItem"
+		parameterType="int">
+		SELECT * FROM
+		ORDER_ITEMS
+		WHERE member_id = #{memberId}
+	</select>
+
+	<select id="findOrderItemByMemberId" resultType="OrderItem"
+		parameterType="int">
+		SELECT * FROM
+		ORDER_ITEMS
+		WHERE member_id = #{memberId}
+	</select>
+
+	<select id="findOrderItemByOrderItemId" resultType="OrderItem"
+		parameterType="int">
+		SELECT * FROM
+		ORDER_ITEMS
+		WHERE order_item_id =
+		#{orderItemId}
+	</select>
+
+	<select id="findOrderItemListByOrderId" resultType="OrderItem"
+		parameterType="int">
+		SELECT * FROM
+		ORDER_ITEMS
+		WHERE order_id = #{orderId}
+	</select>
+
+
+	<select id="findOrderListBySearchCondition"
+		parameterType="Order" resultType="OrderSearchCondition">
+		SELECT * FROM ORDERS
+		WHERE 1 = 1
+		<if test="orderId!= null and orderId!= ''">
+			AND order_id LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="memberId!= null and memberId!= ''">
+			AND member_id LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="totalPrice != null and totalPrice!= ''">
+			AND total_price LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="orderDate != null and orderDate!= ''">
+			AND order_date LIKE '%' || #{orderDate} || '%'
+		</if>
+		<if test="orderStatus != null and orderStatus!= ''">
+			AND order_status = #{orderStatus}
+		</if>
+	</select>
+
+	<update id="modifyOrderItem" parameterType="OrderItem">
+		UPDATE ORDER_ITEMS
+		SET order_item_count = #{orderItemCount}
+		WHERE order_item_id =
+		#{orderItemId}
+
+	</update>
+
+	<update id="modifyTotalPrice" parameterType="int">
+		update orders
+		set total_price = (select sum(total_price)
+		from order_items
+		where order_id = #{orderId})
+		where order_id = #{orderId};
+	</update>
+	<delete id="modifyOrder" parameterType="Order">
+		DELETE FROM ORDER_ITEMS
+		WHERE order_item_id = #{orderItemId}
 	</delete>
 
 </mapper>

@@ -4,6 +4,9 @@ import java.util.List;
 
 import com.app.dto.mustEatPlace.MustEatPlace;
 import com.app.dto.mustEatPlace.MustEatPlaceSearchCondition;
+import com.app.dto.order.Order;
+import com.app.dto.order.OrderItem;
+import com.app.dto.order.OrderSearchCondition;
 import com.app.dto.postRecipe.PostRecipe;
 import com.app.dto.postRecipe.PostRecipeUpdateRecipeType;
 import com.app.dto.product.Product;
@@ -47,5 +50,16 @@ public interface AdminService {
 	public int modifyMustEatPlace(MustEatPlace mustEatPlace);
 	
 	public int removeMustEatPlace(int placeId);
+	
+//	주문 ===============================
+	public List<Order> findOrderList();
+	public List<OrderItem> findOrderItemListByMemberId(int memberId);
+	public OrderItem findOrderItemByMemberId(int orderItemId);
+	public List<Order> findOrderListBySearchCondition(OrderSearchCondition orderSearchCondition);
+	public OrderItem findOrderItemByOrderItemId(int orderItemId);
+	public List<OrderItem> findOrderItemListByOrderId(int orderId);
+	
+	public int modifyOrderItem(OrderItem orderItem);
+	public int modifyTotalPrice(int orderId);
 }
 

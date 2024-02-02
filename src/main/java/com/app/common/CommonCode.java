@@ -12,5 +12,11 @@ public interface CommonCode {
 	public String RECIPE_RECIPETYPE_ETC= "ETC";
 	
 	public String PRODUCT_PRODUCTTYPE_UTENSIL = "UTN";
-	public String PROEUCT_PRODUCTTYPE_FOOD = "FOOD";
+	public String PRODUCT_PRODUCTTYPE_FOOD = "FOOD";
+	
+	public String ORDER_ORDERSTATUS_ORDERED= "O";
+	public String ORDER_ORDERSTATUS_PAIED= "P";
+	public String ORDER_OPDERSTATUS_CANCELLED = "C";
+	
+	
 }

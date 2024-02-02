@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import com.app.dao.admin.AdminDAO;
 import com.app.dto.mustEatPlace.MustEatPlace;
 import com.app.dto.mustEatPlace.MustEatPlaceSearchCondition;
+import com.app.dto.order.Order;
+import com.app.dto.order.OrderItem;
+import com.app.dto.order.OrderSearchCondition;
 import com.app.dto.postRecipe.PostRecipe;
 import com.app.dto.postRecipe.PostRecipeUpdateRecipeType;
 import com.app.dto.product.Product;
@@ -223,6 +226,78 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		System.out.println("adminService removeMustEatPlace 불림");
 		int result  = adminDAO.removeMustEatPlace(placeId);
+		return result;
+	}
+
+//	주문 =================
+//	주문목록
+	@Override
+	public List<Order> findOrderList() {
+		// TODO Auto-generated method stub
+		System.out.println("adminService findOrderList 불림");
+		List<Order> orderList = adminDAO.findOrderList();
+		return orderList;
+	}
+
+//	회원번호로 주문 내역 조회
+	@Override
+	public List<OrderItem> findOrderItemListByMemberId(int memberId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminService findOrderItemListByMemberId 불림");
+		List<OrderItem> orderItemList = adminDAO.findOrderItemListByMemberId(memberId);
+		System.out.println("service :  " + orderItemList);
+		return orderItemList;
+	}
+
+//	주문 검색
+	@Override
+	public List<Order> findOrderListBySearchCondition(OrderSearchCondition orderSearchCondition) {
+		// TODO Auto-generated method stub
+		System.out.println("adminService findOrderListBySearchCondition 불림");
+		List<Order> orderList = adminDAO.findOrderListBySearchCondition(orderSearchCondition);
+		return orderList;
+	}
+//	개별 주문 정보 수정
+	@Override
+	public int modifyOrderItem(OrderItem orderItem) {
+		// TODO Auto-generated method stub
+		System.out.println("adminService modifyOrderItem 불림");
+		int result = adminDAO.modifyOrderItem(orderItem);
+		return result;
+	}
+//	개별주문번호로 히원찾기
+	@Override
+	public OrderItem findOrderItemByMemberId(int orderItemId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminService findOrderItemByMemberId 불림");
+		OrderItem orderItem = adminDAO.findOrderItemByMemberId(orderItemId);
+		return orderItem;
+	}
+
+//	개별주문번호로 개별주문 찾기
+	@Override
+	public OrderItem findOrderItemByOrderItemId(int orderItemId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminService findOrderItemByOrderItemId 불림");
+		OrderItem orderItem = adminDAO.findOrderItemByOrderItemId(orderItemId);
+		return orderItem;
+	}
+
+//	전체주문번호로 주문 목록 조회
+	@Override
+	public List<OrderItem> findOrderItemListByOrderId(int orderId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminService findOrderItemListByOrderId 불림");
+		List<OrderItem> orderItemList = adminDAO.findOrderItemListByOrderId(orderId);
+		return orderItemList;
+	}
+
+//	총가격 변동
+	@Override
+	public int modifyTotalPrice(int orderId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminService modifyTotalPrice 불림");
+		int result = adminDAO.modifyTotalPrice(orderId);
 		return result;
 	}
 
