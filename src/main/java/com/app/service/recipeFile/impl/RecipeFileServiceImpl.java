@@ -3,15 +3,15 @@ package com.app.service.recipeFile.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.app.dao.recipeFile.recipeFileDAO;
+import com.app.dao.recipeFile.RecipeFileDAO;
 import com.app.dto.util.RecipeFileInfo;
-import com.app.service.recipeFile.recipeFileService;
+import com.app.service.recipeFile.RecipeFileService;
 
 @Service
-public class recipeFileServiceImpl implements recipeFileService{
+public class RecipeFileServiceImpl implements RecipeFileService{
 	
 	@Autowired
-	recipeFileDAO recipeFileDAO;
+	RecipeFileDAO recipeFileDAO;
 
 	@Override
 	public int saveRecipeFileInfo(RecipeFileInfo recipeFileInfo) {
@@ -27,6 +27,13 @@ public class recipeFileServiceImpl implements recipeFileService{
 		// TODO Auto-generated method stub
 		RecipeFileInfo recipeFileInfo = recipeFileDAO.findRecipeFileInfoByFileName(fileName);
 		return recipeFileInfo;
+	}
+
+	@Override
+	public RecipeFileInfo findRecipeFileInfoByFileId(int fileId) {
+		// TODO Auto-generated method stub
+		RecipeFileInfo recipeInfo = recipeFileDAO.findRecipeFileInfoByFileId(fileId);
+		return recipeInfo;
 	}
 
 }

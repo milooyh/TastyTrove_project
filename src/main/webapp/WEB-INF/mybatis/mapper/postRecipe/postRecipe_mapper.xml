@@ -3,8 +3,16 @@
 <mapper namespace="postRecipe_mapper">
 
 	<insert id="saveRecipePost" parameterType="com.app.dto.postRecipe.PostRecipe">
-		INSERT INTO recipe_board VALUES(NVL((SELECT MAX(recipe_id) + 1 FROM recipe_board),1), #{recipeTitle}, #{recipeContent}, #{memberId}, to_char(sysdate,'YYYY-MM-DD HH24:MI:SS'), #{recipeType})
+		INSERT INTO recipe_board VALUES(NVL((SELECT MAX(recipe_id) + 1 FROM recipe_board),1), 
+		#{recipeTitle}, #{recipeContent}, #{memberId}, to_char(sysdate,'YYYY-MM-DD HH24:MI:SS'), 
+		#{recipeType}, #{recipeFileId})
 	</insert>
+	
+	<select id="findRecipeInfoById" parameterType="Integer" resultType="PostRecipe">
+		SELECT *
+		FROM RECIPE_BOARD
+		WHERE recipe_id = #{recipeId}
+	</select>
 
 
 </mapper>

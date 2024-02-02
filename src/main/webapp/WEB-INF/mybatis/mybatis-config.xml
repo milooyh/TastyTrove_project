@@ -6,8 +6,6 @@
 
 <configuration>
 
-
-
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true"/>	
 	</settings>
@@ -23,6 +21,7 @@
 	</typeAliases> -->
 		<typeAlias type="com.app.dto.postRecipe.PostRecipe" alias="PostRecipe"/>
 		<typeAlias type="com.app.dto.util.RecipeFileInfo" alias="RecipeFileInfo"/>
+		<typeAlias type="com.app.dto.postRecipe.RecipeImage" alias="RecipeImage"/>
 	</typeAliases>
 
 

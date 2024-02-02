@@ -10,4 +10,5 @@ public class PostRecipe {
    String memberId;
    String boardDate;
    String recipeType;
+   int recipeFileId;
 }

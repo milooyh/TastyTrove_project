@@ -4,11 +4,11 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.app.dao.recipeFile.recipeFileDAO;
+import com.app.dao.recipeFile.RecipeFileDAO;
 import com.app.dto.util.RecipeFileInfo;
 
 @Repository
-public class recipeFileDAOImpl implements recipeFileDAO{
+public class RecipeFileDAOImpl implements RecipeFileDAO{
 
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate;
@@ -26,6 +26,13 @@ public class recipeFileDAOImpl implements recipeFileDAO{
 		// TODO Auto-generated method stub
 		RecipeFileInfo recipeFileInfo = sqlSessionTemplate.selectOne("recipeFile_mapper.findRecipeFileInfoByFileName", fileName);
 		return recipeFileInfo;
+	}
+
+	@Override
+	public RecipeFileInfo findRecipeFileInfoByFileId(int fileId) {
+		// TODO Auto-generated method stub
+		RecipeFileInfo recipeInfo = sqlSessionTemplate.selectOne("recipeFile_mapper.findRecipeFileInfoByFileId", fileId);
+		return recipeInfo;
 	}
 
 }

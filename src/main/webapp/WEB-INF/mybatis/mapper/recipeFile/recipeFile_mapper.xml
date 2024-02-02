@@ -13,6 +13,12 @@
 		FROM RECIPE_FILE_INFO
 		WHERE recipe_file_name = #{recipeFileName}
 	</select>
+	
+	<select id="findRecipeFileInfoByFileId" parameterType="Integer" resultType="RecipeFileInfo">
+		SELECT * 
+		FROM RECIPE_FILE_INFO
+		WHERE recipe_file_id = #{recipeFileId}
+	</select>
 
 
 </mapper>
