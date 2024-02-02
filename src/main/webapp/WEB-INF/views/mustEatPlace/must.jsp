@@ -15,7 +15,7 @@
             height:100%;
             background-color: rgba(0,0,0,0.4);
         }
-        
+
         .modal_body{
             position:absolute;
         	margin-top:50px;
@@ -32,10 +32,11 @@
         .add_mustEatPlace {
             margin-top: 10px;
         	width: 500px;
-        	heigt: 400px;
+        	heigt: 420px;
         	border: 1px solid black;
         	display:flex;
             border-radius: 5px;
+            margin-left:10%;
         }
         
         #map {
@@ -47,8 +48,9 @@
         input {
             border-radius: 5px;
             border: 1.5px solid black;
-            margin: 5px;
-            padding: 5px;
+            margin: 12px;
+            padding: 10px;
+
         }
 
         .button {
@@ -58,6 +60,11 @@
             font-weight: bold;
             padding: 5px;
         }
+
+        #map_add {
+            display: flex;
+        }
+        
 	</style>
 	
 <meta charset="UTF-8">
@@ -66,40 +73,47 @@
 <body>
 
 	<h1>나만의 맛집을 등록하세요</h1>
-	
+	<div id="map_add">
 	<div id="map" style="width:40%;height:400px;"></div>
 
     <!-- 주소를 입력받는 폼 -->
     
     <div class="add_mustEatPlace">
     <form id="addressForm" action="" method="post">
+    	<h3>나만의 맛집을 추가해 보세요</h3>
         <input type="text" id="address" name="place" required placeholder="주소입력">   
         <input type="button" onclick="search_address()" value="주소 검색" class="button"><br>
         <input type="text" id="nickname" name="restaurant_name" required placeholder="식당이름"><br>
         <input type="text" id="review" name="review" required placeholder="한줄평"><br>  
-        <input type="number" id="asterion" name="asterion" required placeholder="제 점수는요"><br> 
+        <input type="number" id="asterion" name="asterion" required placeholder="제 점수는요(1~5)"><br> 
         <input type="text" id="telephone_number" name="telephone_number" required placeholder="전화번호"><br>
         <input type="text" id="representative_menu" name="representative_menu" required placeholder="대표메뉴">
         <button type="submit" id="addBtn" disabled='disabled' class="button">추가하기</button>
     </form>
     </div>
-    
+</div>
 	
     <table>
         <tr>
+            <th>Restaurant</th>
             <th>Address</th>
-            <th>restaurant</th>
             <th>Riview</th>
             <th>Rating</th>
         </tr>
 		<c:forEach var="mustEatPlaceItem" items="${mustEatPlaces}">
             <tr>
-			<td><span>${mustEatPlaceItem.place}</span></td>
-			<td><span>${mustEatPlaceItem.restaurant_name}</span></td>
+            <td><span>${mustEatPlaceItem.restaurant_name}</span></td>
+            <td><span>${mustEatPlaceItem.place}</span></td>
 			<td><span>${mustEatPlaceItem.review}</span></td>
 			<td><span>${mustEatPlaceItem.asterion}</span></td>
+			<td><button onclick="removeMustEatPlace(${mustEatPlaceItem.id})">삭제</button></td>
+			<td><button onclick="location.href='/must/modify?id=${mustEatPlaceItem.id}'">수정</button></td>
         </tr>
 		</c:forEach>
+		
+		<%-- <c:forEach var="mustEatPlaceWithMenuItem" items="${mustEatPlaceWithMenu}">
+			<p>${mustEatPlaceWithMenuItem.id} : ${mustEatPlaceWithMenuItem.menu_name}, ${mustEatPlaceWithMenuItem.price}</p>
+		</c:forEach> --%>
 	</table>
 
 	<div class="modal">
@@ -114,14 +128,8 @@
         </div>
     </div>
     
-    
-    
- 
-    
-    <script type="text/javascript"
-src="//dapi.kakao.com/v2/maps/sdk.js?appkey=81e105f34368d7fc3ec8c1db571a19ad&libraries=services,clusterer"></script>
-		
-	
+       
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=81e105f34368d7fc3ec8c1db571a19ad&libraries=services,clusterer"></script>
 		
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	
@@ -129,6 +137,31 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=81e105f34368d7fc3ec8c1db571a19ad&lib
 	
 	<script>
 	
+	let findMustEatPlaceWithMenu=[];
+	
+	</script>
+	
+	<c:forEach var="mustEatPlaceWithMenuItem" items="${mustEatPlaceWithMenu}">
+    <script>
+        findMustEatPlaceWithMenu.push({
+            id: '<c:out value="${mustEatPlaceWithMenuItem.id}" />',
+            menu_name: '<c:out value="${mustEatPlaceWithMenuItem.menu_name}" />',
+            price: '<c:out value="${mustEatPlaceWithMenuItem.price}" />'
+        });
+    </script>
+</c:forEach>
+
+	<script>
+	
+	function removeMustEatPlace(id){
+		if(confirm("정말 삭제하시겠습니까?")){
+			//확인을 눌렀다
+			console.log('삭제 확인 누름');
+			console.log('넘어온 id 값 : ' + id);
+			location.href='/must/remove?id=' + id;
+		}	
+		//취소 누르면 아무것도 안함
+	}
 	</script>
 	
 	<script>
@@ -186,55 +219,6 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=81e105f34368d7fc3ec8c1db571a19ad&lib
     }
 </script>
     
-    
-    
-    <%-- <c:forEach var="mustEatPlaceItem" items="${mustEatPlaces}">
-    	<script>
-    	
-        var geocoder = new kakao.maps.services.Geocoder();
-
-        // 주소로 좌표를 검색하고, 마커를 표시합니다.
-        geocoder.addressSearch('<c:out value="${mustEatPlaceItem.place}" />', function(result, status) {
-            if (status === kakao.maps.services.Status.OK) {
-                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-                // 마커 이미지의 이미지 주소입니다
-                var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-
-                // 마커 이미지의 이미지 크기 입니다
-                var imageSize = new kakao.maps.Size(24, 35);
-
-                // 마커 이미지를 생성합니다    
-                var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-                
-                var iwContent = '<div style="width:150px;text-align:center;padding:6px 0;">' + '${mustEatPlaceItem.restaurant_name}' + '<br><button class="btn-open-modal">정보보기</button></div>'
-
-                // 마커를 생성하고 지도에 표시합니다
-                var marker = new kakao.maps.Marker({
-                    map: map, // 마커를 표시할 지도
-                    position: coords, // 마커를 표시할 위치
-                    title: '<c:out value="${mustEatPlaceItem.restaurant_name}" />', // 마커의 타이틀
-                    image: markerImage // 마커 이미지
-                });
-                
-                var infowindow = new kakao.maps.InfoWindow({
-                	map: map,
-                    position: coords,
-                    content: iwContent
-                });
-                infowindow.open(map, marker);
-                
-                markers.push(marker);
-                
-            } else {
-                console.error('주소를 변환할 수 없습니당.');
-            }
-        });
-        
-        
-	    </script>
-	</c:forEach> --%>
-	
 <script>
 
 var clusterer = new kakao.maps.MarkerClusterer({
@@ -244,6 +228,7 @@ var clusterer = new kakao.maps.MarkerClusterer({
 });
 
 var markers = [];
+
 
 </script>
 
@@ -275,7 +260,8 @@ var markers = [];
                 '\'<c:out value="${mustEatPlaceItem.review}" />\',' +
                 '\'<c:out value="${mustEatPlaceItem.telephone_number}" />\',' +
                 '\'<c:out value="${mustEatPlaceItem.representative_menu}" />\',' +
-                '\'<c:out value="${mustEatPlaceItem.asterion}" />\')">정보보기</button></div>';
+                '\'<c:out value="${mustEatPlaceItem.asterion}" />\',' +
+                '\'<c:out value="${mustEatPlaceItem.id}" />\')">정보보기</button></div>';
                 iwRemoveable = true;
 
                 // 마커를 생성하고 지도에 표시합니다
@@ -313,21 +299,34 @@ var markers = [];
 </c:forEach>
 
 	<script>
-	function openModal(name, place, review, telephone_number, representative_menu, asterion) {
-        // 모달 열고 데이터 표시
-        const modal = document.querySelector('.modal');
-        const modalBody = document.querySelector('.modal_body');
+	function openModal(name, place, review, telephone_number, representative_menu, asterion, id) {
+	    const modal = document.querySelector('.modal');
+	    const modalBody = document.querySelector('.modal_body');
 
-        modalBody.innerHTML = '<span style="margin-left:15px; cursor:pointer; float:right;" onclick="closeModal()">✖</span>' +
-            '<h2>' + name + '</h2>' +
-            '<p>' + place + '</p>' +
-            '<p>' + review + '</p>' +
-            '<p>' + telephone_number + '</p>' +
-            '<p>' + representative_menu + '</p>' +
-            '<p>' + getStarRating(asterion) + '</p>';
+	    // id에 해당하는 모든 메뉴 정보 가져오기
+	    var menuInfos = findMustEatPlaceWithMenu.filter(function(item) {
+	        return item.id === id;
+	    });
 
-        modal.style.display = "flex";
-    }
+	    modalBody.innerHTML = '<span style="margin-left:15px; cursor:pointer; float:right;" onclick="closeModal()">✖</span>' +
+	        '<h2>' + name + '</h2>' +
+	        '<p>' + place + '</p>' +
+	        '<p>' + review + '</p>' +
+	        '<p>' + telephone_number + '</p>' +
+	        '<p>' + representative_menu + '</p>' +
+	        '<p>' + getStarRating(asterion) + '</p>' + 
+	        '<p>'+'=============메뉴============='+ '</p>';
+
+	 // 모든 메뉴 정보 출력
+	    menuInfos.forEach(function(menuInfo) {
+	        modalBody.innerHTML += '<p>' + menuInfo.menu_name + ', 가격: ' + menuInfo.price + '</p>';
+	    });
+
+	    modalBody.innerHTML += '<p>'+'============================'+ '</p>';
+
+	    modal.style.display = "flex";
+	}
+
 	
 	function getStarRating(asterion) {
         let stars = '';
@@ -341,14 +340,49 @@ var markers = [];
         return stars;
     }
 
-
     function closeModal() {
         // 모달 닫기
         const modal = document.querySelector('.modal');
         modal.style.display = "none";
     }
     </script>
-	
-	
+    
+	<script>
+	document.addEventListener("DOMContentLoaded", function () {
+        var tableRows = document.querySelectorAll('table tr');
+
+        tableRows.forEach(function (row) {
+            row.addEventListener('click', function () {
+                // 클릭된 행에 'selected' 클래스를 추가하거나 제거
+                this.classList.toggle('selected');
+
+                // 클릭된 행의 주소 가져오기
+                var address = this.querySelector('td:nth-child(2) span').innerText;
+
+                // 주소로 좌표를 검색하고, 해당 좌표로 지도 이동
+                geocoder.addressSearch(address, function (results, status) {
+                    if (status === daum.maps.services.Status.OK) {
+                        var result = results[0];
+                        var coords = new daum.maps.LatLng(result.y, result.x);
+
+                        map.panTo(coords); // 지도를 클릭된 주소의 좌표로 이동
+                    }
+                });
+            });
+        });
+    });
+
+    function moveToLocation(address) {
+        // 주소로 좌표를 검색하고, 해당 좌표로 지도 이동
+        geocoder.addressSearch(address, function (results, status) {
+            if (status === daum.maps.services.Status.OK) {
+                var result = results[0];
+                var coords = new daum.maps.LatLng(result.y, result.x);
+
+                map.panTo(coords); // 지도를 클릭된 주소의 좌표로 이동
+            }
+        });
+    }
+</script>
 </body>
 </html>
