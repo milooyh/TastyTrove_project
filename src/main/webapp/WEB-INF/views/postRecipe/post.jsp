@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>레시피 등록</title>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
 	integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
@@ -17,7 +17,7 @@
 <body>
 	<h1>레시피 등록 화면</h1>
 	<!-- 임시작성 -->
-	<form action="/recipe/post" method="post" enctype="multipart/form-data">
+	<form action="" method="post" enctype="multipart/form-data">
 		작성자 <input type="text" name="memberId"> 
 		제목 <input type="text"name="recipeTitle"> 
 		카테고리 <select id="category" name="recipeType">
@@ -34,7 +34,7 @@
 		
 
 		<button>등록</button>
-		<button>취소</button>
+		<button type="button" onclick='postCancle()'>취소</button>
 	</form>
 
 	<script>
@@ -46,53 +46,12 @@
 					maxHeight : null, // 최대 높이
 					focus : true, // 에디터 로딩후 포커스를 맞출지 여부
 					lang : "ko-KR", // 한글 설정
-					placeholder : '레시피를 작성하고 공유해보세요!', //placeholder 설정
-// 					callbacks : { //여기 부분이 이미지를 첨부하는 부분
-// 						onImageUpload : function(files) {
-// 							uploadSummernoteImageFile(files[0], this);
-// 						},
-// 						onPaste : function(e) {
-// 							var clipboardData = e.originalEvent.clipboardData;
-// 							if (clipboardData && clipboardData.items
-// 									&& clipboardData.items.length) {
-// 								var item = clipboardData.items[0];
-// 								if (item.kind === 'file'
-// 										&& item.type.indexOf('image/') !== -1) {
-// 									e.preventDefault();
-// 								}
-// 							}
-// 						}
-// 					}
+					placeholder : '자신의 레시피를 작성하고 공유해보세요!', //placeholder 설정
 				});
-		
-// 		$("div.note-editable").on('drop',function(e){
-// 	         for(i=0; i< e.originalEvent.dataTransfer.files.length; i++){
-// 	         	uploadSummernoteImageFile(e.originalEvent.dataTransfer.files[i],$("#summernote")[0]);
-// 	         }
-// 	        e.preventDefault();
-// 	   })
+		function postCancle(){
+			location.href = "/recipe"
+		}
 
-// 		/*
-// 		 * 이미지 파일 업로드
-// 		 */
-// 		function uploadSummernoteImageFile(file, editor) {
-// 			data = new FormData();
-// 			data.append("file", file);
-// 			$.ajax({
-// 				data : data,
-// 				type : "POST",
-// 				//url : "/uploadSummernoteImageFile",
-// 				url : "/fileStorage",
-// 				contentType : false,
-// 				processData : false,
-// 				enctype : 'multipart/form-data',///
-// 				success : function(data) {
-// 					//항상 업로드된 파일의 url이 있어야 한다.
-// 					$(editor).summernote('insertImage', data.url);
-// 					alert(data.url);
-// 				}
-// 			});
-// 		}
 	</script>
 </body>
 </html>

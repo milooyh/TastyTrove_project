@@ -11,4 +11,6 @@ public class PostRecipe {
    String boardDate;
    String recipeType;
    int recipeFileId;
+   String recipeFileName;
+   String recipeFilePath;
 }

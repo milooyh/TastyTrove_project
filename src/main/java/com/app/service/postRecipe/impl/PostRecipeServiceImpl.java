@@ -1,5 +1,7 @@
 package com.app.service.postRecipe.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +38,13 @@ public class PostRecipeServiceImpl implements PostRecipeService {
 		// TODO Auto-generated method stub
 		PostRecipe recipe = postRecipeDAO.findRecipeInfoById(id);
 		return recipe;
+	}
+
+	@Override
+	public List<PostRecipe> findRecipeList() {
+		// TODO Auto-generated method stub
+		List<PostRecipe> recipeList = postRecipeDAO.findRecipeList();
+		return recipeList;
 	}
 
 }

@@ -1,19 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-
+<title>레시피 목록</title>
 </head>
 <body>
-	<div> ${recipeTitle}</div>
-	<div> ${memberId}</div>
-	<div> ${boardDate}</div>
-	<div> ${recipeType}</div>
-	<div> ${recipeContent}</div>
-	<img src="${fullRecipeFilePath}">
-	
+	<h1>레시피 목록</h1>
+	<form action="/recipe" method="post">
+		<button type="submit">레시피 등록하기</button>
+	</form>
+	<div>
+		<c:forEach var="recipeItem" items="${recipeList}">
+			<div>
+				<a href="/recipe/recipeInfo?id=${recipeItem.recipeId}">
+				<img src="${recipeItem.recipeFilePath}${recipeItem.recipeFileName}" width="300px" height="300px"> <br>		
+				${recipeItem.recipeTitle}</a>
+			</div>
+		</c:forEach>
+	</div>
 </body>
 </html>

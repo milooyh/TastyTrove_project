@@ -1,10 +1,12 @@
 package com.app.controller.postRecipe;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -72,12 +74,26 @@ public class PostRecipeController {
 			System.out.println("catch2 발생");
 		}
 
-		return "redirect:/";
+		return "redirect:/recipe";
 
 	}
+	
+	//레시피 리스트
+	@GetMapping("/recipe")
+	public String recipeList(Model model) {
+		List<PostRecipe> recipeList = postRecipeService.findRecipeList();
+		model.addAttribute("recipeList", recipeList);
+		
+		return "recipe/recipe";
+	}
+	
+	@PostMapping("/recipe")
+	public String postRecipe() {
+		return "redirect:/recipe/post";
+	}
 
-	// 레세피 상세
-	@RequestMapping("/recipe")
+	// 레시피 상세
+	@RequestMapping("/recipe/recipeInfo")
 	public String recipeInfo(@RequestParam int id, Model model) {
 
 		PostRecipe recipe = postRecipeService.findRecipeInfoById(id);
@@ -95,7 +111,7 @@ public class PostRecipeController {
 		model.addAttribute("boardDate", recipe.getBoardDate());
 		model.addAttribute("fullRecipeFilePath", fullRecipeFilePath);
 
-		return "/recipe/recipe";
+		return "recipe/recipeInfo";
 	}
 
 }
