@@ -3,6 +3,9 @@ package com.app.controller.postRecipe;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.app.dto.postRecipe.PostRecipe;
 import com.app.dto.postRecipe.RecipeImageRequestFrom;
+import com.app.dto.postRecipe.RecipeSearchCondition;
 import com.app.dto.util.RecipeFileInfo;
 import com.app.service.postRecipe.PostRecipeService;
 import com.app.service.recipeFile.RecipeFileService;
@@ -41,6 +45,8 @@ public class PostRecipeController {
 	// 이미지 1장 저장
 	@PostMapping("/recipe/post")
 	public String saveRecipePostProcess(RecipeImageRequestFrom requestForm, @ModelAttribute PostRecipe recipe) {
+		
+		
 		System.out.println(requestForm);
 		//파일첨부 안하면 등록 페이지로 이동
 		//스크립트로 파일 없을 시 경고 창 뜨게끔 구현 고려
@@ -78,14 +84,29 @@ public class PostRecipeController {
 
 	}
 	
-	//레시피 리스트
+//	//레시피 리스트
+//	@GetMapping("/recipe")
+//	public String recipeList(Model model) {
+//		List<PostRecipe> recipeList = postRecipeService.findRecipeList();
+//		model.addAttribute("recipeList", recipeList);
+//		
+//		return "recipe/recipe";
+//	}
+	
+	//검색기능 추가된 레시피 리스트
 	@GetMapping("/recipe")
-	public String recipeList(Model model) {
-		List<PostRecipe> recipeList = postRecipeService.findRecipeList();
+	public String recipeList (Model model, RecipeSearchCondition recipeSearchCondition) {
+		System.out.println(recipeSearchCondition);
+		
+		List<PostRecipe> recipeList = postRecipeService.findRecipeListBySearchCondition(recipeSearchCondition);
+		
 		model.addAttribute("recipeList", recipeList);
 		
 		return "recipe/recipe";
+		
 	}
+	
+	
 	
 	@PostMapping("/recipe")
 	public String postRecipe() {

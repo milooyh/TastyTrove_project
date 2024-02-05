@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.app.dao.postRecipe.PostRecipeDAO;
 import com.app.dto.postRecipe.PostRecipe;
 import com.app.dto.postRecipe.RecipeImage;
+import com.app.dto.postRecipe.RecipeSearchCondition;
 import com.app.service.postRecipe.PostRecipeService;
 
 @Service
@@ -44,6 +45,13 @@ public class PostRecipeServiceImpl implements PostRecipeService {
 	public List<PostRecipe> findRecipeList() {
 		// TODO Auto-generated method stub
 		List<PostRecipe> recipeList = postRecipeDAO.findRecipeList();
+		return recipeList;
+	}
+
+	@Override
+	public List<PostRecipe> findRecipeListBySearchCondition(RecipeSearchCondition recipeSearchCondition) {
+		// TODO Auto-generated method stub
+		List<PostRecipe> recipeList = postRecipeDAO.findRecipeListBySearchCondition(recipeSearchCondition);
 		return recipeList;
 	}
 

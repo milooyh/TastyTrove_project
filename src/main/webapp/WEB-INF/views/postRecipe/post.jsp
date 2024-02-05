@@ -15,10 +15,15 @@
 <link rel="stylesheet" href="/summernote/summernote-lite.css">
 </head>
 <body>
+<%
+	String member = (String)session.getAttribute("memberId");
+	System.out.println(member);
+%>
+
 	<h1>레시피 등록 화면</h1>
 	<!-- 임시작성 -->
 	<form action="" method="post" enctype="multipart/form-data">
-		작성자 <input type="text" name="memberId"> 
+		작성자 <input type="text" name="memberId"  value="<%=member %>"> 
 		제목 <input type="text"name="recipeTitle"> 
 		카테고리 <select id="category" name="recipeType">
 			<option name="category" value="KOR">한식</option>

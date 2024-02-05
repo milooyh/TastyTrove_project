@@ -14,9 +14,21 @@
 		WHERE recipe_id = #{recipeId}
 	</select>
 	
-	<select id="findRecipeList" resultType="PostRecipe">
+<!-- 	<select id="findRecipeList" resultType="PostRecipe"> -->
+<!-- 		SELECT * FROM recipe_board r, recipe_file_info i -->
+<!-- 		WHERE r.recipe_file_id = i.recipe_file_id -->
+<!-- 	</select> -->
+	
+	<select id = "findRecipeListBySearchCondition" resultType="PostRecipe" parameterType="RecipeSearchCondition">
 		SELECT * FROM recipe_board r, recipe_file_info i
-		WHERE r.recipe_file_id = i.recipe_file_id
+		WHERE 1=1
+		AND r.recipe_file_id = i.recipe_file_id
+		<if test="recipeType != null and recipeType != ''">
+			AND r.recipe_type = #{recipeType}
+		</if>
+		<if test="searchKeyword != null and searchKeyword != ''">
+			AND r.recipe_title LIKE '%'||#{searchKeyword}||'%'
+		</if>
 	</select>
 
 

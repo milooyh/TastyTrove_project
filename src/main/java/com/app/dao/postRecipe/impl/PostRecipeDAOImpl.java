@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.app.dao.postRecipe.PostRecipeDAO;
 import com.app.dto.postRecipe.PostRecipe;
 import com.app.dto.postRecipe.RecipeImage;
+import com.app.dto.postRecipe.RecipeSearchCondition;
 
 
 @Repository
@@ -53,6 +54,15 @@ public class PostRecipeDAOImpl implements PostRecipeDAO {
 		
 		List<PostRecipe> recipeList = sqlSessionTemplate.selectList("postRecipe_mapper.findRecipeList");
 		
+		return recipeList;
+	}
+
+
+	@Override
+	public List<PostRecipe> findRecipeListBySearchCondition(RecipeSearchCondition recipeSearchCondition) {
+		// TODO Auto-generated method stub
+		
+		List<PostRecipe> recipeList = sqlSessionTemplate.selectList("postRecipe_mapper.findRecipeListBySearchCondition", recipeSearchCondition);
 		return recipeList;
 	}
 
