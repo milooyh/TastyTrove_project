@@ -12,6 +12,7 @@
     
     <form:form method="post" action="/admin/order/orderitem/update">
     <input type="hidden" name="orderItemId" value="${orderItem.orderItemId}" />
+    <input type="hidden" name="orderId" value="${orderItem.orderId}" />
     <label for="orderItemCount">주문개수:</label>
     <input type="text" id="orderItemCount" name="orderItemCount" value="${orderItem.orderItemCount}" /><br>
     <input type="submit" value="수정" />

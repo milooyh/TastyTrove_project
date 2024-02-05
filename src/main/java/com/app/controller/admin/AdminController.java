@@ -22,6 +22,7 @@ import com.app.dto.mustEatPlace.MustEatPlaceSearchCondition;
 import com.app.dto.order.Order;
 import com.app.dto.order.OrderItem;
 import com.app.dto.order.OrderSearchCondition;
+import com.app.dto.payment.Payment;
 import com.app.dto.postRecipe.PostRecipe;
 import com.app.dto.postRecipe.PostRecipeUpdateRecipeType;
 import com.app.dto.product.Product;
@@ -411,16 +412,16 @@ public class AdminController {
 		return "/admin/adminOrder/orderItems";
 
 	}
-	
+
 	@GetMapping("/order/orders")
 	public String findOrderListByOrderId(@RequestParam String orderId, Model model, OrderItem orderItem) {
 		System.out.println("adminController 전체주문번호 누르면 나오는 페이지 ㅜㅜ");
 		int intOrderId = Integer.parseInt(orderId);
 		orderItem.setOrderId(intOrderId);
-		
+
 		List<OrderItem> orderItemList = adminService.findOrderItemListByOrderId(intOrderId);
 		model.addAttribute("orderItemList", orderItemList);
-		
+
 		return "/admin/adminOrder/order";
 	}
 
@@ -448,20 +449,26 @@ public class AdminController {
 	}
 
 	@PostMapping("/order/orderitem/update")
-	public String modifyOrderItemProcess(@RequestParam String orderItemCount, @RequestParam String orderItemId) {
+	public String modifyOrderItemProcess(@RequestParam String orderItemCount, @RequestParam String orderItemId,
+			@RequestParam String orderId, OrderItem orderItem) {
 		System.out.println("adminController modifyOrderItemProc 불림");
 
+		System.out.println("orderItemId : " + orderItemId + "orderItemCount : " + orderItemCount + "orderId :" +  orderId);
+		
 		int intOrderItemCount = Integer.parseInt(orderItemCount);
 		int intOrderItemId = Integer.parseInt(orderItemId);
+		int intOrderId = Integer.parseInt(orderId);
 
-		OrderItem orderItem = new OrderItem();
 		orderItem.setOrderItemId(intOrderItemId);
 		orderItem.setOrderItemCount(intOrderItemCount);
+		orderItem.setOrderId(intOrderId);
 
 		System.out.println("!!!!!!!!!!!!!!" + orderItem);
 
-		int result = adminService.modifyOrderItem(orderItem);
-		if (result > 0) {
+		int result1 = adminService.modifyOrderItem(orderItem);
+		int result2 = adminService.modifyTotalPrice(intOrderId);
+		
+		if (result1 > 0 && result2 > 0) {
 			System.out.println("개별 주문 수정 성공");
 			return "redirect:/admin/order";
 		} else {
@@ -469,5 +476,16 @@ public class AdminController {
 			return "/admin/order/orderitem/update";
 		}
 	}
+	
+//	결제=============================
+	@GetMapping("/payment")
+	public String findPaymentList(Model model) {
+		List<Payment> paymentList = adminService.findPaymentList();
+		model.addAttribute("paymentList", paymentList);
+		
+		return "/admin/adminPayment/adminPayment";
+	}
+	
+	
 
 }

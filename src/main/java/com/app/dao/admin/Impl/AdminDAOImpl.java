@@ -12,6 +12,7 @@ import com.app.dto.mustEatPlace.MustEatPlaceSearchCondition;
 import com.app.dto.order.Order;
 import com.app.dto.order.OrderItem;
 import com.app.dto.order.OrderSearchCondition;
+import com.app.dto.payment.Payment;
 import com.app.dto.postRecipe.PostRecipe;
 import com.app.dto.postRecipe.PostRecipeUpdateRecipeType;
 import com.app.dto.product.Product;
@@ -308,13 +309,23 @@ public class AdminDAOImpl implements AdminDAO {
 		return orderItemList;
 	}
 
-//	총가겨반영
+//	총계반영
 	@Override
 	public int modifyTotalPrice(int orderId) {
 		// TODO Auto-generated method stub
 		System.out.println("adminDAO modifyTotalPrice 불림");
 		int result = sqlSessionTemplate.update("admin_mapper.modifyTotalPrice", orderId);
 		return result;
+	}
+
+//	결제 ====================================
+//	결제목록조회
+	@Override
+	public List<Payment> findPaymentList() {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findPaymentList 불림");
+		List<Payment> paymentList = sqlSessionTemplate.selectList("admin_mapper.findPaymentList");
+		return paymentList;
 	}
 
 }

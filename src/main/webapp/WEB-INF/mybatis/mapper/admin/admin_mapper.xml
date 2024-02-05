@@ -288,11 +288,18 @@
 		set total_price = (select sum(total_price)
 		from order_items
 		where order_id = #{orderId})
-		where order_id = #{orderId};
+		where order_id = #{orderId}
 	</update>
 	<delete id="modifyOrder" parameterType="Order">
 		DELETE FROM ORDER_ITEMS
 		WHERE order_item_id = #{orderItemId}
 	</delete>
+	
+	<!--결제 정보 찾기 ================================================================ -->
+	<select id="findPaymentList" resultType="Payment">
+		SELECT * FROM
+		PAYMENTS
+		ORDER BY payment_id
+	</select>
 
 </mapper>

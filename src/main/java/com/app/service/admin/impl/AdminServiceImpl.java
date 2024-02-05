@@ -11,6 +11,7 @@ import com.app.dto.mustEatPlace.MustEatPlaceSearchCondition;
 import com.app.dto.order.Order;
 import com.app.dto.order.OrderItem;
 import com.app.dto.order.OrderSearchCondition;
+import com.app.dto.payment.Payment;
 import com.app.dto.postRecipe.PostRecipe;
 import com.app.dto.postRecipe.PostRecipeUpdateRecipeType;
 import com.app.dto.product.Product;
@@ -292,13 +293,23 @@ public class AdminServiceImpl implements AdminService {
 		return orderItemList;
 	}
 
-//	총가격 변동
+//	총계 변동
 	@Override
 	public int modifyTotalPrice(int orderId) {
 		// TODO Auto-generated method stub
 		System.out.println("adminService modifyTotalPrice 불림");
 		int result = adminDAO.modifyTotalPrice(orderId);
 		return result;
+	}
+
+//	결제 ===============
+//	결제목록조회
+	@Override
+	public List<Payment> findPaymentList() {
+		// TODO Auto-generated method stub
+		System.out.println("adminService findPaymentList 불림");
+		List<Payment> paymentList = adminDAO.findPaymentList();
+		return paymentList;
 	}
 
 }

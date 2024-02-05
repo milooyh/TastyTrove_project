@@ -36,6 +36,7 @@
 		<typeAlias type="com.app.dto.order.Order" alias="Order"></typeAlias>
 		<typeAlias type="com.app.dto.order.OrderItem" alias="OrderItem"></typeAlias>
 		<typeAlias type="com.app.dto.order.OrderSearchCondition" alias="OrderSearchCondition"></typeAlias>
+		<typeAlias type="com.app.dto.payment.Payment" alias="Payment"></typeAlias>
 	</typeAliases> 
 
 
