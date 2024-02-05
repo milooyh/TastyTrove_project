@@ -17,12 +17,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.app.common.CommonCode;
+import com.app.dto.delivery.Delivery;
 import com.app.dto.mustEatPlace.MustEatPlace;
 import com.app.dto.mustEatPlace.MustEatPlaceSearchCondition;
 import com.app.dto.order.Order;
 import com.app.dto.order.OrderItem;
 import com.app.dto.order.OrderSearchCondition;
 import com.app.dto.payment.Payment;
+import com.app.dto.payment.PaymentSearchCondition;
 import com.app.dto.postRecipe.PostRecipe;
 import com.app.dto.postRecipe.PostRecipeUpdateRecipeType;
 import com.app.dto.product.Product;
@@ -486,6 +488,21 @@ public class AdminController {
 		return "/admin/adminPayment/adminPayment";
 	}
 	
+	@GetMapping("/payment/search")
+	public String findPaymentListBySearchCondition(PaymentSearchCondition paymentSearchCondition, Model model) {
+		List<Payment> paymentList = adminService.findPaymentListBySearchCondition(paymentSearchCondition);
+		model.addAttribute("paymentList", paymentList);
+		
+		return "/admin/adminPayment/findPayment";
+	}
 	
+//	배송 ==============
+	@GetMapping("/delivery")
+	public String findDeliveryList(Model model) {
+		List<Delivery> deliveryList = adminService.findDeliveryList();
+		model.addAttribute("deliveryList", deliveryList);
+		return "/admin/adminDelivery/adminDelivery";
+		
+	}
 
 }

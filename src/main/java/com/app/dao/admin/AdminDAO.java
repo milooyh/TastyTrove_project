@@ -2,12 +2,14 @@ package com.app.dao.admin;
 
 import java.util.List;
 
+import com.app.dto.delivery.Delivery;
 import com.app.dto.mustEatPlace.MustEatPlace;
 import com.app.dto.mustEatPlace.MustEatPlaceSearchCondition;
 import com.app.dto.order.Order;
 import com.app.dto.order.OrderItem;
 import com.app.dto.order.OrderSearchCondition;
 import com.app.dto.payment.Payment;
+import com.app.dto.payment.PaymentSearchCondition;
 import com.app.dto.postRecipe.PostRecipe;
 import com.app.dto.postRecipe.PostRecipeUpdateRecipeType;
 import com.app.dto.product.Product;
@@ -66,5 +68,10 @@ public interface AdminDAO {
 	
 //	결제
 	public List<Payment> findPaymentList();
+	public Payment findPaymentByPaymentId(int paymentId);
+	public List<Payment> findPaymentListBySearchCondition(PaymentSearchCondition paymentSearchCondition);
 	
+//	배송
+	public List<Delivery> findDeliveryList();
+	public Delivery findDeliveryByDeliveryId(int deliveryId);
 }

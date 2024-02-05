@@ -6,12 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.dao.admin.AdminDAO;
+import com.app.dto.delivery.Delivery;
 import com.app.dto.mustEatPlace.MustEatPlace;
 import com.app.dto.mustEatPlace.MustEatPlaceSearchCondition;
 import com.app.dto.order.Order;
 import com.app.dto.order.OrderItem;
 import com.app.dto.order.OrderSearchCondition;
 import com.app.dto.payment.Payment;
+import com.app.dto.payment.PaymentSearchCondition;
 import com.app.dto.postRecipe.PostRecipe;
 import com.app.dto.postRecipe.PostRecipeUpdateRecipeType;
 import com.app.dto.product.Product;
@@ -310,6 +312,44 @@ public class AdminServiceImpl implements AdminService {
 		System.out.println("adminService findPaymentList 불림");
 		List<Payment> paymentList = adminDAO.findPaymentList();
 		return paymentList;
+	}
+
+//	결제번호로 결제 조회
+	@Override
+	public Payment findPaymentByPaymentId(int paymentId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminService findPaymentByPaymentId 불림");
+		Payment payment = adminDAO.findPaymentByPaymentId(paymentId);
+		return payment;
+	}
+
+//	결제 검색하기
+	@Override
+	public List<Payment> findPaymentListBySearchCondition(PaymentSearchCondition paymentSearchCondition) {
+		// TODO Auto-generated method stub
+		System.out.println("adminService findPaymentListBySearchCondition 불림");
+		List<Payment> paymentList = adminDAO.findPaymentListBySearchCondition(paymentSearchCondition);
+		return paymentList;
+	}
+
+	
+//	배송 ===============================
+//	배송 목록 조회
+	@Override
+	public List<Delivery> findDeliveryList() {
+		// TODO Auto-generated method stub
+		System.out.println("adminService findDeliveryList 불림");
+		List<Delivery> deliveryList = adminDAO.findDeliveryList();
+		return deliveryList;
+	}
+	
+//	배송번호로 조회
+	@Override
+	public Delivery findDeliveryByDeliveryId(int deliveryId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminService findDeliveryByDeliveryId 불림");
+		Delivery delivery = adminDAO.findDeliveryByDeliveryId(deliveryId);
+		return delivery;
 	}
 
 }

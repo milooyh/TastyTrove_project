@@ -34,10 +34,20 @@
 			type="com.app.dto.mustEatPlace.MustEatPlaceSearchCondition"
 			alias="MustEatPlaceSearchCondition"></typeAlias>
 		<typeAlias type="com.app.dto.order.Order" alias="Order"></typeAlias>
-		<typeAlias type="com.app.dto.order.OrderItem" alias="OrderItem"></typeAlias>
-		<typeAlias type="com.app.dto.order.OrderSearchCondition" alias="OrderSearchCondition"></typeAlias>
-		<typeAlias type="com.app.dto.payment.Payment" alias="Payment"></typeAlias>
-	</typeAliases> 
+		<typeAlias type="com.app.dto.order.OrderItem"
+			alias="OrderItem"></typeAlias>
+		<typeAlias type="com.app.dto.order.OrderSearchCondition"
+			alias="OrderSearchCondition"></typeAlias>
+		<typeAlias type="com.app.dto.payment.Payment"
+			alias="Payment"></typeAlias>
+		<typeAlias type="com.app.dto.payment.PaymentSearchCondition"
+			alias="PaymentSearchCondition"></typeAlias>
+		<typeAlias type="com.app.dto.delivery.Delivery"
+			alias="Delivery"></typeAlias>
+		<typeAlias
+			type="com.app.dto.delivery.ModifyDeliveryAddressByOrderIdAndMemberId"
+			alias="ModifyDeliveryAddressByOrderIdAndMemberId"></typeAlias>
+	</typeAliases>
 
 
 </configuration>

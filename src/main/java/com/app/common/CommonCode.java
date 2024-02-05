@@ -18,5 +18,12 @@ public interface CommonCode {
 	public String ORDER_ORDERSTATUS_PAIED= "P";
 	public String ORDER_OPDERSTATUS_CANCELLED = "C";
 	
+	public String PAYMENT_PAYMENTMETHOD_CREDITCARD = "C";
+	public String PAYMENT_PAYMENTMETHOD_WIREMONEY = "W";
 	
+	public String DELIVERY_DELIVERYSTATUS_BEFORE = "B";
+	public String DELIVERY_DELIVERYSTATUS_DURING = "D";
+	public String DELIVERY_DELIVERYSTATUS_COMPLETED = "C";
+	
+		
 }

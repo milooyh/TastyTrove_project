@@ -285,21 +285,74 @@
 
 	<update id="modifyTotalPrice" parameterType="int">
 		update orders
-		set total_price = (select sum(total_price)
+		set
+		total_price = (select sum(total_price)
 		from order_items
-		where order_id = #{orderId})
+		where order_id =
+		#{orderId})
 		where order_id = #{orderId}
 	</update>
 	<delete id="modifyOrder" parameterType="Order">
 		DELETE FROM ORDER_ITEMS
 		WHERE order_item_id = #{orderItemId}
 	</delete>
-	
+
 	<!--결제 정보 찾기 ================================================================ -->
 	<select id="findPaymentList" resultType="Payment">
 		SELECT * FROM
 		PAYMENTS
 		ORDER BY payment_id
 	</select>
+
+	<select id="findPaymentByPaymentId" resultType="Payment">
+		SELECT * FROM
+		PAYMENTS
+		WHERE payment_id = #{paymentId}
+	</select>
+
+	<select id="findPaymentListBySearchCondition"
+		parameterType="Payment" resultType="PaymentSearchCondition">
+		SELECT * FROM PAYMENTS
+		WHERE 1 = 1
+		<if test="paymentId!= null and paymentId!= ''">
+			AND payment_id LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="orderId!= null and orderId!= ''">
+			AND order_id LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="paymentAmount!= null and paymentAmount!= ''">
+			AND payment_amount LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="paymentDate!= null and paymentDate!= ''">
+			AND payment_date LIKE '%' || #{paymentDate} || '%'
+		</if>
+		<if test="paymentMethod != null and paymentMethod!= ''">
+			AND payment_method = #{paymentMethod}
+		</if>
+	</select>
+
+	<!--배송 찾기 ============================================================== -->
+	<select id="findDeliveryList" resultType="Delivery">
+		SELECT * FROM
+		DELIVERIES
+		ORDER BY delivery_id
+	</select>
+
+	<select id="findDeliveryByDeliveryId" resultType="Delivery">
+		SELECT * FROM
+		DELIVERIES
+		WHERE delivery_id = #{deliveryId}
+	</select>
+
+	<update id="modifyDeliveryAddress"
+		parameterType="ModifyDeliveryAddressByOrderIdAndMemberId">
+		update deliveries
+		set delivery_address = (select
+		m.user_address
+		from members m, orders o
+		where m.member_id = o.member_id
+		and o.order_id = #{orderId})
+		where order_id = ${orderId};
+	</update>
 
 </mapper>

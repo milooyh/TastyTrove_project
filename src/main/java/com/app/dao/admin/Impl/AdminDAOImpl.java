@@ -7,12 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.app.dao.admin.AdminDAO;
+import com.app.dto.delivery.Delivery;
 import com.app.dto.mustEatPlace.MustEatPlace;
 import com.app.dto.mustEatPlace.MustEatPlaceSearchCondition;
 import com.app.dto.order.Order;
 import com.app.dto.order.OrderItem;
 import com.app.dto.order.OrderSearchCondition;
 import com.app.dto.payment.Payment;
+import com.app.dto.payment.PaymentSearchCondition;
 import com.app.dto.postRecipe.PostRecipe;
 import com.app.dto.postRecipe.PostRecipeUpdateRecipeType;
 import com.app.dto.product.Product;
@@ -326,6 +328,43 @@ public class AdminDAOImpl implements AdminDAO {
 		System.out.println("adminDAO findPaymentList 불림");
 		List<Payment> paymentList = sqlSessionTemplate.selectList("admin_mapper.findPaymentList");
 		return paymentList;
+	}
+
+//	결제번호로 결제조회
+	@Override
+	public Payment findPaymentByPaymentId(int paymentId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findPaymentByPaymentId 불림");
+		Payment payment = sqlSessionTemplate.selectOne("admin_mapper.findPaymentByPaymentId", paymentId);
+		return payment;
+	}
+
+//	결제내역 검색하기
+	@Override
+	public List<Payment> findPaymentListBySearchCondition(PaymentSearchCondition paymentSearchCondition) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findPaymentListBySearchCondition 불림");
+		List<Payment> paymentList = sqlSessionTemplate.selectList("admin_mapper.findPaymentListBySearchCondition", paymentSearchCondition);
+		return paymentList;
+	}
+
+//	배송 =================================
+//	배송 목록 조회
+	@Override
+	public List<Delivery> findDeliveryList() {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findDeliveryList 불림");
+		List<Delivery> deliveryList = sqlSessionTemplate.selectList("admin_mapper.findDeliveryList");
+		return deliveryList;
+	}
+
+//	배송번호로 조회
+	@Override
+	public Delivery findDeliveryByDeliveryId(int deliveryId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findDeliveryByDeliveryId 불림");
+		Delivery delivery = sqlSessionTemplate.selectOne("admin_mapper.findDeliveryByDeliveryId", deliveryId);
+		return delivery;
 	}
 
 }
