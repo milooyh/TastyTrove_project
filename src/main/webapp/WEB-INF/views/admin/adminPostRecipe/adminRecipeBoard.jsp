@@ -51,11 +51,26 @@ th, td {
 						href="/admin/recipeboard/content?recipeId=${recipe.recipeId}">${recipe.recipeTitle}</a></td>
 					<td>${recipe.memberId}</td>
 					<td>${recipe.boardDate}</td>
-					<form method="post" action="/admin/recipeboard/update/recipeType">
-					<td><select name="selectedRecipeType">
-							<c:forEach var="category" items="${allRecipeTypes}">
-								<option ${recipe.recipeType eq category ? 'selected' : ''}>${category}</option>
-							</c:forEach>
+					<form method="post" action="/admin/recipeboard/update">
+					<td><select name="recipeType">
+							<option value="KOR"
+								<c:if test="${recipe.recipeType == 'KOR'}">selected</c:if>>
+								한식</option>
+							<option value="CHI"
+								<c:if test="${recipe.recipeType == 'CHI'}">selected</c:if>>
+								중식</option>
+								<option value="JPN"
+								<c:if test="${recipe.recipeType == 'JPN'}">selected</c:if>>
+								일식</option>
+								<option value="WTN"
+								<c:if test="${recipe.recipeType == 'WTN'}">selected</c:if>>
+								양식</option>
+								<option value="DRT"
+								<c:if test="${recipe.recipeType == 'DRT'}">selected</c:if>>
+								디저트</option>
+								<option value="ETC"
+								<c:if test="${recipe.recipeType == 'ETC'}">selected</c:if>>
+								기타</option>
 					</select></td>
 					<input type="hidden" name="recipeId" value="${recipe.recipeId}" />
 					<td><button type="submit"
