@@ -3,16 +3,15 @@ package com.app.dto.mustEatPlace;
 import lombok.Data;
 
 @Data
-public class MustEatPlace {
-	int placeId;
-	String restaurantName;
+public class MustEatPlaceWithMenu {
+
+	int id;
 	String place;
 	String restaurantName;
 	String review;
 	int asterion;
+	String menuName;
 	String telephoneNumber;
 	String representativeMenu;
-	//byte[] representativeMenuImage;
-	String representativeMenuImage;
-	String userId;
+	int price;
 }
