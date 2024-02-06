@@ -1,4 +1,5 @@
-	<%@ page language="java" contentType="text/html; charset=UTF-8"
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -19,41 +20,38 @@
 			name="userName"><br> <label>별명 : </label><input
 			type="text" id="userNickname" name="userNickname">
 		<button type="button" id="nicknameChk_btn" name="nicknameChk_btn">확인</button>
-		<br> 
-		
-		<label>출생연도 : </label><input type="text" name="birthYear">
+		<br> <label>출생연도 : </label><input type="text" name="birthYear">
 		<label>출생월</label> <select name="birthMonth">
-         <option disabled selected>월</option>
-         <% 
+			<option disabled selected>월</option>
+			<% 
             for (int i = 1; i <= 12; i++) {
                 out.println("<option value='" + i + "'>" + i + "</option>");
             }
-        %></select><br>         
-         
-      </select> <label>출생일</label> <select name="birthDate">
-         <option disabled selected>일</option>
-         <% 
+        %>
+		</select><br> </select> <label>출생일</label> <select name="birthDate">
+			<option disabled selected>일</option>
+			<% 
             for (int i = 1; i <= 31; i++) {
                 out.println("<option value='" + i + "'>" + i + "</option>");
             }
         %>
-      </select><br>
-		<label>전화번호 : </label><input type="text" id="tel1" name="tel1">
-		<input type="text" id="tel2" name="tel2">
+		</select><br> <label>전화번호 : </label><input type="text" id="tel1"
+			name="tel1"> <input type="text" id="tel2" name="tel2">
 		<input type="text" id="tel3" name="tel3">
 		<button type="button" id="telChk_btn" name="telChk_btn">확인</button>
-		<br> 
-		
-		<label>주소 : </label><input type="text" id="userAddress" name="userAddress">
+		<br> <label>주소 : </label><input type="text" id="userAddress"
+			name="userAddress">
 		<button type="button" id="addressChk_btn" name="addressChk_btn">확인</button>
-		<br> 
-		
-		<label>이메일 : </label><input type="text" id="userEmail" name="userEmail">
+		<br> <label>이메일 : </label><input type="text" id="userEmail"
+			name="userEmail">
 		<button type="button" id="emailChk_btn" name="emailChk_btn">확인</button>
 		<br>
-		
+
 		<button type="submit">관리자등록하기</button>
 	</form>
+
+	<br>
+    <button onclick="location.href='/admin/member'">뒤로 가기</button>
 </body>
 </html>
 </body>

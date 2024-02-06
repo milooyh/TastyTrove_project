@@ -7,6 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.app.dao.admin.AdminDAO;
+import com.app.dto.delivery.Delivery;
+import com.app.dto.mustEatPlace.MustEatPlace;
+import com.app.dto.mustEatPlace.MustEatPlaceSearchCondition;
+import com.app.dto.order.Order;
+import com.app.dto.order.OrderItem;
+import com.app.dto.order.OrderSearchCondition;
+import com.app.dto.payment.Payment;
+import com.app.dto.payment.PaymentSearchCondition;
+import com.app.dto.postRecipe.PostRecipe;
+import com.app.dto.postRecipe.PostRecipeUpdateRecipeType;
+import com.app.dto.product.Product;
 import com.app.dto.user.User;
 import com.app.dto.user.UserSearchCondition;
 
@@ -79,8 +90,281 @@ public class AdminDAOImpl implements AdminDAO {
 		// TODO Auto-generated method stub
 		System.out.println("adminDAO removeMember 불림");
 
-		int result = sqlSessionTemplate.update("admin_mapper.removeMember", memberId);
+		int result = sqlSessionTemplate.delete("admin_mapper.removeMember", memberId);
 		return result;
+	}
+
+//	==================================================================================
+//	레시피 전체목록조회
+	@Override
+	public List<PostRecipe> findPostRecipeList() {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findPostRecipeList 불림");
+
+		List<PostRecipe> postRecipeList = sqlSessionTemplate.selectList("admin_mapper.findPostRecipeList");
+
+		return postRecipeList;
+	}
+
+//	레시피번호로 레세피 찾기
+	@Override
+	public PostRecipe findPostRecipeById(int recipeId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findPostRecipeById 불림");
+
+		PostRecipe postRecipe = sqlSessionTemplate.selectOne("admin_mapper.findPostRecipeById", recipeId);
+
+		return postRecipe;
+	}
+
+//	레시피 카테고리 수정
+	@Override
+	public int modifyRecipeType(PostRecipeUpdateRecipeType postRecipeUpdateRecipeType) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO modifyRecipeType 불림");
+
+		int result = sqlSessionTemplate.update("admin_mapper.findPostRecipeById", postRecipeUpdateRecipeType);
+
+		return result;
+	}
+
+//	레시피 삭제
+	@Override
+	public int removePostRecipe(int recipeId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO removePostRecipe 불림");
+
+		int result = sqlSessionTemplate.delete("admin_mapper.removePostRecipe", recipeId);
+
+		return result;
+	}
+
+//	상품 =================================================
+//	상품 찾기
+	@Override
+	public List<Product> findProductList() {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findProductList 불림");
+
+		List<Product> productList = sqlSessionTemplate.selectList("admin_mapper.findProductList");
+
+		return productList;
+	}
+
+//	상품번호로 상품 찾기
+	@Override
+	public Product findProductByProductId(int productId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findProductByProductId 불림");
+
+		Product product = sqlSessionTemplate.selectOne("admin_mapper.findProductByProductId", productId);
+
+		return product;
+	}
+
+//	상품 등록
+	@Override
+	public int saveProduct(Product product) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO saveProduct 불림");
+
+		int result = sqlSessionTemplate.insert("admin_mapper.saveProduct", product);
+
+		return result;
+	}
+
+//	======================================
+//	맛집목록조회
+	@Override
+	public List<MustEatPlace> findMustEatPlaceList() {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findMustEatPlaceList 불림");
+
+		List<MustEatPlace> placeList = sqlSessionTemplate.selectList("admin_mapper.findMustEatPlaceList");
+
+		return placeList;
+	}
+
+//	맛집번호로 맛집 조회
+	@Override
+	public MustEatPlace findMustEatPlaceByPlaceId(int placeId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findMustEatPlaceByPlaceId 불림");
+
+		MustEatPlace mustEatPlace = sqlSessionTemplate.selectOne("admin_mapper.findMustEatPlaceByPlaceId", placeId);
+
+		return mustEatPlace;
+	}
+
+//	맛집 저장
+	@Override
+	public int saveMustEatPlace(MustEatPlace mustEatPlace) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO saveMustEatPlace 불림");
+
+		int result = sqlSessionTemplate.insert("admin_mapper.saveMustEatPlace", mustEatPlace);
+		return result;
+	}
+
+//	맛집 검색하기
+	@Override
+	public List<MustEatPlace> findMustEatPlaceListBySearchCondition(
+			MustEatPlaceSearchCondition mustEatPlaceSearchCondition) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findMustEatPlaceListBySearchCondition 불림");
+
+		List<MustEatPlace> placeList = sqlSessionTemplate
+				.selectList("admin_mapper.findMustEatPlaceListBySearchCondition", mustEatPlaceSearchCondition);
+		return placeList;
+	}
+	
+//	맛집 수정
+	@Override
+	public int modifyMustEatPlace(MustEatPlace mustEatPlace) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO modifyMustEatPlace 불림");
+
+		int result = sqlSessionTemplate.update("admin_mapper.modifyMustEatPlace", mustEatPlace);
+		return result;
+	}
+
+//	맛집 삭제
+	@Override
+	public int removeMustEatPlace(int placeId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO removeMustEatPlace 불림");
+		int result = sqlSessionTemplate.delete("admin_mapper.removeMustEatPlace", placeId);
+		return result;
+	}
+
+//	주문 =============================
+//	주문 목록
+	@Override
+	public List<Order> findOrderList() {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO removefindOrderList 불림");
+		List<Order> orderList = sqlSessionTemplate.selectList("admin_mapper.findOrderList");
+		return orderList;
+	}
+
+//	회원번호로 주문 내역 찾기
+	@Override
+	public List<OrderItem> findOrderItemListByMemberId(int memberId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findOrderItemListByMemberId 불림");
+		List<OrderItem> orderItemList = sqlSessionTemplate.selectList("admin_mapper.findOrderItemListByMemberId", memberId);
+		System.out.println("dao : " + orderItemList);
+		
+		return orderItemList;
+	}
+
+//	주문 검색
+	@Override
+	public List<Order> findOrderListBySearchCondition(OrderSearchCondition orderSearchCondition) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findOrderListBySearchCondition 불림");
+		List<Order> orderList = sqlSessionTemplate.selectList("admin_mapper.findOrderListBySearchCondition", orderSearchCondition);
+		return orderList;
+	}
+
+//	개별 주문 정보 수정
+	@Override
+	public int modifyOrderItem(OrderItem orderItem) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO modifyOrderItem 불림");
+		int result = sqlSessionTemplate.update("admin_mapper.modifyOrderItem", orderItem);
+		return result;
+	}
+
+//	회원번호로 개별주문 찾기
+	@Override
+	public OrderItem findOrderItemByMemberId(int orderItemId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findOrderItemByMemberId 불림");
+		OrderItem orderItem = sqlSessionTemplate.selectOne("admin_mapper.findOrderItemByMemberId", orderItemId);
+		
+		return orderItem;
+	}
+
+//	개별주문번호로 개별주문찾기
+	@Override
+	public OrderItem findOrderItemByOrderItemId(int orderItemId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findOrderItemByOrderItemId 불림");
+		OrderItem orderItem = sqlSessionTemplate.selectOne("admin_mapper.findOrderItemByOrderItemId", orderItemId);
+		return orderItem;
+	}
+	
+//	주문상태 변경
+	@Override
+	public int modifyOrder(Order order) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+//	전체주문번호로 주문목록조회
+	@Override
+	public List<OrderItem> findOrderItemListByOrderId(int orderId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findOrderItemListByOrderId 불림");
+		List<OrderItem> orderItemList = sqlSessionTemplate.selectList("admin_mapper.findOrderItemListByOrderId", orderId);
+		return orderItemList;
+	}
+
+//	총계반영
+	@Override
+	public int modifyTotalPrice(int orderId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO modifyTotalPrice 불림");
+		int result = sqlSessionTemplate.update("admin_mapper.modifyTotalPrice", orderId);
+		return result;
+	}
+
+//	결제 ====================================
+//	결제목록조회
+	@Override
+	public List<Payment> findPaymentList() {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findPaymentList 불림");
+		List<Payment> paymentList = sqlSessionTemplate.selectList("admin_mapper.findPaymentList");
+		return paymentList;
+	}
+
+//	결제번호로 결제조회
+	@Override
+	public Payment findPaymentByPaymentId(int paymentId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findPaymentByPaymentId 불림");
+		Payment payment = sqlSessionTemplate.selectOne("admin_mapper.findPaymentByPaymentId", paymentId);
+		return payment;
+	}
+
+//	결제내역 검색하기
+	@Override
+	public List<Payment> findPaymentListBySearchCondition(PaymentSearchCondition paymentSearchCondition) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findPaymentListBySearchCondition 불림");
+		List<Payment> paymentList = sqlSessionTemplate.selectList("admin_mapper.findPaymentListBySearchCondition", paymentSearchCondition);
+		return paymentList;
+	}
+
+//	배송 =================================
+//	배송 목록 조회
+	@Override
+	public List<Delivery> findDeliveryList() {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findDeliveryList 불림");
+		List<Delivery> deliveryList = sqlSessionTemplate.selectList("admin_mapper.findDeliveryList");
+		return deliveryList;
+	}
+
+//	배송번호로 조회
+	@Override
+	public Delivery findDeliveryByDeliveryId(int deliveryId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findDeliveryByDeliveryId 불림");
+		Delivery delivery = sqlSessionTemplate.selectOne("admin_mapper.findDeliveryByDeliveryId", deliveryId);
+		return delivery;
 	}
 
 }

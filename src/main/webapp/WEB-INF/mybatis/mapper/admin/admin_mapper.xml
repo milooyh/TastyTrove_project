@@ -2,12 +2,14 @@
 
 <mapper namespace="admin_mapper">
 
-	<!--회원 정보 찾기 -->
+	<!--회원 정보 찾기 ================================================================ -->
 	<select id="findUserList" resultType="User">
-		SELECT * FROM MEMBERS
+		SELECT * FROM MEMBERS ORDER
+		BY member_id
 	</select>
-	
-	<select id="findUserByMemberId" resultType="User" parameterType="int">
+
+	<select id="findUserByMemberId" resultType="User"
+		parameterType="int">
 		SELECT * FROM MEMBERS
 		WHERE member_id = #{memberId}
 	</select>
@@ -67,7 +69,7 @@
 			AND SUBSTR(user_email, INSTR(user_email, '@')) =
 			#{emailSystem}
 		</if>
-		
+
 		<if test="userType!= null and userType!= ''">
 			AND user_type = #{userType}
 		</if>
@@ -83,26 +85,274 @@
 		#{userBirthdate} , #{userTel} , #{userAddress} , #{userEmail} ,
 		'ADM')
 	</insert>
-	
+
 	<update id="modifyMember" parameterType="User">
 		UPDATE MEMBERS
-		SET member_id = #{memberId},
-			user_id = #{userId},
-			user_password = #{userPassword},
-			user_name = #{userName},
-			user_nickname = #{userNickname},
-			user_birthdate = #{userBirthdate},
-			user_address = #{userAddress},
-			user_email = #{userEmail}
+		SET
+		member_id = #{memberId},
+		user_id = #{userId},
+		user_password =
+		#{userPassword},
+		user_name = #{userName},
+		user_nickname =
+		#{userNickname},
+		user_birthdate = #{userBirthdate},
+		user_address =
+		#{userAddress},
+		user_email = #{userEmail}
 		WHERE
-			member_id = #{memberId}
+		member_id = #{memberId}
 	</update>
-	
-	<delete id="removeMember" parameterType="int">
-		DELETE FROM MEMBERS WHERE member_id = #{memberId}
-	</delete>
-	
-	<!-- 레시피 찾기 -->
 
+	<delete id="removeMember" parameterType="int">
+		DELETE FROM MEMBERS
+		WHERE member_id = #{memberId}
+	</delete>
+
+	<!--레시피 찾기 ============================================================== -->
+	<select id="findPostRecipeList" resultType="PostRecipe">
+		SELECT * FROM
+		RECIPE_BOARD
+		ORDER BY recipe_id
+	</select>
+
+	<select id="findPostRecipeById" resultType="PostRecipe"
+		parameterType="int">
+		SELECT * FROM RECIPE_BOARD WHERE recipe_id = #{recipeId}
+	</select>
+
+	<update id="modifyRecipeType"
+		parameterType="PostRecipeUpdateRecipeType">
+		UPDATE RECIPE_BOARD
+		SET
+		recipe_type =
+		#{selectedRecipeType}
+		WHERE
+		recipe_id = #{recipeId
+	</update>
+
+	<delete id="removePostRecipe" parameterType="int">
+		DELETE FROM
+		RECIPE_BOARD
+		WHERE recipe_id = #{recipeId}
+	</delete>
+
+	<!--상품 정보 찾기 ================================================================ -->
+	<select id="findProductList" resultType="Product">
+		SELECT * FROM PRODUCT
+		ORDER BY product_id
+	</select>
+
+	<select id="findProductByProductId" resultType="Product">
+		SELECT * FROM
+		PRODUCT
+		WHERE product_id = #{productId}
+	</select>
+
+	<insert id="saveProduct" parameterType="Product">
+		INSERT INTO PRODUCT
+		(product_id, product_name, product_price, product_count, productImage,
+		productType)
+		VALUES
+		((select NVL(max(product_id), 0)+1 as product_id
+		from product),
+		#{productName} , #{productPrice} , #{productCount} ,
+		#{productImage} ,
+		#{productType})
+	</insert>
+
+	<!--맛집 정보 찾기 ================================================================ -->
+	<select id="findMustEatPlaceList" resultType="MustEatPlace">
+		SELECT * FROM
+		MUST_EAT_PLACE
+		ORDER BY place_id
+	</select>
+
+	<select id="findMustEatPlaceByPlaceId" resultType="MustEatPlace">
+		SELECT * FROM
+		MUST_EAT_PLACE
+		WHERE place_id = #{placeId}
+	</select>
+
+	<select id="findMustEatPlaceListBySearchCondition"
+		parameterType="MustEatPlace" resultType="MustEatPlaceSearchCondition">
+		SELECT * FROM MUST_EAT_PLACE
+		WHERE 1 = 1
+		<if test="placeId != null and placeId!= ''">
+			AND place_id LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="restaurantName != null and restaurantName!= ''">
+			AND restaurant_name LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="place != null and place!= ''">
+			AND place LIKE '%' || #{searchKeyword} || '%'
+		</if>
+	</select>
+
+
+	<insert id="saveMustEatPlace" parameterType="MustEatPlace">
+		INSERT INTO
+		MUST_EAT_PLACE
+		(place_id, restaurant_name, place)
+		VALUES
+		((select
+		NVL(max(place_id), 0)+1 as place_id
+		from MUST_EAT_PLACE),
+		#{restaurantName}, #{place})
+	</insert>
+
+	<update id="modifyMustEatPlace" parameterType="MustEatPlace">
+		UPDATE
+		MUST_EAT_PLACE
+		SET
+		restaurant_name = #{restaurantName},
+		place = #{place}
+		WHERE place_id = #{placeId}
+	</update>
+
+	<delete id="removeMustEatPlace" parameterType="int">
+		DELETE FROM
+		MUST_EAT_PLACE
+		WHERE place_id = #{placeId}
+	</delete>
+
+	<!--주문 정보 찾기 ================================================================ -->
+	<select id="findOrderList" resultType="Order">
+		SELECT * FROM
+		ORDERS
+		ORDER
+		BY order_id
+	</select>
+
+	<select id="findOrderItemListByMemberId" resultType="OrderItem"
+		parameterType="int">
+		SELECT * FROM
+		ORDER_ITEMS
+		WHERE member_id = #{memberId}
+	</select>
+
+	<select id="findOrderItemByMemberId" resultType="OrderItem"
+		parameterType="int">
+		SELECT * FROM
+		ORDER_ITEMS
+		WHERE member_id = #{memberId}
+	</select>
+
+	<select id="findOrderItemByOrderItemId" resultType="OrderItem"
+		parameterType="int">
+		SELECT * FROM
+		ORDER_ITEMS
+		WHERE order_item_id =
+		#{orderItemId}
+	</select>
+
+	<select id="findOrderItemListByOrderId" resultType="OrderItem"
+		parameterType="int">
+		SELECT * FROM
+		ORDER_ITEMS
+		WHERE order_id = #{orderId}
+	</select>
+
+
+	<select id="findOrderListBySearchCondition"
+		parameterType="Order" resultType="OrderSearchCondition">
+		SELECT * FROM ORDERS
+		WHERE 1 = 1
+		<if test="orderId!= null and orderId!= ''">
+			AND order_id LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="memberId!= null and memberId!= ''">
+			AND member_id LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="totalPrice != null and totalPrice!= ''">
+			AND total_price LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="orderDate != null and orderDate!= ''">
+			AND order_date LIKE '%' || #{orderDate} || '%'
+		</if>
+		<if test="orderStatus != null and orderStatus!= ''">
+			AND order_status = #{orderStatus}
+		</if>
+	</select>
+
+	<update id="modifyOrderItem" parameterType="OrderItem">
+		UPDATE ORDER_ITEMS
+		SET order_item_count = #{orderItemCount}
+		WHERE order_item_id =
+		#{orderItemId}
+
+	</update>
+
+	<update id="modifyTotalPrice" parameterType="int">
+		update orders
+		set
+		total_price = (select sum(total_price)
+		from order_items
+		where order_id =
+		#{orderId})
+		where order_id = #{orderId}
+	</update>
+	<delete id="modifyOrder" parameterType="Order">
+		DELETE FROM ORDER_ITEMS
+		WHERE order_item_id = #{orderItemId}
+	</delete>
+
+	<!--결제 정보 찾기 ================================================================ -->
+	<select id="findPaymentList" resultType="Payment">
+		SELECT * FROM
+		PAYMENTS
+		ORDER BY payment_id
+	</select>
+
+	<select id="findPaymentByPaymentId" resultType="Payment">
+		SELECT * FROM
+		PAYMENTS
+		WHERE payment_id = #{paymentId}
+	</select>
+
+	<select id="findPaymentListBySearchCondition"
+		parameterType="Payment" resultType="PaymentSearchCondition">
+		SELECT * FROM PAYMENTS
+		WHERE 1 = 1
+		<if test="paymentId!= null and paymentId!= ''">
+			AND payment_id LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="orderId!= null and orderId!= ''">
+			AND order_id LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="paymentAmount!= null and paymentAmount!= ''">
+			AND payment_amount LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="paymentDate!= null and paymentDate!= ''">
+			AND payment_date LIKE '%' || #{paymentDate} || '%'
+		</if>
+		<if test="paymentMethod != null and paymentMethod!= ''">
+			AND payment_method = #{paymentMethod}
+		</if>
+	</select>
+
+	<!--배송 찾기 ============================================================== -->
+	<select id="findDeliveryList" resultType="Delivery">
+		SELECT * FROM
+		DELIVERIES
+		ORDER BY delivery_id
+	</select>
+
+	<select id="findDeliveryByDeliveryId" resultType="Delivery">
+		SELECT * FROM
+		DELIVERIES
+		WHERE delivery_id = #{deliveryId}
+	</select>
+
+	<update id="modifyDeliveryAddress"
+		parameterType="ModifyDeliveryAddressByOrderIdAndMemberId">
+		update deliveries
+		set delivery_address = (select
+		m.user_address
+		from members m, orders o
+		where m.member_id = o.member_id
+		and o.order_id = #{orderId})
+		where order_id = ${orderId};
+	</update>
 
 </mapper>

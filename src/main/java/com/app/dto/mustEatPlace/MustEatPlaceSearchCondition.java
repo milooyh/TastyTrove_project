@@ -3,11 +3,12 @@ package com.app.dto.mustEatPlace;
 import lombok.Data;
 
 @Data
-public class MustEatPlace {
-	int placeId;
+public class MustEatPlaceSearchCondition {
+	String placeId;
 	String restaurantName;
 	String place;
 	String memberId;
 	String review;
-	double rating;
+	String rating;
+	String searchKeyword;
 }
