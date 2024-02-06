@@ -2,7 +2,7 @@
 
 <mapper namespace="mustEatPlace_mapper">
 	<insert id="saveMustEatPlace" parameterType="com.app.dto.mustEatPlace.MustEatPlace">
-		INSERT INTO MUST_EAT_PLACE(id, place, restaurant_name, review, asterion, telephone_number, representative_menu) VALUES(NVL((SELECT MAX(id) + 1 FROM MUST_EAT_PLACE),1), #{place}, #{restaurant_name}, #{review}, #{asterion}, #{telephone_number}, #{representative_menu})
+		INSERT INTO MUST_EAT_PLACE(id, place, restaurant_name, review, asterion, telephone_number, representative_menu) VALUES(NVL((SELECT MAX(id) + 1 FROM MUST_EAT_PLACE),1), #{place}, #{restaurantName}, #{review}, #{asterion}, #{telephoneNumber}, #{representativeMenu})
 	</insert>
 	
 	<select id="findMustEatPlace" resultType="com.app.dto.mustEatPlace.MustEatPlace">
@@ -16,10 +16,17 @@
 	
 	<select id="findMustEatPlaceMenuById" resultType="com.app.dto.mustEatPlace.MustEatPlaceMenu" parameterType="int">
 		SELECT * FROM menu_info
-		WHERE menu_id=#{menu_id}
+		WHERE menu_id=#{menuId}
 	</select>
 	
-	
+	<insert id="saveMenuById" parameterType="com.app.dto.mustEatPlace.MustEatPlaceMenu">
+		INSERT INTO menu_info (menu_id, menu_name, price)
+		VALUES (
+		    #{menuId},
+		    #{menuName},
+		    #{price}
+		)
+	</insert>
 	
 	<delete id="removeMustEatPlace" parameterType="int">
 		DELETE FROM must_eat_place
@@ -29,15 +36,15 @@
 	<resultMap id="mustEatPlaceWithMenuResultMap" type="com.app.dto.mustEatPlace.MustEatPlaceWithMenu">
         <id property="id" column="id"/>
         <result property="place" column="place"/>
-        <result property="restaurant_name" column="restaurant_name"/>
+        <result property="restaurantName" column="restaurant_name"/>
         <result property="review" column="review"/>
         <result property="asterion" column="asterion"/>
-        <result property="menu_name" column="menu_name"/>
+        <result property="menuName" column="menu_name"/>
         <result property="price" column="price"/>
     </resultMap>
 	
 	<select id="findMustEatPlaceWithMenu" resultMap="mustEatPlaceWithMenuResultMap">
-		SELECT DISTINCT mep.id, mep.place, mep.restaurant_name, mep.review, mep.telephone_number, mep.representative_menu, mep.asterion
+		SELECT *
 		FROM MUST_EAT_PLACE mep
 		INNER JOIN menu_info mi ON mep.id = mi.menu_id
 		order by mep.id
@@ -46,12 +53,43 @@
 	<update id="modifyMustEatPlace" parameterType="com.app.dto.mustEatPlace.MustEatPlace">
 		UPDATE MUST_EAT_PLACE
 		SET place = #{place},
-			restaurant_name = #{restaurant_name},
+			restaurant_name = #{restaurantName},
 			review = #{review},
 			asterion = #{asterion},
-			representative_menu = #{representative_menu},
-			telephone_number = #{telephone_number}
+			representative_menu = #{representativeMenu},
+			telephone_number = #{telephoneNumber}
 		WHERE
 			id = #{id}
 	</update>
+	
+	<delete id="removeMenuByName" parameterType="string">
+        DELETE FROM menu_info
+        WHERE menu_name = #{menuName}
+    </delete>
+    
+    <update id="updateImagePath" parameterType="com.app.dto.mustEatPlace.MustEatPlace">
+        UPDATE MUST_EAT_PLACE 
+        SET representative_menu_image = #{representativeMenuImage}
+        WHERE id = #{id}
+    </update>
+	
+	<!--<resultMap id="mustEatPlaceMenuMap" type="com.app.dto.mustEatPlace.MustEatPlaceMenu">
+        <id property="menu_id" column="menu_id"/>
+        <result property="menu_name" column="menu_name"/>
+        <result property="price" column="price"/>
+    </resultMap>
+
+    <select id="getMenuByIdAndName" resultMap="mustEatPlaceMenuMap">
+        SELECT * FROM menu_info
+        WHERE menu_id = #{menu_id} AND menu_name = #{menu_name}
+    </select>
+
+    <update id="modifyMenu" parameterType="com.app.dto.mustEatPlace.MustEatPlaceMenu">
+        UPDATE menu_info
+        SET menu_name = #{menu_name},
+            price = #{price}
+        WHERE
+            menu_id = #{menu_id}
+            AND menu_name = #{menu_name}
+    </update> -->
 </mapper>

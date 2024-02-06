@@ -7,11 +7,11 @@ public class MustEatPlaceWithMenu {
 
 	int id;
 	String place;
-	String restaurant_name;
+	String restaurantName;
 	String review;
 	int asterion;
-	String menu_name;
-	String telephone_number;
-	String representative_menu;
+	String menuName;
+	String telephoneNumber;
+	String representativeMenu;
 	int price;
 }

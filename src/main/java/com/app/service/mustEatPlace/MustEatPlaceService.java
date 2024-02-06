@@ -21,5 +21,18 @@ public interface MustEatPlaceService {
 	public MustEatPlace findMustEatPlaceById(int id);
 	
 	public List<MustEatPlaceMenu> findMustEatPlaceMenuById(int id);
+	
+	public int saveMenuInfo(int mustEatPlaceId, String menuName, int price);
+	
+	public int removeMenuByName(String menuName);
+	
+	public int updateImageData(MustEatPlace mustEatPlace);
+	
+	/*
+	public MustEatPlaceMenu getMenuByIdAndName(int menu_id, String menu_name);
+
+    public void modifyMenu(MustEatPlaceMenu menu);
+    */
+
 
 }

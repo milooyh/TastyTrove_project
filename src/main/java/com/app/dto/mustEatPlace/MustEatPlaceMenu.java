@@ -5,7 +5,8 @@ import lombok.Data;
 @Data
 public class MustEatPlaceMenu {
 
-	int menu_id;
-	String menu_name;
+	int menuId;
+	String menuName;
 	int price; 
+	
 }

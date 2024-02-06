@@ -59,4 +59,36 @@ public class MustEatPlaceDAOImpl implements MustEatPlaceDAO{
 		return mustEatPlaceMenu;
 	}
 
+	@Override
+	public int saveMenuInfo(MustEatPlaceMenu mustEatPlaceMenu) {
+		int result = sqlSessionTemplate.insert("mustEatPlace_mapper.saveMenuById", mustEatPlaceMenu);
+		return result;
+	}
+
+	@Override
+	public int removeMenuByName(String menuName) {
+		int result = sqlSessionTemplate.delete("mustEatPlace_mapper.removeMenuByName", menuName);
+		return result;
+	}
+
+	@Override
+	public int updateImageData(MustEatPlace mustEatPlace) {
+		int result = sqlSessionTemplate.update("mustEatPlace_mapper.updateImagePath", mustEatPlace);
+		
+		return result;
+	}
+
+	/*
+	@Override
+	public MustEatPlaceMenu getMenuByIdAndName(int menu_id, String menu_name) {
+		return sqlSessionTemplate.selectOne("mustEatPlace_mapper.getMenuByIdAndName", new MustEatPlaceMenu(menu_id, menu_name));
+	}
+
+	@Override
+	public void modifyMenu(MustEatPlaceMenu menu) {
+		sqlSessionTemplate.update("mustEatPlace_mapper.modifyMenu", menu);
+		
+	}
+	*/
+
 }

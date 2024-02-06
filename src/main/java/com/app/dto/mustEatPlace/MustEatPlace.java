@@ -6,11 +6,12 @@ import lombok.Data;
 public class MustEatPlace {
 	int id;
 	String place;
-	String restaurant_name;
+	String restaurantName;
 	String review;
 	int asterion;
-	String telephone_number;
-	String representative_menu;
-	String representative_menu_image;
-	String user_id;
+	String telephoneNumber;
+	String representativeMenu;
+	//byte[] representativeMenuImage;
+	String representativeMenuImage;
+	String userId;
 }

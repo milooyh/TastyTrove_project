@@ -81,13 +81,13 @@
     <div class="add_mustEatPlace">
     <form id="addressForm" action="" method="post">
     	<h3>나만의 맛집을 추가해 보세요</h3>
-        <input type="text" id="address" name="place" required placeholder="주소입력">   
+        <input type="text" id="address" name="place" required placeholder="주소입력" readonly>   
         <input type="button" onclick="search_address()" value="주소 검색" class="button"><br>
-        <input type="text" id="nickname" name="restaurant_name" required placeholder="식당이름"><br>
+        <input type="text" id="nickname" name="restaurantName" required placeholder="식당이름"><br>
         <input type="text" id="review" name="review" required placeholder="한줄평"><br>  
         <input type="number" id="asterion" name="asterion" required placeholder="제 점수는요(1~5)"><br> 
-        <input type="text" id="telephone_number" name="telephone_number" required placeholder="전화번호"><br>
-        <input type="text" id="representative_menu" name="representative_menu" required placeholder="대표메뉴">
+        <input type="text" id="telephone_number" name="telephoneNumber" required placeholder="전화번호"><br>
+        <input type="text" id="representative_menu" name="representativeMenu" required placeholder="대표메뉴">
         <button type="submit" id="addBtn" disabled='disabled' class="button">추가하기</button>
     </form>
     </div>
@@ -102,13 +102,17 @@
         </tr>
 		<c:forEach var="mustEatPlaceItem" items="${mustEatPlaces}">
             <tr>
-            <td><span>${mustEatPlaceItem.restaurant_name}</span></td>
+            <td><img src="data:image/jpg;base64,${mustEatPlace.representativeMenuImage}" style="max-width: 200px; max-height: 200px;"></td>
+            <td><span>${mustEatPlaceItem.restaurantName}</span></td>
             <td><span>${mustEatPlaceItem.place}</span></td>
 			<td><span>${mustEatPlaceItem.review}</span></td>
 			<td><span>${mustEatPlaceItem.asterion}</span></td>
 			<td><button onclick="removeMustEatPlace(${mustEatPlaceItem.id})">삭제</button></td>
 			<td><button onclick="location.href='/must/modify?id=${mustEatPlaceItem.id}'">수정</button></td>
-        </tr>
+			<td><button onclick="location.href='/must/registerMenu?id=${mustEatPlaceItem.id}'">메뉴 추가</button></td>
+			<td><button onclick="location.href='/must/modifyMenu?id=${mustEatPlaceItem.id}'">메뉴 삭제</button></td>
+			<td><button onclick="location.href='/must/upload?id=${mustEatPlaceItem.id}'">이미지 업로드</button></td>
+        	</tr>
 		</c:forEach>
 		
 		<%-- <c:forEach var="mustEatPlaceWithMenuItem" items="${mustEatPlaceWithMenu}">
@@ -120,7 +124,7 @@
         <div class="modal_body">
         	<span style="margin-left:15px; cursor:pointer; float:right;" onclick="closeModal()">✖</span>
         	<c:forEach var="mustEatPlaceItem" items="${mustEatPlaces}">
-        		<h2>${mustEatPlaceItem.restaurant_name}</h2>
+        		<h2>${mustEatPlaceItem.restaurantName}</h2>
         		<span>${mustEatPlaceItem.place}</span>
         		<span>${mustEatPlaceItem.review}</span>
         		<span>${mustEatPlaceItem.asterion}</span>
@@ -145,11 +149,11 @@
     <script>
         findMustEatPlaceWithMenu.push({
             id: '<c:out value="${mustEatPlaceWithMenuItem.id}" />',
-            menu_name: '<c:out value="${mustEatPlaceWithMenuItem.menu_name}" />',
+            menuName: '<c:out value="${mustEatPlaceWithMenuItem.menuName}" />',
             price: '<c:out value="${mustEatPlaceWithMenuItem.price}" />'
         });
     </script>
-</c:forEach>
+	</c:forEach>
 
 	<script>
 	
@@ -253,13 +257,13 @@ var markers = [];
                 var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
                 
                 var iwContent = '<div style="width:150px;text-align:center;padding:6px 0;">' +
-                '<c:out value="${mustEatPlaceItem.restaurant_name}" />' +
+                '<c:out value="${mustEatPlaceItem.restaurantName}" />' +
                 '<br><button class="btn-open-modal" onclick="openModal(\'' +
-                '<c:out value="${mustEatPlaceItem.restaurant_name}" />\',' +
+                '<c:out value="${mustEatPlaceItem.restaurantName}" />\',' +
                 '\'<c:out value="${mustEatPlaceItem.place}" />\',' +
                 '\'<c:out value="${mustEatPlaceItem.review}" />\',' +
-                '\'<c:out value="${mustEatPlaceItem.telephone_number}" />\',' +
-                '\'<c:out value="${mustEatPlaceItem.representative_menu}" />\',' +
+                '\'<c:out value="${mustEatPlaceItem.telephoneNumber}" />\',' +
+                '\'<c:out value="${mustEatPlaceItem.representativeMenu}" />\',' +
                 '\'<c:out value="${mustEatPlaceItem.asterion}" />\',' +
                 '\'<c:out value="${mustEatPlaceItem.id}" />\')">정보보기</button></div>';
                 iwRemoveable = true;
@@ -268,7 +272,7 @@ var markers = [];
                 var marker = new kakao.maps.Marker({
                     map: map, // 마커를 표시할 지도
                     position: coords, // 마커를 표시할 위치
-                    title: '<c:out value="${mustEatPlaceItem.restaurant_name}" />', // 마커의 타이틀
+                    title: '<c:out value="${mustEatPlaceItem.restaurantName}" />', // 마커의 타이틀
                     image: markerImage // 마커 이미지
                 });
                 
@@ -299,7 +303,7 @@ var markers = [];
 </c:forEach>
 
 	<script>
-	function openModal(name, place, review, telephone_number, representative_menu, asterion, id) {
+	function openModal(name, place, review, telephoneNumber, representativeMenu, asterion, id) {
 	    const modal = document.querySelector('.modal');
 	    const modalBody = document.querySelector('.modal_body');
 
@@ -312,14 +316,14 @@ var markers = [];
 	        '<h2>' + name + '</h2>' +
 	        '<p>' + place + '</p>' +
 	        '<p>' + review + '</p>' +
-	        '<p>' + telephone_number + '</p>' +
-	        '<p>' + representative_menu + '</p>' +
+	        '<p>' + telephoneNumber + '</p>' +
+	        '<p>' + representativeMenu + '</p>' +
 	        '<p>' + getStarRating(asterion) + '</p>' + 
 	        '<p>'+'=============메뉴============='+ '</p>';
 
 	 // 모든 메뉴 정보 출력
 	    menuInfos.forEach(function(menuInfo) {
-	        modalBody.innerHTML += '<p>' + menuInfo.menu_name + ', 가격: ' + menuInfo.price + '</p>';
+	        modalBody.innerHTML += '<p>' + menuInfo.menuName + ', 가격: ' + menuInfo.price + '</p>';
 	    });
 
 	    modalBody.innerHTML += '<p>'+'============================'+ '</p>';
