@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
+
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>맛집 관리 페이지</h1>
+		${originalFileName } 파일을 업로드 하였습니다.<br>
+		${fileUpload }
 </body>
 </html>
