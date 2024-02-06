@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="product_mapper">
+<!-- 
+    <insert id="saveProduct" parameterType="com.app.dto.product.Product">
+        INSERT INTO PRODUCT (product_id, product_name, product_content, product_price, product_count, uploadFile, viewType)
+        VALUES (product_id_seq.NEXTVAL, #{productName}, #{productContent}, #{productPrice}, #{productCount}, #{uploadFile}, #{viewType})
+    </insert> -->
+  <insert id="saveProduct" parameterType="com.app.dto.product.Product">
+        INSERT INTO PRODUCT (product_id, product_name, product_content, product_price, product_count, uploadFile, viewType)
+        VALUES (product_id_seq.NEXTVAL, #{productName}, #{productContent}, #{productPrice}, #{productCount}, #{uploadFile}, #{viewType})
+    </insert> 
+    <select id="findProductList" resultType="com.app.dto.product.Product">
+        SELECT * FROM PRODUCT
+    </select>
+
+    <update id="modifyProduct" parameterType="com.app.dto.product.Product">
+        UPDATE PRODUCT
+        SET product_name = #{productName},
+            product_content = #{productContent},
+            product_price = #{productPrice},
+            product_count = #{productCount},
+            uploadFile = #{uploadFile},
+            viewType = #{viewType}
+        WHERE
+            product_id = #{productId}
+    </update>
+
+    <delete id="removeProduct" parameterType="int">
+        DELETE FROM PRODUCT
+        WHERE product_id = #{productId}
+    </delete>
+
+    <select id="findProductByProductId" resultType="com.app.dto.product.Product" parameterType="int">
+        SELECT * FROM PRODUCT
+        WHERE product_id = #{productId}
+    </select>
+
+    <select id="findProductListBySearchCondition" resultType="com.app.dto.product.Product" parameterType="ProductSearchCondition">
+        SELECT * FROM PRODUCT
+        WHERE 1=1
+        <if test="productId != null and productId != ''">
+            AND product_Id = #{productId}
+        </if>
+        <if test="productName != null and productName != ''">
+            AND product_Name = #{searchKeyword}
+        </if>
+        <if test="productContent != null and productContent != ''">
+            AND product_Content = #{searchKeyword}
+        </if>
+        <if test="productPrice != null and productPrice !=''">
+            AND product_Price = #{productPrice}
+        </if>
+        <if test="productCount != null and productCount != ''">
+            AND product_Count = #{productCount}
+        </if>
+        <if test="uploadFile != null and uploadFile != ''">
+          <!--   AND uploadFile = #{searchKeyword} -->
+             AND uploadFile = #{searchKeyword}
+        </if>
+        <if test="viewType != null and viewType != ''">
+			AND viewType = #{viewType}
+		</if>
+    </select>
+  
+</mapper>
