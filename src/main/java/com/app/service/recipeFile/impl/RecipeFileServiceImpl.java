@@ -36,4 +36,13 @@ public class RecipeFileServiceImpl implements RecipeFileService{
 		return recipeInfo;
 	}
 
+	@Override
+	public int modifyRecipeFileInfo(RecipeFileInfo recipeFileInfo) {
+		// TODO Auto-generated method stub
+		
+		int result = recipeFileDAO.modifyRecipeFileInfo(recipeFileInfo);
+		
+		return result;
+	}
+
 }

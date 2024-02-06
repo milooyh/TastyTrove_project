@@ -66,4 +66,21 @@ public class PostRecipeDAOImpl implements PostRecipeDAO {
 		return recipeList;
 	}
 
+
+	@Override
+	public int modifyRecipe(PostRecipe postRecipe) {
+		// TODO Auto-generated method stub
+		int result = sqlSessionTemplate.update("postRecipe_mapper.modifyRecipePost", postRecipe);
+		return result;
+	}
+
+
+	@Override
+	public int removeRecipeById(int recipeId) {
+		// TODO Auto-generated method stub
+		
+		int result = sqlSessionTemplate.delete("postRecipe_mapper.removeRecipeById", recipeId);
+		return result;
+	}
+
 }

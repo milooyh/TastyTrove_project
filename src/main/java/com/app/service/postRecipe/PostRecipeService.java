@@ -17,5 +17,9 @@ public interface PostRecipeService {
 	
 	public List<PostRecipe> findRecipeListBySearchCondition(RecipeSearchCondition recipeSearchCondition);
 	
+	public int modifyRecipe(PostRecipe postRecipe);
+	
+	public int removeRecipeById(int recipeId);
+	
 	
 }

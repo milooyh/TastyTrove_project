@@ -3,7 +3,6 @@ package com.app.controller.postRecipe;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,6 +89,95 @@ public class PostRecipeController {
 
 	}
 	
+	//레시피 수정 페이지
+	@GetMapping("/recipe/modifyRecipe")
+	public String modifyRecipe(@RequestParam int id, Model model) {
+		
+		PostRecipe recipe = postRecipeService.findRecipeInfoById(id);
+
+		RecipeFileInfo recipeFileInfo = recipeFileService.findRecipeFileInfoByFileId(recipe.getRecipeFileId());
+		
+		String fullRecipeFilePath = recipeFileInfo.getRecipeFilePath() + recipeFileInfo.getRecipeFileName();
+		System.out.println(recipeFileInfo.getRecipeFilePath());
+		System.out.println(recipeFileInfo.getRecipeFileName());
+		
+		model.addAttribute("recipeId", recipe.getRecipeId());
+		model.addAttribute("recipeTitle", recipe.getRecipeTitle());
+		model.addAttribute("memberId", recipe.getMemberId());
+		model.addAttribute("recipeContent", recipe.getRecipeContent());
+		model.addAttribute("recipeType", recipe.getRecipeType());
+		model.addAttribute("boardDate", recipe.getBoardDate());
+		model.addAttribute("recipeFileId", recipe.getRecipeFileId());
+		model.addAttribute("fullRecipeFilePath", fullRecipeFilePath);
+
+		return "recipe/modifyRecipe";
+	}
+	
+	//수정 레시피 저장
+	@PostMapping("/recipe/modifyRecipe")
+	public String modifyRecipeProcess(PostRecipe postRecipe, @RequestParam int id, Model model, RecipeImageRequestFrom requestForm) {
+		
+		postRecipe.setRecipeId(id);
+		
+		System.out.println(postRecipe);
+		System.out.println(requestForm);
+		
+		try {
+			
+			if(requestForm.getRecipeImage().getSize() != 0) {
+				System.out.println("파일도 수정한다.");
+				
+				RecipeFileInfo recipeFileInfo = recipeFileManager.storeFile(requestForm.getRecipeImage());
+				recipeFileInfo.setRecipeFileId(postRecipe.getRecipeFileId());
+				
+				System.out.println(recipeFileInfo);
+				
+				int result = recipeFileService.modifyRecipeFileInfo(recipeFileInfo);
+				
+			}
+
+			
+			int result2 = postRecipeService.modifyRecipe(postRecipe);
+			
+			if(result2 > 0) {
+				System.out.println("수정성공");
+				return "redirect:/recipe";
+			}else {
+				System.out.println("수정실패");
+				return "recipe";
+			}
+			
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		return "redirect:/recipe";
+		
+		
+	}
+	
+	//레시피 삭제
+	@RequestMapping("/recipe/removeRecipe")
+	public String removeRecipeProcess(@RequestParam int id) {
+		System.out.println("/removeRecipe 실행됨 "+id);
+		int result = postRecipeService.removeRecipeById(id);
+		if(result > 0) {
+			System.out.println("삭제성공");
+			return "redirect:/recipe";
+		}else {
+			System.out.println("삭제실패");
+			return "recipe/recipe";
+		}
+		
+		
+	}
+	
 //	//레시피 리스트
 //	@GetMapping("/recipe")
 //	public String recipeList(Model model) {
@@ -130,6 +218,7 @@ public class PostRecipeController {
 		System.out.println(recipeFileInfo.getRecipeFilePath());
 		System.out.println(recipeFileInfo.getRecipeFileName());
 		
+		model.addAttribute("recipeId", recipe.getRecipeId());
 		model.addAttribute("recipeTitle", recipe.getRecipeTitle());
 		model.addAttribute("memberId", recipe.getMemberId());
 		model.addAttribute("recipeContent", recipe.getRecipeContent());

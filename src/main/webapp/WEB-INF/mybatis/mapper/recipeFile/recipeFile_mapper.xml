@@ -19,6 +19,22 @@
 		FROM RECIPE_FILE_INFO
 		WHERE recipe_file_id = #{recipeFileId}
 	</select>
+	
+	<update id="modifyRecipeFileInfo" parameterType="RecipeFileInfo">
+		UPDATE recipe_file_info
+		SET recipe_file_name = #{recipeFileName},
+			original_recipe_file_name = #{originalRecipeFileName},
+			recipe_file_path = #{recipeFilePath},
+			recipe_file_extension = #{recipeFileExtension},
+			recipe_file_size = #{recipeFileSize}
+		WHERE 
+			recipe_file_id = #{recipeFileId}
+	</update>
+	
+	<delete id="removeRecipe">
+		DELETE FROM recipe_file_info
+		WHERE recipe_file_id = #{recipeFileId}
+	</delete>
 
 
 </mapper>

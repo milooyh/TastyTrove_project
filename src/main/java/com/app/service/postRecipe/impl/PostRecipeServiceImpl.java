@@ -55,4 +55,18 @@ public class PostRecipeServiceImpl implements PostRecipeService {
 		return recipeList;
 	}
 
+	@Override
+	public int modifyRecipe(PostRecipe postRecipe) {
+		// TODO Auto-generated method stub
+		int result = postRecipeDAO.modifyRecipe(postRecipe);
+		return result;
+	}
+
+	@Override
+	public int removeRecipeById(int recipeId) {
+		// TODO Auto-generated method stub
+		int result = postRecipeDAO.removeRecipeById(recipeId);
+		return result;
+	}
+
 }

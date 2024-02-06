@@ -35,4 +35,13 @@ public class RecipeFileDAOImpl implements RecipeFileDAO{
 		return recipeInfo;
 	}
 
+	@Override
+	public int modifyRecipeFileInfo(RecipeFileInfo recipeFileInfo) {
+		// TODO Auto-generated method stub
+		
+		int result = sqlSessionTemplate.update("recipeFile_mapper.modifyRecipeFileInfo", recipeFileInfo);
+		
+		return result;
+	}
+
 }

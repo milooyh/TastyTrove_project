@@ -9,5 +9,7 @@ public interface RecipeFileDAO {
 	public RecipeFileInfo findRecipeFileInfoByFileName(String fileName);
 	
 	public RecipeFileInfo findRecipeFileInfoByFileId(int fileId);
+	
+	public int modifyRecipeFileInfo(RecipeFileInfo recipeFileInfo);
 
 }

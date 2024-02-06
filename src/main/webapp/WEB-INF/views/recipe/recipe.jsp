@@ -11,6 +11,7 @@
 
 .recipeList{
 	display: flex;
+	flex-wrap: wrap;
 }
 
 .recipe{
