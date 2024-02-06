@@ -115,7 +115,11 @@ public class PostRecipeController {
 
 	// 레시피 상세
 	@RequestMapping("/recipe/recipeInfo")
-	public String recipeInfo(@RequestParam int id, Model model) {
+	public String recipeInfo(@RequestParam int id, Model model, HttpSession session) {
+		
+		String sessionId = (String)session.getAttribute("memberId");
+		
+		System.out.println(sessionId);
 
 		PostRecipe recipe = postRecipeService.findRecipeInfoById(id);
 
@@ -131,6 +135,7 @@ public class PostRecipeController {
 		model.addAttribute("recipeType", recipe.getRecipeType());
 		model.addAttribute("boardDate", recipe.getBoardDate());
 		model.addAttribute("fullRecipeFilePath", fullRecipeFilePath);
+		model.addAttribute("sessionId", sessionId);
 
 		return "recipe/recipeInfo";
 	}
