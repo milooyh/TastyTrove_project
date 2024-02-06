@@ -4,9 +4,10 @@ import lombok.Data;
 
 @Data
 public class MustEatPlace {
-	int id;
+	int placeId;
+	String restaurantName;
 	String place;
-	String restaurant_name;
+	String memberId;
 	String review;
-	int asterion;
+	double rating;
 }

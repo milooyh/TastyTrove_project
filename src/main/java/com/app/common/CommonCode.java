@@ -1,11 +1,31 @@
 package com.app.common;
 
-public interface CommonCode { //공통코드 구분자/식별자
-	String USER_USERTYPE_CUSTOMER = "CUS";	//고객
-	String USER_USERTYPE_ADMIN = "ADM";		//관리자
+public interface CommonCode {
+	public String USER_USERTYPE_CUSTOMER = "CUS";
+	public String USER_USERTYPE_ADMIN = "ADM";
+	
+	public String RECIPE_RECIPETYPE_KOREAN= "KOR";
+	public String RECIPE_RECIPETYPE_CHINESE= "CHI";
+	public String RECIPE_RECIPETYPE_JAPANSES= "JPN";
+	public String RECIPE_RECIPETYPE_WESTERN= "WST";
+	public String RECIPE_RECIPETYPE_DESSERT= "DRT";
+	public String RECIPE_RECIPETYPE_ETC= "ETC";
+	
+	public String PRODUCT_PRODUCTTYPE_UTENSIL = "UTN";
+	public String PRODUCT_PRODUCTTYPE_FOOD = "FOOD";
+	
+	public String ORDER_ORDERSTATUS_ORDERED= "O";
+	public String ORDER_ORDERSTATUS_PAIED= "P";
+	public String ORDER_OPDERSTATUS_CANCELLED = "C";
+	
+	public String PAYMENT_PAYMENTMETHOD_CREDITCARD = "C";
+	public String PAYMENT_PAYMENTMETHOD_WIREMONEY = "W";
+	
+	public String DELIVERY_DELIVERYSTATUS_BEFORE = "B";
+	public String DELIVERY_DELIVERYSTATUS_DURING = "D";
+	public String DELIVERY_DELIVERYSTATUS_COMPLETED = "C";
 	
 	String ROOM_VIEWTYPE_OCEAN = "OCN";	//오션뷰
 	String ROOM_VIEWTYPE_CITY = "CTY";	//시티뷰
-	String ROOM_VIEWTYPE_MOUTAIN = "MOT";	//마운틴뷰
+	String ROOM_VIEWTYPE_MOUTAIN = "MOT";	//마운틴뷰	
 }
-

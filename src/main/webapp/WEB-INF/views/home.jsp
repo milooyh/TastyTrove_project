@@ -11,9 +11,11 @@
 
 </head>
 <body>
+
 	<h1>실행이 잘 되남 ..</h1>
 	
     <p><a href="/product">상품리스트 이동</a></p>
      <p><a href="/productwrite">상품등록 이동</a></p>
+
 </body>
 </html>
