@@ -38,7 +38,13 @@ public class PostRecipeController {
 	@RequestMapping("/recipe/post")
 	public String post() {
 
-		return "postRecipe/post";
+		return "recipe/post";
+	}
+	
+	
+	@PostMapping("/recipe")
+	public String postRecipe() {
+		return "redirect:/recipe/post";
 	}
 
 
@@ -107,11 +113,6 @@ public class PostRecipeController {
 	}
 	
 	
-	
-	@PostMapping("/recipe")
-	public String postRecipe() {
-		return "redirect:/recipe/post";
-	}
 
 	// 레시피 상세
 	@RequestMapping("/recipe/recipeInfo")

@@ -12,6 +12,7 @@
 	<button type="button" onclick="back()">돌아가기</button> 
 	<c:if test="${memberId == sessionId}">
 		<button>수정</button>
+		<button>삭제</button>
 	</c:if>
 	<br><br>
 	<img src="${fullRecipeFilePath}" width="300px" height="300px">
