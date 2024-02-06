@@ -99,7 +99,7 @@ button:hover {
                                     <c:when test="${product.viewType == 'OCN'}">밀키트</c:when>
                                     <c:when test="${product.viewType == 'CTY'}">제품</c:when>
                                     <c:when test="${product.viewType == 'MOT'}">재료</c:when>
-                                    <c:otherwise>알 수 없음</c:otherwise>
+                                    <c:otherwise>없음</c:otherwise>
                                 </c:choose>
                     </p>
                     <button onclick="location.href='/modifyProduct?productId=${product.productId}'">수정</button>
