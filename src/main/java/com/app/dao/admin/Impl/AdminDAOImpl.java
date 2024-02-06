@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.app.dao.admin.AdminDAO;
 import com.app.dto.delivery.Delivery;
+import com.app.dto.delivery.DeliverySearchCondition;
 import com.app.dto.mustEatPlace.MustEatPlace;
 import com.app.dto.mustEatPlace.MustEatPlaceSearchCondition;
 import com.app.dto.order.Order;
@@ -16,6 +17,7 @@ import com.app.dto.order.OrderSearchCondition;
 import com.app.dto.payment.Payment;
 import com.app.dto.payment.PaymentSearchCondition;
 import com.app.dto.postRecipe.PostRecipe;
+import com.app.dto.postRecipe.PostRecipeSearchCondition;
 import com.app.dto.postRecipe.PostRecipeUpdateRecipeType;
 import com.app.dto.product.Product;
 import com.app.dto.user.User;
@@ -119,11 +121,10 @@ public class AdminDAOImpl implements AdminDAO {
 
 //	레시피 카테고리 수정
 	@Override
-	public int modifyRecipeType(PostRecipeUpdateRecipeType postRecipeUpdateRecipeType) {
+	public int modifyRecipeType(PostRecipe postRecipe) {
 		// TODO Auto-generated method stub
-		System.out.println("adminDAO modifyRecipeType 불림");
 
-		int result = sqlSessionTemplate.update("admin_mapper.findPostRecipeById", postRecipeUpdateRecipeType);
+		int result = sqlSessionTemplate.update("admin_mapper.modifyRecipeType", postRecipe);
 
 		return result;
 	}
@@ -138,6 +139,16 @@ public class AdminDAOImpl implements AdminDAO {
 
 		return result;
 	}
+	
+//	레시피 조건 검색
+	@Override
+	public List<PostRecipe> findPostRecipeListBySearchCondition(PostRecipeSearchCondition postRecipeSearchCondition) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findPostRecipeListBySearchCondition 불림");
+		List<PostRecipe> recipeList = sqlSessionTemplate.selectList("admin_mapper.findPostRecipeListBySearchCondition", postRecipeSearchCondition);
+		return recipeList;
+	}
+
 
 //	상품 =================================================
 //	상품 찾기
@@ -217,7 +228,7 @@ public class AdminDAOImpl implements AdminDAO {
 				.selectList("admin_mapper.findMustEatPlaceListBySearchCondition", mustEatPlaceSearchCondition);
 		return placeList;
 	}
-	
+
 //	맛집 수정
 	@Override
 	public int modifyMustEatPlace(MustEatPlace mustEatPlace) {
@@ -252,9 +263,10 @@ public class AdminDAOImpl implements AdminDAO {
 	public List<OrderItem> findOrderItemListByMemberId(int memberId) {
 		// TODO Auto-generated method stub
 		System.out.println("adminDAO findOrderItemListByMemberId 불림");
-		List<OrderItem> orderItemList = sqlSessionTemplate.selectList("admin_mapper.findOrderItemListByMemberId", memberId);
+		List<OrderItem> orderItemList = sqlSessionTemplate.selectList("admin_mapper.findOrderItemListByMemberId",
+				memberId);
 		System.out.println("dao : " + orderItemList);
-		
+
 		return orderItemList;
 	}
 
@@ -263,7 +275,8 @@ public class AdminDAOImpl implements AdminDAO {
 	public List<Order> findOrderListBySearchCondition(OrderSearchCondition orderSearchCondition) {
 		// TODO Auto-generated method stub
 		System.out.println("adminDAO findOrderListBySearchCondition 불림");
-		List<Order> orderList = sqlSessionTemplate.selectList("admin_mapper.findOrderListBySearchCondition", orderSearchCondition);
+		List<Order> orderList = sqlSessionTemplate.selectList("admin_mapper.findOrderListBySearchCondition",
+				orderSearchCondition);
 		return orderList;
 	}
 
@@ -282,7 +295,7 @@ public class AdminDAOImpl implements AdminDAO {
 		// TODO Auto-generated method stub
 		System.out.println("adminDAO findOrderItemByMemberId 불림");
 		OrderItem orderItem = sqlSessionTemplate.selectOne("admin_mapper.findOrderItemByMemberId", orderItemId);
-		
+
 		return orderItem;
 	}
 
@@ -294,7 +307,7 @@ public class AdminDAOImpl implements AdminDAO {
 		OrderItem orderItem = sqlSessionTemplate.selectOne("admin_mapper.findOrderItemByOrderItemId", orderItemId);
 		return orderItem;
 	}
-	
+
 //	주문상태 변경
 	@Override
 	public int modifyOrder(Order order) {
@@ -307,7 +320,8 @@ public class AdminDAOImpl implements AdminDAO {
 	public List<OrderItem> findOrderItemListByOrderId(int orderId) {
 		// TODO Auto-generated method stub
 		System.out.println("adminDAO findOrderItemListByOrderId 불림");
-		List<OrderItem> orderItemList = sqlSessionTemplate.selectList("admin_mapper.findOrderItemListByOrderId", orderId);
+		List<OrderItem> orderItemList = sqlSessionTemplate.selectList("admin_mapper.findOrderItemListByOrderId",
+				orderId);
 		return orderItemList;
 	}
 
@@ -344,8 +358,18 @@ public class AdminDAOImpl implements AdminDAO {
 	public List<Payment> findPaymentListBySearchCondition(PaymentSearchCondition paymentSearchCondition) {
 		// TODO Auto-generated method stub
 		System.out.println("adminDAO findPaymentListBySearchCondition 불림");
-		List<Payment> paymentList = sqlSessionTemplate.selectList("admin_mapper.findPaymentListBySearchCondition", paymentSearchCondition);
+		List<Payment> paymentList = sqlSessionTemplate.selectList("admin_mapper.findPaymentListBySearchCondition",
+				paymentSearchCondition);
 		return paymentList;
+	}
+
+//	결제 총액 변동
+	@Override
+	public int modifyPaymentAmount(int orderId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO modifyPaymentAmount 불림");
+		int result = sqlSessionTemplate.update("admin_mapper.modifyPaymentAmount", orderId);
+		return result;
 	}
 
 //	배송 =================================
@@ -366,5 +390,16 @@ public class AdminDAOImpl implements AdminDAO {
 		Delivery delivery = sqlSessionTemplate.selectOne("admin_mapper.findDeliveryByDeliveryId", deliveryId);
 		return delivery;
 	}
+
+//	배송 조건 검색
+	@Override
+	public List<Delivery> findDeliveryListBySearchCondition(DeliverySearchCondition deliverySearchCondition) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findDeliveryListBySearchCondition 불림");
+		List<Delivery> deliveryList = sqlSessionTemplate.selectList("admin_mapper.findDeliveryListBySearchCondition",
+				deliverySearchCondition);
+		return deliveryList;
+	}
+
 
 }

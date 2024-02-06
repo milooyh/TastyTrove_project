@@ -5,14 +5,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/adminHeader.css?ver=1" type="text/css"/> 
-
 </head>
 <body>
 	<h1>관리자 메인 페이지</h1>
 	관리자 ${userId}님 로그인 중
 	<hr>
-	<a href="/admin/member">회원관리</a><br>
+	<a href="/admin/adminMember/member">회원관리</a><br>
 	<a href="/admin/recipeboard">레시피게시판관리</a><br>
 	<a href="/admin/musteatplace">맛집관리</a><br>
 	<a href="/admin/product">상품관리</a><br>

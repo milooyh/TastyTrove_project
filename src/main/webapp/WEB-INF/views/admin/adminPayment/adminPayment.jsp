@@ -60,7 +60,7 @@ th, td {
 					</select></td>
 					<td>${payment.paymentAmount}</td>
 					<td><button
-							onclick="location.href='/admin/member/update?memberId=${user.memberId}'">결제정보수정</button></td>
+							onclick="location.href='/admin/payment/update?paymentId=${payment.paymentId}'">결제정보수정</button></td>
 				</tr>
 			</c:forEach>
 		</tbody>

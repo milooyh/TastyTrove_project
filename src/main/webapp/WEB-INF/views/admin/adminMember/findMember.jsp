@@ -75,8 +75,8 @@ th, td {
       <label>유형</label>
       <select name="userType">
       	<option disabled selected>회원구분</option>
-      	<option value="cus">CUS</option>
-      	<option value="AMD">ADM</option>
+      	<option value="CUS">회원</option>
+      	<option value="ADM">관리자</option>
       </select>
 		
 		<button type="submit">검색하기</button>
@@ -109,14 +109,27 @@ th, td {
 					<td>${user.userTel}</td>
 					<td>${user.userAddress}</td>
 					<td>${user.userEmail}</td>
-					<th>${user.userType}</th>
-					<td><button>회원정보수정</button>
-					<td><button>회원정보삭제</button>
+					<td><c:choose>
+							<c:when test="${user.userType eq 'CUS'}">회원</c:when>
+							<c:when test="${user.userType eq 'ADM'}">관리자</c:when>
+					</c:choose></td>
+					<td><button onclick="location.href='/admin/member/update?memberId=${user.memberId}'">회원정보수정</button>
+					<td><button onclick="confirmDelete(${user.memberId})">회원정보삭제</button>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table><br>
 	<button onclick="location.href='/admin/member'">전체회원목록</button>
+	
+	<script>
+		function confirmDelete(memberId) {
+			var result = confirm("정말 삭제하시겠습니까?");
+
+			if (result) {
+				location.href = '/admin/member/remove?memberId=' + memberId;
+			}
+		}
+	</script>
 	
 </body>
 </html>

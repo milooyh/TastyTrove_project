@@ -1,3 +1,4 @@
+
 package com.app.dto.mustEatPlace;
 
 import lombok.Data;
@@ -7,7 +8,7 @@ public class MustEatPlace {
 	int placeId;
 	String restaurantName;
 	String place;
-	String memberId;
+	String userId;
 	String review;
-	double rating;
+	int rating;
 }

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.app.common.CommonCode;
 import com.app.dto.delivery.Delivery;
+import com.app.dto.delivery.DeliverySearchCondition;
 import com.app.dto.mustEatPlace.MustEatPlace;
 import com.app.dto.mustEatPlace.MustEatPlaceSearchCondition;
 import com.app.dto.order.Order;
@@ -26,6 +27,7 @@ import com.app.dto.order.OrderSearchCondition;
 import com.app.dto.payment.Payment;
 import com.app.dto.payment.PaymentSearchCondition;
 import com.app.dto.postRecipe.PostRecipe;
+import com.app.dto.postRecipe.PostRecipeSearchCondition;
 import com.app.dto.postRecipe.PostRecipeUpdateRecipeType;
 import com.app.dto.product.Product;
 import com.app.dto.user.User;
@@ -221,22 +223,25 @@ public class AdminController {
 
 	@GetMapping("/recipeboard/update")
 	public String updateRecipeType(@RequestParam String recipeId, Model model,
-			PostRecipeUpdateRecipeType postRecipeUpdateRecipeType) {
+			PostRecipe postRecipe) {
+		System.out.println("recipeId : " + recipeId);
+		
 		int intRecipeId = Integer.parseInt(recipeId);
-		postRecipeUpdateRecipeType.setRecipeId(intRecipeId);
+		postRecipe.setRecipeId(intRecipeId);
 
-		PostRecipe postRecipe = adminService.findPostRecipeById(intRecipeId);
+		postRecipe = adminService.findPostRecipeById(intRecipeId);
+		
 		model.addAttribute("postRecipe", postRecipe);
 
 		return "/admin/adminPostRecipe";
 	}
 
 	@PostMapping("/recipeboard/update")
-	public String updateRecipeTypeProcess(PostRecipeUpdateRecipeType postRecipeUpdateRecipeType) {
+	public String updateRecipeTypeProcess(PostRecipe postRecipe) {
 
 		System.out.println("adminController 레시피 카테고리 수정하기");
-
-		int result = adminService.modifyRecipeType(postRecipeUpdateRecipeType);
+		int result = adminService.modifyRecipeType(postRecipe);
+		
 		if (result > 0) {
 			System.out.println("레시피 카테고리 변경 성공");
 			return "redirect:/admin/recipeboard";
@@ -244,6 +249,16 @@ public class AdminController {
 			System.out.println("레시피 카레토리 변경 실패");
 			return "admin/adminPostRecipe/adminRecipeBoard";
 		}
+	}
+	
+//	레시피 조건 검색
+	@GetMapping("/recipeboard/search")
+	public String findPostRecipeListBySearchCondition(PostRecipeSearchCondition postRecipeSearchCondition, Model model) {
+		List<PostRecipe> recipeList = adminService.findPostRecipeListBySearchCondition(postRecipeSearchCondition);
+		model.addAttribute("recipeList", recipeList);
+		
+		return "admin/adminPostRecipe/findRecipeBoard";
+		
 	}
 
 //	레시피 삭제
@@ -496,6 +511,15 @@ public class AdminController {
 		return "/admin/adminPayment/findPayment";
 	}
 	
+	@GetMapping("/payment/update")
+	public String modifyPayment(@RequestParam String paymentId, Payment payment, Model model) {
+		int intPaymentId = Integer.parseInt(paymentId);
+		payment.setPaymentId(intPaymentId);
+		model.addAttribute("payment", payment);
+		return "/admin/adminPayment/modifyPayment";
+	}
+	
+	
 //	배송 ==============
 	@GetMapping("/delivery")
 	public String findDeliveryList(Model model) {
@@ -503,6 +527,13 @@ public class AdminController {
 		model.addAttribute("deliveryList", deliveryList);
 		return "/admin/adminDelivery/adminDelivery";
 		
+	}
+	
+	@GetMapping("/delivery/search")
+	public String findDeliveryListBySearchCondition(DeliverySearchCondition deliverySearhCondition, Model model) {
+		List<Delivery> deliveryList = adminService.findDeliveryListBySearchCondition(deliverySearhCondition);
+		model.addAttribute("deliveryList", deliveryList);
+		return "/admin/adminDelivery/findDelivery";
 	}
 
 }

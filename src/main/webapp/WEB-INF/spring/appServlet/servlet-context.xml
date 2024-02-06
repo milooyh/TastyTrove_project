@@ -26,10 +26,11 @@ http://www.springframework.org/schema/context/spring-context.xsd">
 		<beans:property name="prefix" value="/WEB-INF/views/"></beans:property>
 		<beans:property name="suffix" value=".jsp"></beans:property>
 	</beans:bean>
-	<resources mapping="/**" location="/resources/" />
-	<resources mapping="/abcss/**" location="/resources/css/" />
-	<resources mapping="/jsjs/**" location="/resources/js/" />
+	
+	<resources mapping="/css/**" location="/resources/css/" />
+	<resources mapping="/js/**" location="/resources/js/" />
 	<resources mapping="/fileStorage/**" location="/file://D:/fileStorage/" />
+	<resources mapping="/**" location="/resources/" />
 
 	<beans:bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

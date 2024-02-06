@@ -60,17 +60,20 @@ th, td {
 					<td>${user.userTel}</td>
 					<td>${user.userAddress}</td>
 					<td>${user.userEmail}</td>
-					<td>${user.userType}</td>
+					<td><c:choose>
+							<c:when test="${user.userType eq 'CUS'}">회원</c:when>
+							<c:when test="${user.userType eq 'ADM'}">관리자</c:when>
+					</c:choose></td>
+
 					<td><button
 							onclick="location.href='/admin/member/update?memberId=${user.memberId}'">회원정보수정</button></td>
-					<td><button
-							onclick="confirmDelete(${user.memberId})">회원정보삭제</button></td>
+					<td><button onclick="confirmDelete(${user.memberId})">회원정보삭제</button></td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
 	<br>
-	<button onclick="location.href='/admin/member/add'">회원추가</button>
+	<button onclick="location.href='/admin/member/add'">관리자추가</button>
 	<button onclick="location.href='/admin/member/search'">회원검색</button>
 
 	<script>

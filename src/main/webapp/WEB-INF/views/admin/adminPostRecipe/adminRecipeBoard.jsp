@@ -86,13 +86,13 @@ th, td {
 		</tbody>
 	</table>
 	<br>
-	<button onclick="location.href='/admin/member/search'">게시물검색</button>
+	<button onclick="location.href='/admin/recipeboard/search'">레시피 게시물 검색</button>
 
 	<script>
     function confirmModify(recipeId) {
         var result = confirm("카테고리를 수정할까요?");
         if (result) {
-            location.href = '/admin/recipeboard/update/recipeType?recipeId=' + recipeId;
+            location.href = '/admin/recipeboard/update?recipeId=' + recipeId;
         }
         return result; // true면 submit 진행, false면 중단
     }

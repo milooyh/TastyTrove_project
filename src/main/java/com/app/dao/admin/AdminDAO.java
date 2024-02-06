@@ -3,6 +3,7 @@ package com.app.dao.admin;
 import java.util.List;
 
 import com.app.dto.delivery.Delivery;
+import com.app.dto.delivery.DeliverySearchCondition;
 import com.app.dto.mustEatPlace.MustEatPlace;
 import com.app.dto.mustEatPlace.MustEatPlaceSearchCondition;
 import com.app.dto.order.Order;
@@ -11,6 +12,7 @@ import com.app.dto.order.OrderSearchCondition;
 import com.app.dto.payment.Payment;
 import com.app.dto.payment.PaymentSearchCondition;
 import com.app.dto.postRecipe.PostRecipe;
+import com.app.dto.postRecipe.PostRecipeSearchCondition;
 import com.app.dto.postRecipe.PostRecipeUpdateRecipeType;
 import com.app.dto.product.Product;
 import com.app.dto.user.User;
@@ -32,8 +34,9 @@ public interface AdminDAO {
 //	레시피
 	public List<PostRecipe> findPostRecipeList();
 	public PostRecipe findPostRecipeById(int recipeId);
+	public List<PostRecipe> findPostRecipeListBySearchCondition(PostRecipeSearchCondition postRecipeSearhCondition);
 	
-	public int modifyRecipeType(PostRecipeUpdateRecipeType postRecipeUpdateRecipeType);
+	public int modifyRecipeType(PostRecipe postRecipe);
 
 	public int removePostRecipe(int recipeId);
 	
@@ -74,4 +77,7 @@ public interface AdminDAO {
 //	배송
 	public List<Delivery> findDeliveryList();
 	public Delivery findDeliveryByDeliveryId(int deliveryId);
+	public List<Delivery> findDeliveryListBySearchCondition(DeliverySearchCondition deliverySearchCondition);
+
+	public int modifyPaymentAmount(int orderId);
 }
