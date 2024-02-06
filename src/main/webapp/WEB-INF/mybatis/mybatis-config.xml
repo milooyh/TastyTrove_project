@@ -8,8 +8,10 @@
 
 
 
+
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true" />
+		 <setting name="jdbcTypeForNull" value="NULL"/> 
 	</settings>
 
 
@@ -56,6 +58,11 @@
 		<typeAlias
 			type="com.app.dto.payment.ModifyPaymentAmountByOrderId"
 			alias="ModifyPaymentAmountByOrderId"></typeAlias>
+
+		<typeAlias type="com.app.dto.util.RecipeFileInfo" alias="RecipeFileInfo"/>
+		<typeAlias type="com.app.dto.postRecipe.RecipeImage" alias="RecipeImage"/>
+		<typeAlias type="com.app.dto.postRecipe.RecipeSearchCondition" alias="RecipeSearchCondition"/>
+
 	</typeAliases>
 
 

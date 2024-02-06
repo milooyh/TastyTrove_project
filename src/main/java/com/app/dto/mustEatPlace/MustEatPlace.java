@@ -8,7 +8,11 @@ public class MustEatPlace {
 	int placeId;
 	String restaurantName;
 	String place;
-	String userId;
 	String review;
-	int rating;
+	int asterion;
+	String telephoneNumber;
+	String representativeMenu;
+	//byte[] representativeMenuImage;
+	String representativeMenuImage;
+	String userId;
 }
