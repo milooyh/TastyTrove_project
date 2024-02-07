@@ -201,7 +201,7 @@ public class AdminDAOImpl implements AdminDAO {
 	public MustEatPlace findMustEatPlaceByPlaceId(int placeId) {
 		// TODO Auto-generated method stub
 		System.out.println("adminDAO findMustEatPlaceByPlaceId 불림");
-
+		System.out.println("DAO : "+ placeId);
 		MustEatPlace mustEatPlace = sqlSessionTemplate.selectOne("admin_mapper.findMustEatPlaceByPlaceId", placeId);
 
 		return mustEatPlace;
@@ -308,12 +308,6 @@ public class AdminDAOImpl implements AdminDAO {
 		return orderItem;
 	}
 
-//	주문상태 변경
-	@Override
-	public int modifyOrder(Order order) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 //	전체주문번호로 주문목록조회
 	@Override
@@ -331,6 +325,27 @@ public class AdminDAOImpl implements AdminDAO {
 		// TODO Auto-generated method stub
 		System.out.println("adminDAO modifyTotalPrice 불림");
 		int result = sqlSessionTemplate.update("admin_mapper.modifyTotalPrice", orderId);
+		return result;
+	}
+	
+//	주문번호로 전체주문목록 조회
+	@Override
+	public Order findOrderByOrderId(int orderId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findOrderByOrderId 불림");
+		Order order = sqlSessionTemplate.selectOne("admin_mapper.findOrderByOrderId", orderId);
+		System.out.println(order.getOrderId());
+		return order;
+	}
+
+//	주문상태 수정
+	@Override
+	public int modifyOrderStatus(Order order) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO modifyOrderStatus 불림");
+		System.out.println(order.getOrderStatus());
+		int result = sqlSessionTemplate.update("admin_mapper.modifyOrderStatus", order);
+		System.out.println("result = " + result);
 		return result;
 	}
 
@@ -371,7 +386,15 @@ public class AdminDAOImpl implements AdminDAO {
 		int result = sqlSessionTemplate.update("admin_mapper.modifyPaymentAmount", orderId);
 		return result;
 	}
-
+	
+//	결제 방법 변경
+	@Override
+	public int ModifyPaymentMethod(Payment payment) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO ModifyPaymentMethod 불림");
+		int result = sqlSessionTemplate.update("admin_mapper.modifyPaymentMethod", payment);
+		return result;
+	}
 //	배송 =================================
 //	배송 목록 조회
 	@Override
@@ -400,6 +423,20 @@ public class AdminDAOImpl implements AdminDAO {
 				deliverySearchCondition);
 		return deliveryList;
 	}
+
+//	배송 상태 변경
+	@Override
+	public int modifyDeliveryStatus(Delivery delivery) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO modifyDeliveryStatus 불림");
+		int result = sqlSessionTemplate.update("admin_mapper.modifyDeliveryStatus", delivery);
+		return result;
+	}
+
+
+
+
+
 
 
 }

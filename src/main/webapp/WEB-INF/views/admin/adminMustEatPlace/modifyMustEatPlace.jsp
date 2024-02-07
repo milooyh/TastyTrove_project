@@ -1,14 +1,30 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Modify Member</title>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/adminMustEatPlace.css?after"
+	type="text/css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 </head>
 <body>
-    <h1>맛집 정보 수정</h1>
+	<%@include file="../adminHeader.jsp"%>
+
+	<div class="content">
+		<div class="content-title">맛집 정보 수정</div>
+		<hr>
+		<div class="content-nav">
+			<span>맛집관리</span><span> - </span><span><a href="/admin/musteatplace">맛집목록</a></span><span>
+				- </span><span><a href="/admin/musteatplace/search">맛집검색</a></span><span>
+				- </span><span><a href="/admin/musteatplace/add">맛집추가</a></span>
+		</div>
     
     <form:form method="post" action="/admin/musteatplace/update">
         <input type="hidden" name="placeId" value="${mustEatPlace.placeId}" />

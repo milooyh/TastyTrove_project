@@ -1,24 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/adminHeader.css?ver=1" type="text/css"/> 
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/adminMember.css?after"
+	type="text/css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 </head>
 <body>
-	<h1>관리자 메인 페이지</h1>
-	관리자 ${userId}님 로그인 중
-	<hr>
-	<a href="/admin/member">회원관리</a><br>
-	<a href="/admin/recipeboard">레시피게시판관리</a><br>
-	<a href="/admin/musteatplace">맛집관리</a><br>
-	<a href="/admin/product">상품관리</a><br>
-	<a href="/admin/order">주문관리</a><br>
-	<a href="/admin/payment">결제관리</a><br>
-	<a href="/admin/delivery">배송관리</a><br>
-	
+	<%@include file="adminHeader.jsp"%>
+
+	<div class="content">
+		<div class="content-title">관리자 메인</div>
+	</div>
 </body>
 </html>

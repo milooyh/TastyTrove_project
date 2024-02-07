@@ -6,9 +6,24 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/adminMember.css?after"
+	type="text/css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
+
 <body>
-	<h1>관리자 추가</h1>
+	<%@include file="../adminHeader.jsp"%>
+	<div class="content">
+		<div class="content-title">관리자 추가</div>
+		<hr>
+		<div class="content-nav">
+			<span>회원관리</span><span> - </span><span><a
+				href="/admin/member">회원목록</a></span><span> - </span><span><a
+				href="/admin/member/search">회원검색</a></span><span> - </span><span><a
+				href="/admin/member/add">관리자추가</a></span>
+		</div>
 	<hr>
 	<form action="" method="post">
 		<label>아이디 : </label><input type="text" id="userId" name="userId">

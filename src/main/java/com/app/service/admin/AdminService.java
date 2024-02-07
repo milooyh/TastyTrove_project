@@ -64,14 +64,18 @@ public interface AdminService {
 	public List<Order> findOrderListBySearchCondition(OrderSearchCondition orderSearchCondition);
 	public OrderItem findOrderItemByOrderItemId(int orderItemId);
 	public List<OrderItem> findOrderItemListByOrderId(int orderId);
+	public Order findOrderByOrderId(int orderId);
 	
 	public int modifyOrderItem(OrderItem orderItem);
 	public int modifyTotalPrice(int orderId);
+	public int modifyOrderStatus(Order order);
 	
 //	결제 ============
 	public List<Payment> findPaymentList();
 	public Payment findPaymentByPaymentId(int paymentId);
 	public List<Payment> findPaymentListBySearchCondition(PaymentSearchCondition paymentSearchCondition);
+	
+	public int modifyPaymentMethod(Payment payment);
 	
 //	배송 ================================
 	public List<Delivery> findDeliveryList();
@@ -79,5 +83,6 @@ public interface AdminService {
 	public List<Delivery> findDeliveryListBySearchCondition(DeliverySearchCondition deliverySearchCondition);
 	
 	public int modifyPaymentAmount(int orderId);
+	public int modifyDeliveryStatus(Delivery delivery);
 }
 

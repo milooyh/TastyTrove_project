@@ -58,6 +58,18 @@ public class AdminController {
 
 		return "/admin/adminMember/adminMember";
 	}
+	
+//	ajax값 넘겨 주기 위한 컨트롤러
+	@GetMapping("/member/details")
+	@ResponseBody
+	public User getUserDetails(@RequestParam String memberId) {
+		System.out.println("getUserDatil 호출됨 ㅜㅜㅜ");
+	    int intMemberId = Integer.parseInt(memberId);
+	    User user = adminService.findUserByMemberId(intMemberId);
+	    return user;
+	}
+
+
 
 //	조건에 따른 회원 검색
 	@GetMapping("/member/search")
@@ -218,9 +230,18 @@ public class AdminController {
 
 		return "/admin/adminPostRecipe/recipeContent";
 	}
+	
+//	ajax값 넘겨 주기 위한 컨트롤러
+	@GetMapping("/recipeboard/details")
+	@ResponseBody
+	public PostRecipe getRecipeDetails(@RequestParam String recipeId) {
+		System.out.println("레시피 getUserDatil 호출됨 ㅜㅜㅜ");
+	    int intRecipeId = Integer.parseInt(recipeId);
+	    PostRecipe recipe = adminService.findPostRecipeById(intRecipeId);
+	    return recipe;
+	}
 
-//	레시피 카테고리 수정 >>>>>>>>>> 안 됨 ㅜㅜ
-
+//	레시피 카테고리 수정
 	@GetMapping("/recipeboard/update")
 	public String updateRecipeType(@RequestParam String recipeId, Model model,
 			PostRecipe postRecipe) {
@@ -279,6 +300,7 @@ public class AdminController {
 		}
 	}
 
+
 //	상품 ==============================================================
 //	상품 목록
 	@GetMapping("/product")
@@ -326,6 +348,23 @@ public class AdminController {
 
 		return "/admin/adminMustEatPlace/adminMustEatPlace";
 	}
+	
+//	ajax값 넘겨 주기 위한 컨트롤러
+	@GetMapping("/musteatplace/details")
+	@ResponseBody
+	public MustEatPlace getMustDetails(@RequestParam String placeId) {
+		System.out.println(placeId);
+		System.out.println("맛집 getUserDatil 호출됨 ㅜㅜㅜ");
+		
+	    int intPlaceId = Integer.parseInt(placeId);
+	    System.out.println(intPlaceId);
+	    
+	    MustEatPlace mustEatPlace = adminService.findMustEatPlaceByPlaceId(intPlaceId);
+	    System.out.println(mustEatPlace);
+	    
+	    return mustEatPlace;
+	}
+
 
 //	맛집별 리뷰
 	@RequestMapping("/musteatplace/content")
@@ -494,6 +533,35 @@ public class AdminController {
 		}
 	}
 	
+	
+//	주문 상태 수정
+	@GetMapping("/order/update")
+	public String modifyOrderStatus(@RequestParam String orderId, Model model, Order order) {
+		System.out.println("admin controller modifyOrderStauts 불림");
+		int intOrderId = Integer.parseInt(orderId);
+		order.setOrderId(intOrderId);
+		order = adminService.findOrderByOrderId(intOrderId);
+		
+		model.addAttribute("order", order);
+		System.out.println("model : " + model);
+		return "/admin/adminOrder";
+	}
+	
+	@PostMapping("/order/update")
+	public String modifyOrderStatusProcess(Order order) {
+		System.out.println("admin controller modifyOrderStatusProcess 불림");
+		System.out.println(order);
+		int result = adminService.modifyOrderStatus(order);
+		System.out.println("result : " + result);
+		if (result > 0) {
+			System.out.println("주문상태 수정 성공");
+			return "redirect:/admin/order";
+		} else {
+			System.out.println("주문상태 수정 실패");
+			return "/admin/adminOrder/adminOrder";
+		}
+	}
+	
 //	결제=============================
 	@GetMapping("/payment")
 	public String findPaymentList(Model model) {
@@ -515,8 +583,23 @@ public class AdminController {
 	public String modifyPayment(@RequestParam String paymentId, Payment payment, Model model) {
 		int intPaymentId = Integer.parseInt(paymentId);
 		payment.setPaymentId(intPaymentId);
+		
+		payment = adminService.findPaymentByPaymentId(intPaymentId);
 		model.addAttribute("payment", payment);
 		return "/admin/adminPayment/modifyPayment";
+	}
+	
+	@PostMapping("/payment/update")
+	public String modifyPaymentProc(Payment payment) {
+		System.out.println("adminController modifyPaymentMethod 불림");
+		int result = adminService.modifyPaymentMethod(payment);
+		if(result > 0) {
+			System.out.println("결제 방법 변경 셩공");
+			return "redirect:/admin/payment";
+		} else {
+			System.out.println("결제 방법 변경 실패");
+			return "/admin/adminPayment/adminPayment";
+		}
 	}
 	
 	
@@ -535,5 +618,35 @@ public class AdminController {
 		model.addAttribute("deliveryList", deliveryList);
 		return "/admin/adminDelivery/findDelivery";
 	}
+	
+//	배송 상태 변경
+	@GetMapping("/delivery/update")
+	public String modifyDeliveryStatus(@RequestParam String deliveryId, Model model, Delivery delivery) {
+		System.out.println("adminController modifyDeliveryStatus 불림");
+		
+		int intDeliveryId = Integer.parseInt(deliveryId);
+		delivery.setDeliveryId(intDeliveryId);
+		
+		delivery = adminService.findDeliveryByDeliveryId(intDeliveryId);
+		model.addAttribute("delivery", delivery);
+		
+		return "/admin/adminDelivery/adminDelivery";
+	}
+	
+	@PostMapping("/delivery/update")
+	public String modifyDeliveryStatusProc(Delivery delivery) {
+		System.out.println("admin Controller modifyDeliveryStatus 불림");
+		
+		int result = adminService.modifyDeliveryStatus(delivery);
+		if(result > 0) {
+			System.out.println("배송 상태 변경 셩공");
+			return "redirect:/admin/delivery";
+		} else {
+			System.out.println("배송 상ㄴ태 변경 실패");
+			return "/admin/adminDelivery/adminDelivery";
+		}
+	}
+	
+	
 
 }

@@ -315,6 +315,25 @@ public class AdminServiceImpl implements AdminService {
 		int result = adminDAO.modifyTotalPrice(orderId);
 		return result;
 	}
+	
+//	주문번호로 전체주문목록 조회
+	@Override
+	public Order findOrderByOrderId(int orderId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminService findOrderByOrderId 불림");
+		Order order = adminDAO.findOrderByOrderId(orderId);
+		return order;
+	}
+	
+//	주문상태 수정
+	@Override
+	public int modifyOrderStatus(Order order) {
+		// TODO Auto-generated method stub
+		System.out.println("adminService modifyOrderStatus 불림");
+		int result = adminDAO.modifyOrderStatus(order);
+		return result;
+	}
+
 
 //	결제 ===============
 //	결제목록조회
@@ -353,6 +372,14 @@ public class AdminServiceImpl implements AdminService {
 		return result;
 	}
 
+//	결제 방법 변동
+	@Override
+	public int modifyPaymentMethod(Payment payment) {
+		// TODO Auto-generated method stub
+		System.out.println("adminService modifyPaymentMethod 불림");
+		int result = adminDAO.ModifyPaymentMethod(payment);
+		return result;
+	}
 
 	
 //	배송 ===============================
@@ -382,6 +409,19 @@ public class AdminServiceImpl implements AdminService {
 		List<Delivery> deliveryList = adminDAO.findDeliveryListBySearchCondition(deliverySearchCondition);
 		return deliveryList;
 	}
+
+//	배송상태 변경
+	@Override
+	public int modifyDeliveryStatus(Delivery delivery) {
+		// TODO Auto-generated method stub
+		System.out.println("adminSErvice modifyDeliveryStatus 불림");
+		int result = adminDAO.modifyDeliveryStatus(delivery);
+		return result;
+	}
+
+
+
+
 
 
 }

@@ -7,20 +7,24 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
-table {
-	border-collapse: collapse;
-	text-align: center;
-}
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/adminMustEatPlace.css?after"
+	type="text/css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-th, td {
-	border: 1px solid black;
-}
-</style>
 </head>
 <body>
-	<h1>맛집 검색</h1> 
-	<hr>
+	<%@include file="../adminHeader.jsp"%>
+
+	<div class="content">
+		<div class="content-title">맛집 검색</div>
+		<hr>
+		<div class="content-nav">
+			<span>맛집관리</span><span> - </span><span><a href="/admin/musteatplace">맛집목록</a></span><span>
+				- </span><span><a href="/admin/musteatplace/search">맛집검색</a></span><span>
+				- </span><span><a href="/admin/musteatplace/add">맛집추가</a></span>
+		</div>
 	<form>
 		<p>검색기준</p>
 		<lable><input type="checkbox" name="placeId">맛집번호</lable>

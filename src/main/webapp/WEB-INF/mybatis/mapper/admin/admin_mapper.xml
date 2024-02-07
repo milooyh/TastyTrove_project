@@ -121,8 +121,7 @@
 		SELECT * FROM RECIPE_BOARD WHERE recipe_id = #{recipeId}
 	</select>
 
-	<update id="modifyRecipeType"
-		parameterType="PostRecipe">
+	<update id="modifyRecipeType" parameterType="PostRecipe">
 		UPDATE RECIPE_BOARD
 		SET
 		recipe_type = #{recipeType}
@@ -135,8 +134,8 @@
 		RECIPE_BOARD
 		WHERE recipe_id = #{recipeId}
 	</delete>
-	
-		<select id="findPostRecipeListBySearchCondition"
+
+	<select id="findPostRecipeListBySearchCondition"
 		parameterType="PostRecipe" resultType="PostRecipeSearchCondition">
 		SELECT * FROM RECIPE_BOARD
 		WHERE 1 = 1
@@ -315,10 +314,27 @@
 		#{orderId})
 		where order_id = #{orderId}
 	</update>
+
 	<delete id="modifyOrder" parameterType="Order">
 		DELETE FROM ORDER_ITEMS
 		WHERE order_item_id = #{orderItemId}
 	</delete>
+
+	<update id="modifyOrderStatus" parameterType="Order">
+		UPDATE ORDERS
+		SET
+		order_status = #{orderStatus}
+		WHERE
+		order_id = #{orderId}
+	</update>
+
+	<select id="findOrderByOrderId" resultType="Order"
+		parameterType="int">
+		SELECT * FROM
+		ORDERS
+		WHERE order_id = #{orderId}
+	</select>
+
 
 	<!--결제 정보 찾기 ================================================================ -->
 	<select id="findPaymentList" resultType="Payment">
@@ -353,6 +369,15 @@
 			AND payment_method = #{paymentMethod}
 		</if>
 	</select>
+
+
+	<update id="modifyPaymentMethod" parameterType="Payment">
+		UPDATE PAYMENTS
+		SET
+		payment_method = #{paymentMethod}
+		WHERE
+		payment_id = #{paymentId}
+	</update>
 
 	<!--배송 찾기 ============================================================== -->
 	<select id="findDeliveryList" resultType="Delivery">
@@ -407,11 +432,22 @@
 	<update id="modifyPaymentAmount"
 		parameterType="ModifyPaymentAmountByOrderId">
 		update payments
-		set payment_amount = (select o.total_price + d.delivery_fee
+		set payment_amount = (select
+		o.total_price + d.delivery_fee
 		from orders o, deliveries d
-		where o.order_id = d.order_id
+		where
+		o.order_id = d.order_id
 		and o.order_id = #{orderId})
-		where order_id = #{orderId};
+		where order_id =
+		#{orderId};
+	</update>
+
+	<update id="modifyDeliveryStatus" parameterType="Delivery">
+		UPDATE DELIVERIES
+		SET
+		delivery_status = #{deliveryStatus}
+		WHERE
+		delivery_id = #{deliveryId}
 	</update>
 
 
