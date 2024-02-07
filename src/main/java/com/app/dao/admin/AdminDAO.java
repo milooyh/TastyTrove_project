@@ -23,7 +23,7 @@ public interface AdminDAO {
 //	회원
 	public List<User> findUserList();
 	public List<User> findUserListBySearchCondition(UserSearchCondition userSearchCondition);
-	public User findUserByMemberId(int memberId); 
+	public User findUserByMemberId(int memberId);
 	
 	public int saveMember(User user);
 	

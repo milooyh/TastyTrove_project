@@ -28,8 +28,17 @@
 		<p>검색기준</p>
 		<lable><input type="checkbox" name="orderId">주문번호</lable>
 		<lable><input type="checkbox" name="memberId">회원번호</lable>
-		<lable><input type="checkbox" name="totalPrice">총계</lable>
 		<lable><input type="text" name="searchKeyword" placeholder="검색어를 입력하세요."></lable><br>
+		
+		<label for="minPrice">최소 가격:</label>
+		<input type="range" id="minPrice" name="minPrice" min="1000" max="10000" step="1000" value="1000">
+		<span id="minPriceValue">1000원</span>
+		
+		<label for="maxPrice">최대 가격:</label>
+		<input type="range" id="maxPrice" name="maxPrice" min="1000" max="10000" step="1000" value="10000">
+		<span id="maxPriceValue">10000원</span>
+		<br>
+		
 		<lable>주문일시</lable><input type="date" name="orderDate">
 		<lable>주문상태</lable>
 		<select name="orderStatus">
@@ -68,6 +77,26 @@
 		</tbody>
 	</table><br>
 	<button onclick="location.href='/admin/order'">전체주문목록</button>
+	
+	<script>
+	
+	// 최소 가격 슬라이더
+	const minPriceSlider = document.getElementById('minPrice');
+	const minPriceValue = document.getElementById('minPriceValue');
+
+	minPriceSlider.addEventListener('input', function() {
+	    minPriceValue.textContent = minPriceSlider.value + '원';
+	});
+
+	// 최대 가격 슬라이더
+	const maxPriceSlider = document.getElementById('maxPrice');
+	const maxPriceValue = document.getElementById('maxPriceValue');
+
+	maxPriceSlider.addEventListener('input', function() {
+	    maxPriceValue.textContent = maxPriceSlider.value + '원';
+	});
+
+	</script>
 	
 </body>
 </html>

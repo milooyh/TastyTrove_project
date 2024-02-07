@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.app.common.CommonCode;
 import com.app.dto.user.User;
@@ -28,18 +29,18 @@ public class UserController {
 
 	@PostMapping("/login")
 	public String loginProcess(User user, HttpSession session) {
-		
+
 		User findUser = userService.findUserByLoginId(user);
 		System.out.println(findUser);
-		
-		if(findUser == null) { // 로그인 실패하면 로그인 페이지로 다시
+
+		if (findUser == null) { // 로그인 실패하면 로그인 페이지로 다시
 			System.out.println("로그인 실패");
 			return "user/login";
 		}
-		
+
 		session.setAttribute("userId", findUser.getUserId()); // 로그인한 아이디 세션 저장
 		System.out.println(session);
-		
+
 		if (findUser != null) { // 로그인 성공
 			System.out.println("로그인 성공");
 			if (findUser.getUserType().equals(CommonCode.USER_USERTYPE_ADMIN)) {
@@ -58,6 +59,20 @@ public class UserController {
 	@GetMapping("/signup")
 	public String signup() {
 		return "user/signup";
+	}
+
+//	아이디 있나 확인
+	@PostMapping("/signup/checkId")
+	@ResponseBody
+	public String checkId(@RequestParam String userId) {
+		User user = userService.findUserByUserId(userId);
+		if (user != null) {
+			System.out.println("아이디 사용 가능");
+			return "0";
+		} else {
+			System.out.println("아이디 사용 불가");
+		}
+		return "1";
 	}
 
 	@PostMapping("/signup")
@@ -101,12 +116,11 @@ public class UserController {
 		}
 
 	}
-	
+
 //	관리자 페이지 =================
 	@RequestMapping("/admin")
 	public String adminHome() {
 		return "/admin/adminHome";
 	}
-	
 
 }

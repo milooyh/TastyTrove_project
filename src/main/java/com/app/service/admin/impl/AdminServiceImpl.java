@@ -64,7 +64,7 @@ public class AdminServiceImpl implements AdminService {
 		return result;
 	}
 
-//	아이디로 회원 조회
+//	회원번호로 회원 조회
 	@Override
 	public User findUserByMemberId(int memberId) {
 		// TODO Auto-generated method stub
@@ -74,6 +74,7 @@ public class AdminServiceImpl implements AdminService {
 
 		return user;
 	}
+
 
 //	회원 정보 수정
 	@Override

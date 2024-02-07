@@ -33,5 +33,13 @@ public class UserServiceImpl implements UserService{
 		
 		return result;
 	}
+
+//	아이디로 조회
+	@Override
+	public User findUserByUserId(String userId) {
+		// TODO Auto-generated method stub
+		User user = userDAO.findUserByUserId(userId);
+		return user;
+	}
 	
 }

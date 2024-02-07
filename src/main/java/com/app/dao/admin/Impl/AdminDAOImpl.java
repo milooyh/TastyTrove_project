@@ -39,6 +39,7 @@ public class AdminDAOImpl implements AdminDAO {
 
 		return userList;
 	}
+	
 
 //	조건에 따라 회원 정보 검색
 	@Override
@@ -432,6 +433,7 @@ public class AdminDAOImpl implements AdminDAO {
 		int result = sqlSessionTemplate.update("admin_mapper.modifyDeliveryStatus", delivery);
 		return result;
 	}
+
 
 
 
