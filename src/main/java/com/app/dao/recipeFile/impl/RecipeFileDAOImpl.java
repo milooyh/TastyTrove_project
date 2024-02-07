@@ -44,4 +44,11 @@ public class RecipeFileDAOImpl implements RecipeFileDAO{
 		return result;
 	}
 
+	@Override
+	public int removeRecipeFileInfo(int id) {
+		// TODO Auto-generated method stub
+		int result = sqlSessionTemplate.delete("recipeFile_mapper.removeRecipe", id);
+		return result;
+	}
+
 }

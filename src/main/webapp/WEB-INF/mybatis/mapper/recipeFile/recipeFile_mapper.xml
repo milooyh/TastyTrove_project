@@ -31,7 +31,7 @@
 			recipe_file_id = #{recipeFileId}
 	</update>
 	
-	<delete id="removeRecipe">
+	<delete id="removeRecipe" parameterType="int">
 		DELETE FROM recipe_file_info
 		WHERE recipe_file_id = #{recipeFileId}
 	</delete>

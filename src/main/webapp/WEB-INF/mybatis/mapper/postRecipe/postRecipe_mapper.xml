@@ -14,11 +14,6 @@
 		WHERE recipe_id = #{recipeId}
 	</select> 
 	
-<!-- 	<select id="findRecipeList" resultType="PostRecipe"> -->
-<!-- 		SELECT * FROM recipe_board r, recipe_file_info i -->
-<!-- 		WHERE r.recipe_file_id = i.recipe_file_id -->
-<!-- 	</select> -->
-	
 <!-- 	레시피 목록 출력 및 검색 -->
 	<select id = "findRecipeListBySearchCondition" resultType="PostRecipe" parameterType="RecipeSearchCondition">
 		SELECT * FROM recipe_board r, recipe_file_info i

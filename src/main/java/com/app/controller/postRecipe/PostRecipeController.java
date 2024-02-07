@@ -165,9 +165,20 @@ public class PostRecipeController {
 	//레시피 삭제
 	@RequestMapping("/recipe/removeRecipe")
 	public String removeRecipeProcess(@RequestParam int id) {
-		System.out.println("/removeRecipe 실행됨 "+id);
+		System.out.println("/removeRecipe 실행됨 레시피 아이디 : "+id);
+		
+		//아이디에 따른 레시피 찾기
+		PostRecipe recipe = postRecipeService.findRecipeInfoById(id);
+		int recipeFileId = recipe.getRecipeFileId();
+		
+		System.out.println("recipeFileId : " + recipeFileId);
+		
+		//찾은 레시피의 이미지 DB 정보 삭제
+		int result2 = recipeFileService.removeRecipeFileInfo(recipeFileId);
 		int result = postRecipeService.removeRecipeById(id);
-		if(result > 0) {
+		
+		
+		if(result > 0 && result2 >0) {
 			System.out.println("삭제성공");
 			return "redirect:/recipe";
 		}else {
@@ -175,17 +186,8 @@ public class PostRecipeController {
 			return "recipe/recipe";
 		}
 		
-		
 	}
-	
-//	//레시피 리스트
-//	@GetMapping("/recipe")
-//	public String recipeList(Model model) {
-//		List<PostRecipe> recipeList = postRecipeService.findRecipeList();
-//		model.addAttribute("recipeList", recipeList);
-//		
-//		return "recipe/recipe";
-//	}
+
 	
 	//검색기능 추가된 레시피 리스트
 	@GetMapping("/recipe")

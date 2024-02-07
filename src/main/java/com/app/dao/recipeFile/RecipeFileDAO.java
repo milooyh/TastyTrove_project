@@ -11,5 +11,7 @@ public interface RecipeFileDAO {
 	public RecipeFileInfo findRecipeFileInfoByFileId(int fileId);
 	
 	public int modifyRecipeFileInfo(RecipeFileInfo recipeFileInfo);
+	
+	public int removeRecipeFileInfo(int id);
 
 }

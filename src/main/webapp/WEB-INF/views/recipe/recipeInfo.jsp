@@ -14,7 +14,7 @@
 	
 		<button onclick="location.href='/recipe/modifyRecipe?id=${recipeId}'">수정</button>
 	
-		<button onclick="location.href='/recipe/removeRecipe?id=${recipeId}'">삭제</button>
+		<button onclick="location.href='/recipe/removeRecipe?id=${recipeId}'" id="removeRecipeBtn">삭제</button>
 		
 	</c:if>
 	<br><br>
@@ -22,7 +22,15 @@
 	<div> <h1> ${recipeTitle} </h1></div>
 	<div> 작성자 : ${memberId}</div>
 	<div> 작성일자 : ${boardDate}</div>
-	<div> 카테고리 : ${recipeType}</div>
+	<div> 카테고리 : 
+	<c:choose>
+		<c:when test="${recipeType == 'KOR'}">한식</c:when>
+		<c:when test="${recipeType == 'CHI'}">중식</c:when>
+		<c:when test="${recipeType == 'JPN'}">일식</c:when>
+		<c:when test="${recipeType == 'WST'}">양식</c:when>
+		<c:when test="${recipeType == 'DRT'}">디저트</c:when>
+	</c:choose>	
+	</div>
 	<div> ${recipeContent}</div>
 	
 	<script>

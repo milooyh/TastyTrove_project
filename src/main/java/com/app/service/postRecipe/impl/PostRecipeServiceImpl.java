@@ -41,13 +41,8 @@ public class PostRecipeServiceImpl implements PostRecipeService {
 		return recipe;
 	}
 
-	@Override
-	public List<PostRecipe> findRecipeList() {
-		// TODO Auto-generated method stub
-		List<PostRecipe> recipeList = postRecipeDAO.findRecipeList();
-		return recipeList;
-	}
-
+	
+	//레시피 목록 출력 및 조건에 따른 레시피 출력
 	@Override
 	public List<PostRecipe> findRecipeListBySearchCondition(RecipeSearchCondition recipeSearchCondition) {
 		// TODO Auto-generated method stub

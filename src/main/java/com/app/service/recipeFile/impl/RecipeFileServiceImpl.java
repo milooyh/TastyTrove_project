@@ -45,4 +45,11 @@ public class RecipeFileServiceImpl implements RecipeFileService{
 		return result;
 	}
 
+	@Override
+	public int removeRecipeFileInfo(int id) {
+		// TODO Auto-generated method stub
+		int result = recipeFileDAO.removeRecipeFileInfo(id);
+		return result;
+	}
+
 }
