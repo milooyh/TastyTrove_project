@@ -1,3 +1,4 @@
+
 package com.app.dto.mustEatPlace;
 
 import lombok.Data;
@@ -8,7 +9,7 @@ public class MustEatPlace {
 	String restaurantName;
 	String place;
 	String review;
-	int asterion;
+	int rating;
 	String telephoneNumber;
 	String representativeMenu;
 	//byte[] representativeMenuImage;

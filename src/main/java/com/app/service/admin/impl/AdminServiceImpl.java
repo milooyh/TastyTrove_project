@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.app.dao.admin.AdminDAO;
 import com.app.dto.delivery.Delivery;
+import com.app.dto.delivery.DeliverySearchCondition;
 import com.app.dto.mustEatPlace.MustEatPlace;
 import com.app.dto.mustEatPlace.MustEatPlaceSearchCondition;
 import com.app.dto.order.Order;
@@ -15,6 +16,7 @@ import com.app.dto.order.OrderSearchCondition;
 import com.app.dto.payment.Payment;
 import com.app.dto.payment.PaymentSearchCondition;
 import com.app.dto.postRecipe.PostRecipe;
+import com.app.dto.postRecipe.PostRecipeSearchCondition;
 import com.app.dto.postRecipe.PostRecipeUpdateRecipeType;
 import com.app.dto.product.Product;
 import com.app.dto.user.User;
@@ -62,7 +64,7 @@ public class AdminServiceImpl implements AdminService {
 		return result;
 	}
 
-//	아이디로 회원 조회
+//	회원번호로 회원 조회
 	@Override
 	public User findUserByMemberId(int memberId) {
 		// TODO Auto-generated method stub
@@ -72,6 +74,7 @@ public class AdminServiceImpl implements AdminService {
 
 		return user;
 	}
+
 
 //	회원 정보 수정
 	@Override
@@ -120,11 +123,11 @@ public class AdminServiceImpl implements AdminService {
 
 //	레시피 카테고리 수정
 	@Override
-	public int modifyRecipeType(PostRecipeUpdateRecipeType postRecipeUpdateRecipeType) {
+	public int modifyRecipeType(PostRecipe postRecipe) {
 		// TODO Auto-generated method stub
 		System.out.println("adminService modifyRecipeType 불림");
 
-		int result = adminDAO.modifyRecipeType(postRecipeUpdateRecipeType);
+		int result = adminDAO.modifyRecipeType(postRecipe);
 		return result;
 	}
 
@@ -138,6 +141,16 @@ public class AdminServiceImpl implements AdminService {
 
 		return result;
 	}
+	
+//	레시피 조건 검색
+	@Override
+	public List<PostRecipe> findPostRecipeListBySearchCondition(PostRecipeSearchCondition postRecipeSearchCondition) {
+		// TODO Auto-generated method stub
+		System.out.println("adminService findPostRecipeListBySearchCondition 불림");
+		List<PostRecipe> recipeList = adminDAO.findPostRecipeListBySearchCondition(postRecipeSearchCondition);
+		return recipeList;
+	}
+
 
 //	상품==========================
 //	상품 목록 조회
@@ -303,6 +316,25 @@ public class AdminServiceImpl implements AdminService {
 		int result = adminDAO.modifyTotalPrice(orderId);
 		return result;
 	}
+	
+//	주문번호로 전체주문목록 조회
+	@Override
+	public Order findOrderByOrderId(int orderId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminService findOrderByOrderId 불림");
+		Order order = adminDAO.findOrderByOrderId(orderId);
+		return order;
+	}
+	
+//	주문상태 수정
+	@Override
+	public int modifyOrderStatus(Order order) {
+		// TODO Auto-generated method stub
+		System.out.println("adminService modifyOrderStatus 불림");
+		int result = adminDAO.modifyOrderStatus(order);
+		return result;
+	}
+
 
 //	결제 ===============
 //	결제목록조회
@@ -331,6 +363,24 @@ public class AdminServiceImpl implements AdminService {
 		List<Payment> paymentList = adminDAO.findPaymentListBySearchCondition(paymentSearchCondition);
 		return paymentList;
 	}
+	
+//	결제 총액 변동
+	@Override
+	public int modifyPaymentAmount(int orderId) {
+		// TODO Auto-generated method stub
+		System.out.println("adminService modifyPaymentAmount 불림");
+		int result = adminDAO.modifyPaymentAmount(orderId);
+		return result;
+	}
+
+//	결제 방법 변동
+	@Override
+	public int modifyPaymentMethod(Payment payment) {
+		// TODO Auto-generated method stub
+		System.out.println("adminService modifyPaymentMethod 불림");
+		int result = adminDAO.ModifyPaymentMethod(payment);
+		return result;
+	}
 
 	
 //	배송 ===============================
@@ -351,5 +401,28 @@ public class AdminServiceImpl implements AdminService {
 		Delivery delivery = adminDAO.findDeliveryByDeliveryId(deliveryId);
 		return delivery;
 	}
+
+//	배송 조건으로 검색
+	@Override
+	public List<Delivery> findDeliveryListBySearchCondition(DeliverySearchCondition deliverySearchCondition) {
+		// TODO Auto-generated method stub
+		System.out.println("adminService findDeliveryListBySearchCondition 불림");
+		List<Delivery> deliveryList = adminDAO.findDeliveryListBySearchCondition(deliverySearchCondition);
+		return deliveryList;
+	}
+
+//	배송상태 변경
+	@Override
+	public int modifyDeliveryStatus(Delivery delivery) {
+		// TODO Auto-generated method stub
+		System.out.println("adminSErvice modifyDeliveryStatus 불림");
+		int result = adminDAO.modifyDeliveryStatus(delivery);
+		return result;
+	}
+
+
+
+
+
 
 }

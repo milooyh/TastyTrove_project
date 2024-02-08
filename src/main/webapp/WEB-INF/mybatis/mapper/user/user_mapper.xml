@@ -4,35 +4,52 @@
 	<select id="findUserByLoginId" parameterType="User"
 		resultType="User">
 		SELECT * FROM MEMBERS
-		WHERE user_id = #{userId} AND user_password = #{userPassword}
+		WHERE user_id = #{userId} AND
+		user_password = #{userPassword}
 	</select>
 
+
+
 	<insert id="saveUser" parameterType="User">
-    INSERT INTO MEMBERS (
-        member_id,
-        user_id,
-        user_password,
-        user_name,
-        user_nickname,
-        user_birthdate,
-        user_tel,
-        user_address,
-        user_email,
-        user_type
-    )
-    VALUES (
-        (SELECT NVL(MAX(member_id), 0) + 1 AS member_id FROM members),
-        #{userId},
-        #{userPassword},
-        #{userName},
-        #{userNickname},
-        #{userBirthdate},
-        #{userTel},
-        #{userAddress},
-        #{userEmail},
-        'CUS'
-    )
-</insert>
+		INSERT INTO MEMBERS (
+		member_id,
+		user_id,
+		user_password,
+		user_name,
+		user_nickname,
+		user_birthdate,
+		user_tel,
+		user_address,
+		user_email,
+		user_type
+		)
+		VALUES (
+		(SELECT NVL(MAX(member_id), 0) + 1 AS member_id FROM members),
+		#{userId},
+		#{userPassword},
+		#{userName},
+		#{userNickname},
+		#{userBirthdate},
+		#{userTel},
+		#{userAddress},
+		#{userEmail},
+		'CUS'
+		)
+	</insert>
+
+	<select id="findUserByUserId" resultType="User"
+		parameterType="String">
+		SELECT * FROM MEMBERS
+		WHERE user_id = #{userId}
+	</select>
+	
+	<select id="findUserByUserPassword" resultType="User"
+		parameterType="String">
+		SELECT * FROM MEMBERS
+		WHERE user_password = #{userPassword}
+	</select>
+	
+	
 
 
 </mapper>

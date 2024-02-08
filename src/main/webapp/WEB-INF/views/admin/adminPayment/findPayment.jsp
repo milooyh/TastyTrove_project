@@ -7,20 +7,25 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
-table {
-	border-collapse: collapse;
-	text-align: center;
-}
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/adminMember.css?after"
+	type="text/css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-th, td {
-	border: 1px solid black;
-}
-</style>
 </head>
 <body>
-	<h1>결제 검색</h1>
-	<hr>
+	<%@include file="../adminHeader.jsp"%>
+
+	<div class="content">
+		<div class="content-title">결제 내역 목록</div>
+		<hr>
+		<div class="content-nav">
+			<span>결제관리</span><span> - </span><span><a
+				href="/admin/payment">결제내역목록</a></span><span> - </span><span><a
+				href="/admin/payment/search">결제내역검색</a></span><span>
+		</div>
+		
 	<form>
 		<p>검색기준</p>
 		<lable><input type="checkbox" name="paymentId">결제번호</lable>
@@ -30,8 +35,8 @@ th, td {
 		<lable>결제방법</lable>
 		<select name="paymentMethod">
 			<option disabled selected>결제방법</option>
-			<option value="C">C</option>
-			<option value="W">W</option>
+			<option value="C">카드</option>
+			<option value="W">계좌이체</option>
 		</select>
 		<button type="submit">검색하기</button>
 	</form>
@@ -52,10 +57,11 @@ th, td {
 					<td>${payment.paymentId}</td>
 					<td>${payment.orderId}</td>
 					<td>${payment.paymentDate}</td>
-					<td>${payment.paymentMethod}</td>
+						<td><c:choose>
+							<c:when test="${payment.paymentMethod eq 'C'}">카드</c:when>
+							<c:when test="${payment.paymentMethod eq 'W'}">계좌이체</c:when>
+						</c:choose></td>
 					<td>${payment.paymentAmount}</td>
-					<td><button>결제정보수정</button>
-					<td><button>결제정보삭제</button>
 				</tr>
 			</c:forEach>
 		</tbody>
