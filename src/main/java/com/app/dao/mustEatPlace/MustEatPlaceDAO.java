@@ -28,6 +28,8 @@ public interface MustEatPlaceDAO {
 	
 	public int updateImageData(MustEatPlace mustEatPlace);
 	
+	public int removeImage(int id);
+	
 	/*
 	public MustEatPlaceMenu getMenuByIdAndName(int menu_id, String menu_name);
 

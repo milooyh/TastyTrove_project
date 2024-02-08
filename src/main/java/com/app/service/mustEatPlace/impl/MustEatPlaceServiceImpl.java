@@ -86,6 +86,12 @@ public class MustEatPlaceServiceImpl implements MustEatPlaceService{
 		return result;
 	}
 
+	@Override
+	public int removeImage(int id) {
+		int result = mustEatPlaceDAO.removeImage(id);
+		return result;
+	}
+
 	/*
 	@Override
     public MustEatPlaceMenu getMenuByIdAndName(int menu_id, String menu_name) {

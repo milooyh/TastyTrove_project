@@ -4,19 +4,76 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+<style>
+	
+	 * {
+		margin:0;
+		padding:0;
+		box-sizing:border-box;
+		}
+	
+	.container {
+		width: 60%;
+        heigt: 100%;
+        display:block;
+        border-radius: 10px;
+        margin-top:5%;
+        margin-left: auto;
+    	margin-right: auto;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+		text-decoration: none;
+	}
+	
+	input {
+            border-radius: 15px;
+            border: 0;
+            margin: 17px;
+            padding: 10px;
+            outline: none;
+            background-color: rgb(233, 233, 233);
+        }
+        
+     .btn {
+		    position: relative;
+		    border: none;
+		    padding: 7px 15px;
+		    border-radius: 15px;
+		    font-family: "paybooc-Light", sans-serif;
+		    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+		    text-decoration: none;
+		    font-weight: 600;
+		    transition: 0.25s;
+		    background-color: #6aafe6;
+		    color: #d4dfe6;
+		}
+		
+	.deleteMenu {
+		margin-left: auto;
+    	margin-right: auto;
+	}
+		
+	body {
+		background-color:#f0f0f0;
+	}
+</style>
+
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
 	<h1>메뉴 삭제 페이지</h1>
 
-	
+	<div class="container">
 	<c:forEach var="mustEatPlaceMenuItem" items="${mustEatPlaceMenu}">
+		<div class="deleteMenu">
 		<input type="hidden" name="menuId" value="${mustEatPlaceMenuItem.menuId}">
-		메뉴 : <input type="text" name="menuName" value="${mustEatPlaceMenuItem.menuName}">
-		가격 : <input type="number" name="price" value="${mustEatPlaceMenuItem.price}">
-		<button onclick="removeMenu('${mustEatPlaceMenuItem.menuName}')">삭제하기</button><br>
+		메뉴 : <input type="text" name="menuName" value="${mustEatPlaceMenuItem.menuName}" readonly>
+		가격 : <input type="number" name="price" value="${mustEatPlaceMenuItem.price}" readonly>
+		<button class="btn" onclick="removeMenu('${mustEatPlaceMenuItem.menuName}')">삭제하기</button><br>
+		</div>
 	</c:forEach>
+	</div>
 	
 	
 	<script>

@@ -7,61 +7,62 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
-table {
-	border-collapse: collapse;
-	text-align: center;
-}
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/adminMustEatPlace.css?after"
+	type="text/css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-th, td {
-	border: 1px solid black;
-}
-</style>
 </head>
 <body>
-	<h1>맛집 목록</h1>
-	<a href="/admin/recipeboard">레시피게시판관리</a>
-	<br>
-	<a href="/admin/musteatplace">맛집관리</a>
-	<br>
-	<a href="/admin/product">상품관리</a>
-	<br>
-	<a href="/admin/order">주문관리</a>
-	<br>
-	<a href="/admin/payment">결제관리</a>
-	<br>
-	<a href="/admin/delivery">배송관리</a>
-	<br>
-	<hr>
-	<table>
-		<thead>
-			<tr>
-				<th>맛집번호</th>
-				<th>맛집명</th>
-				<th>주소</th>
-				<th>평균별점</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var="place" items="${placeList}">
-				<tr>
-					<td>${place.placeId}</td>
-					<td><a href="/admin/musteatplace/content?placeId=${place.placeId}">${place.restaurantName}</a></td>
-					<td>${place.place}</td>
-					<td>${place.rating}</td>					
-					<td><button
-							onclick="location.href='/admin/musteatplace/update?placeId=${place.placeId}'">맛집정보수정</button></td>
-					<td><button
-							onclick="confirmDelete(${place.placeId})">맛집삭제</button></td>
-				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
-	<br>
-	<button onclick="location.href='/admin/musteatplace/add'">맛집추가</button>
-	<button onclick="location.href='/admin/musteatplace/search'">맛집검색</button>
+	<%@include file="../adminHeader.jsp"%>
 
-	<script>
+	<div class="content">
+		<div class="content-title">맛집 목록</div>
+		<hr>
+		<div class="content-nav">
+			<span>맛집관리</span><span> - </span><span><a
+				href="/admin/musteatplace">맛집목록</a></span><span> - </span><span><a
+				href="/admin/musteatplace/search">맛집검색</a></span><span> - </span><span><a
+				href="/admin/musteatplace/add">맛집추가</a></span>
+		</div>
+		<table>
+			<thead>
+				<tr>
+					<th>맛집번호</th>
+					<th>맛집명</th>
+					<th>주소</th>
+					<th>평균별점</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="place" items="${placeList}">
+					<tr>
+						<td>${place.placeId}</td>
+						<td>${place.restaurantName}</td>
+						<td>${place.place}</td>
+						<td>${place.rating}</td>
+						<td><button
+								onclick="location.href='/admin/musteatplace/update?placeId=${place.placeId}'">맛집정보수정</button></td>
+						<td><button onclick="confirmDelete(${place.placeId})">맛집삭제</button></td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+		<br>
+		<button onclick="location.href='/admin/musteatplace/add'">맛집추가</button>
+		<button onclick="location.href='/admin/musteatplace/search'">맛집검색</button>
+
+
+		<!-- 모달창 -->
+		<div id="mustModal" class="modal">
+			<div class="modal-content">
+				<div class="modal-title">맛집 리뷰 목록</div>
+				<span class="close">&times;</span>
+				<div id="review">${place.review}</div>
+			</div>
+		</div>
+		<script>
 		function confirmDelete(placeId) {
 			var result = confirm("맛집 정보를 삭제하시겠습니까?");
 
@@ -69,6 +70,77 @@ th, td {
 				location.href = '/admin/musteatplace/remove?placeId=' + placeId;
 			}
 		}
+		
+		// 모달창 닫기 버튼 기능 구현
+		var modal = document.getElementById('mustModal');
+		var closeButton = document.getElementsByClassName("close")[0];
+		closeButton.onclick = function() {
+			modal.style.display = "none";
+		}
+
+		// ESC 키를 눌렀을 때 모달창 닫기
+		window.addEventListener("keydown", function(event) {
+			if (event.key === "Escape") {
+				modal.style.display = "none";
+			}
+		});
+
+		// 테이블의 각 맛집명을 클릭했을 때 모달창 열기
+		var restaurantnameCells = document.querySelectorAll(".content table tbody tr td:nth-child(2)");
+		restaurantnameCells.forEach(function(cell) {
+		    cell.addEventListener("click", function() {
+		        var placeId = this.parentNode.firstChild.textContent; // 클릭한 행의 첫 번째 열(맛집번호)의 값을 가져옵니다.
+		        openMemberModal(placeId);
+		    });
+		    // 툴팁 추가
+		    cell.addEventListener("mouseover", function(event) {
+		        var tooltip = document.createElement("div"); // 새로운 div 요소를 생성합니다.
+		        tooltip.textContent = "맛집리뷰보기"; // 툴팁에 표시할 내용을 설정합니다.
+		        tooltip.classList.add("tooltip"); // CSS 스타일링을 위해 클래스를 추가합니다.
+
+		        // 툴팁을 마우스 위치에 위치시킵니다.
+		        tooltip.style.position = "absolute";
+		        tooltip.style.top = event.clientY + 10 + "px";
+		        tooltip.style.left = event.clientX + 10 + "px";
+
+		        document.body.appendChild(tooltip); // 툴팁을 문서의 body에 추가합니다.
+
+		        // 마우스가 벗어날 때 툴팁을 제거합니다.
+		        cell.addEventListener("mouseout", function() {
+		            if (tooltip.parentNode) {
+		                document.body.removeChild(tooltip); // 툴팁을 제거합니다.
+		            }
+		        });
+
+		    });
+		});
+
+
+		// 모달창 열기 함수
+		function openMemberModal(placeId) {
+		    console.log("openMemberModal 함수 호출 !!");
+		    var modal = document.getElementById('mustModal');
+		    modal.style.display = "block";
+
+		    console.log("모달창 열림");
+
+		    // AJAX 요청을 통해 회원 상세 정보 가져오기
+		    $.ajax({
+		        url: '/admin/musteatplace/details',
+		        type: 'GET',
+		        data: {
+		            placeId: placeId // 맛집 번호를 매개변수로 전달
+		        },
+		        success: function(mustEatPlace) {
+		            console.log(mustEatPlace);
+		            document.getElementById('review').textContent = mustEatPlace.review;
+		        },
+		        error: function(error) {
+		            console.error(error);
+		        }
+		    });
+		}
+
 	</script>
 </body>
 </html>

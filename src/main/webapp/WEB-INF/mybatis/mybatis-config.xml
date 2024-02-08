@@ -23,6 +23,9 @@
 		<typeAlias type="com.app.dto.postRecipe.PostRecipe"
 			alias="PostRecipe" />
 		<typeAlias
+			type="com.app.dto.postRecipe.PostRecipeSearchCondition"
+			alias="PostRecipeSearchCondition" />
+		<typeAlias
 			type="com.app.dto.postRecipe.PostRecipeUpdateRecipeType"
 			alias="PostRecipeUpdateRecipeType" />
 		<typeAlias type="com.app.dto.product.Product"
@@ -44,12 +47,20 @@
 		<typeAlias type="com.app.dto.delivery.Delivery"
 			alias="Delivery"></typeAlias>
 		<typeAlias
+			type="com.app.dto.delivery.DeliverySearchCondition"
+			alias="DeliverySearchCondition"></typeAlias>
+		<typeAlias
 			type="com.app.dto.delivery.ModifyDeliveryAddressByOrderIdAndMemberId"
 			alias="ModifyDeliveryAddressByOrderIdAndMemberId"></typeAlias>
+		<typeAlias
+			type="com.app.dto.payment.ModifyPaymentAmountByOrderId"
+			alias="ModifyPaymentAmountByOrderId"></typeAlias>
 
 		<typeAlias type="com.app.dto.util.RecipeFileInfo" alias="RecipeFileInfo"/>
 		<typeAlias type="com.app.dto.postRecipe.RecipeImage" alias="RecipeImage"/>
 		<typeAlias type="com.app.dto.postRecipe.RecipeSearchCondition" alias="RecipeSearchCondition"/>
+		
+		<typeAlias type="com.app.dto.user.UserPasswordChk" alias="UserPasswordChk"></typeAlias>
 
 	</typeAliases>
 

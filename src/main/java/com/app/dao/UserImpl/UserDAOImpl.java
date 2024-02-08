@@ -37,4 +37,21 @@ public class UserDAOImpl implements UserDAO{
 		int result = sqlSessionTemplate.insert("user_mapper.saveUser", user);
 		return result;
 	}
+
+//	아이디 있나 조회
+	@Override
+	public User findUserByUserId(String userId) {
+		// TODO Auto-generated method stub
+		User user = sqlSessionTemplate.selectOne("user_mapper.findUserByUserId", userId);
+		return user;
+	}
+
+
+//	비밀번호 있나 조회
+	@Override
+	public User findUserByUserPassword(String userPassword) {
+		// TODO Auto-generated method stub
+		User user = sqlSessionTemplate.selectOne("user_mapper.findUserByUserPassword", userPassword);
+		return user;
+	}
 }

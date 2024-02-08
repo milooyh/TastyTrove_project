@@ -121,14 +121,12 @@
 		SELECT * FROM RECIPE_BOARD WHERE recipe_id = #{recipeId}
 	</select>
 
-	<update id="modifyRecipeType"
-		parameterType="PostRecipeUpdateRecipeType">
+	<update id="modifyRecipeType" parameterType="PostRecipe">
 		UPDATE RECIPE_BOARD
 		SET
-		recipe_type =
-		#{selectedRecipeType}
+		recipe_type = #{recipeType}
 		WHERE
-		recipe_id = #{recipeId
+		recipe_id = #{recipeId}
 	</update>
 
 	<delete id="removePostRecipe" parameterType="int">
@@ -136,6 +134,30 @@
 		RECIPE_BOARD
 		WHERE recipe_id = #{recipeId}
 	</delete>
+
+	<select id="findPostRecipeListBySearchCondition"
+		parameterType="PostRecipe" resultType="PostRecipeSearchCondition">
+		SELECT * FROM RECIPE_BOARD
+		WHERE 1 = 1
+		<if test="recipeId != null and recipeId!= ''">
+			AND recipe_id LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="recipeTitle!= null and recipeTitle!= ''">
+			AND recipe_title LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="recipeContent!= null and recipeContent!= ''">
+			AND recipe_content LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="memberId!= null and memberId!= ''">
+			AND member_id LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="boardDate!= null and boardDate!= ''">
+			AND board_date LIKE '%' || #{boardDate} || '%'
+		</if>
+		<if test="recipeType!= null and recipeType!= ''">
+			AND recipe_type = #{recipeType}
+		</if>
+	</select>
 
 	<!--상품 정보 찾기 ================================================================ -->
 	<select id="findProductList" resultType="Product">
@@ -292,10 +314,27 @@
 		#{orderId})
 		where order_id = #{orderId}
 	</update>
+
 	<delete id="modifyOrder" parameterType="Order">
 		DELETE FROM ORDER_ITEMS
 		WHERE order_item_id = #{orderItemId}
 	</delete>
+
+	<update id="modifyOrderStatus" parameterType="Order">
+		UPDATE ORDERS
+		SET
+		order_status = #{orderStatus}
+		WHERE
+		order_id = #{orderId}
+	</update>
+
+	<select id="findOrderByOrderId" resultType="Order"
+		parameterType="int">
+		SELECT * FROM
+		ORDERS
+		WHERE order_id = #{orderId}
+	</select>
+
 
 	<!--결제 정보 찾기 ================================================================ -->
 	<select id="findPaymentList" resultType="Payment">
@@ -331,6 +370,15 @@
 		</if>
 	</select>
 
+
+	<update id="modifyPaymentMethod" parameterType="Payment">
+		UPDATE PAYMENTS
+		SET
+		payment_method = #{paymentMethod}
+		WHERE
+		payment_id = #{paymentId}
+	</update>
+
 	<!--배송 찾기 ============================================================== -->
 	<select id="findDeliveryList" resultType="Delivery">
 		SELECT * FROM
@@ -354,5 +402,54 @@
 		and o.order_id = #{orderId})
 		where order_id = ${orderId};
 	</update>
+
+	<select id="findDeliveryListBySearchCondition"
+		parameterType="Delivery" resultType="DeliverySearchCondition">
+		SELECT * FROM DELIVERIES
+		WHERE 1 = 1
+		<if test="deliveryId!= null and deliveryId!= ''">
+			AND delivery_id LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="orderId!= null and orderId!= ''">
+			AND order_id LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="deliveryDate!= null and deliveryDate!= ''">
+			AND delivery_date LIKE '%' || #{deliveryDate} || '%'
+		</if>
+		<if test="addressSystem != null and addressSystem!= ''">
+			AND SUBSTR(delivery_address, 1, INSTR(delivery_address, '
+			') - 1) = #{addressSystem}
+		</if>
+		<if test="deliveryStatus!= null and deliveryStatus!= ''">
+			AND delivery_status = #{deliveryStatus}
+		</if>
+
+		<if test="deliveryFee!= null and deliveryFee!= ''">
+			AND delivery_fee = #{deliveryFee}
+		</if>
+	</select>
+
+	<update id="modifyPaymentAmount"
+		parameterType="ModifyPaymentAmountByOrderId">
+		update payments
+		set payment_amount = (select
+		o.total_price + d.delivery_fee
+		from orders o, deliveries d
+		where
+		o.order_id = d.order_id
+		and o.order_id = #{orderId})
+		where order_id =
+		#{orderId};
+	</update>
+
+	<update id="modifyDeliveryStatus" parameterType="Delivery">
+		UPDATE DELIVERIES
+		SET
+		delivery_status = #{deliveryStatus}
+		WHERE
+		delivery_id = #{deliveryId}
+	</update>
+
+
 
 </mapper>

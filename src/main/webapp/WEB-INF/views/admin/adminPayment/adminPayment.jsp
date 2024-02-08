@@ -7,65 +7,95 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
-table {
-	border-collapse: collapse;
-	text-align: center;
-}
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/adminMember.css?after"
+	type="text/css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-th, td {
-	border: 1px solid black;
-}
-</style>
 </head>
 <body>
-	<h1>결제 목록</h1>
-	<a href="/admin/recipeboard">레시피게시판관리</a>
-	<br>
-	<a href="/admin/musteatplace">맛집관리</a>
-	<br>
-	<a href="/admin/product">상품관리</a>
-	<br>
-	<a href="/admin/order">주문관리</a>
-	<br>
-	<a href="/admin/payment">결제관리</a>
-	<br>
-	<a href="/admin/delivery">배송관리</a>
-	<br>
-	<hr>
-	<table>
-		<thead>
-			<tr>
-				<th>결제번호</th>
-				<th>전체주문번호</th>
-				<th>결제일시</th>
-				<th>결제방법</th>
-				<th>총계</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var="payment" items="${paymentList}">
+	<%@include file="../adminHeader.jsp"%>
+
+	<div class="content">
+		<div class="content-title">결제 내역 목록</div>
+		<hr>
+		<div class="content-nav">
+			<span>결제관리</span><span> - </span><span><a
+				href="/admin/payment">결제내역목록</a></span><span> - </span><span><a
+				href="/admin/payment/search">결제내역검색</a></span><span>
+		</div>
+
+		<table>
+			<thead>
 				<tr>
-					
-					<td>${payment.paymentId}</td>
-					<td><a href="/admin/order/orders?orderId=${payment.orderId}">${payment.orderId}</a></td>
-					<td>${payment.paymentDate}</td>
-					<td><select name="paymentMethod">
-							<option value="C"
-								<c:if test="${payment.paymentMethod == 'C'}">selected</c:if>>
-								카드</option>
-							<option value="W"
-								<c:if test="${payment.paymentMethod == 'W'}">selected</c:if>>
-								계좌이체</option>
-					</select></td>
-					<td>${payment.paymentAmount}</td>
-					<td><button
-							onclick="location.href='/admin/member/update?memberId=${user.memberId}'">결제정보수정</button></td>
+					<th>결제번호</th>
+					<th>전체주문번호</th>
+					<th>결제일시</th>
+					<th>결제방법</th>
+					<th>총계</th>
 				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
-	<br>
-	<button onclick="location.href='/admin/payment/search'">결제내역검색</button>
+			</thead>
+			<tbody>
+				<c:forEach var="payment" items="${paymentList}">
+					<tr>
+
+						<td>${payment.paymentId}</td>
+						<td><a href="/admin/order/orders?orderId=${payment.orderId}"
+							onmouseover="showTooltip('주문번호별주문내역보기')"
+							onmouseout="hideTooltip()">${payment.orderId}</a></td>
+						<td>${payment.paymentDate}</td>
+						<form action="/admin/payment/update" method="post">
+							<td><select name="paymentMethod">
+									<option value="C"
+										<c:if test="${payment.paymentMethod == 'C'}">selected</c:if>>
+										카드</option>
+									<option value="W"
+										<c:if test="${payment.paymentMethod == 'W'}">selected</c:if>>
+										계좌이체</option>
+							</select></td>
+							<td>${payment.paymentAmount}</td> <input type="hidden"
+								name="paymentId" value="${payment.paymentId}">
+							<td><button onclick="confirmModify(${payment.paymentId})'">결제방법수정</button></td>
+					</tr>
+					</form>
+				</c:forEach>
+			</tbody>
+		</table>
+		<br>
+		<button onclick="location.href='/admin/payment/search'">결제내역검색</button>
+		<script>
+    function confirmModify(paymentId) {
+        var result = confirm("결제방법을 수정할까요?");
+        if (result) {
+            location.href = '/admin/payment/update?paymentId=' + paymentId;
+        }
+        return result;
+    }
+    
+    function showTooltip(tooltipText) {
+        var tooltip = document.createElement("div"); // 새로운 div 요소를 생성합니다.
+        tooltip.textContent = tooltipText; // 툴팁에 표시할 내용을 설정합니다.
+        tooltip.classList.add("tooltip"); // CSS 스타일링을 위해 클래스를 추가합니다.
+
+        // 툴팁을 마우스 위치에 위치시킵니다.
+        tooltip.style.position = "absolute";
+        tooltip.style.top = event.clientY + 10 + "px";
+        tooltip.style.left = event.clientX + 10 + "px";
+        document.body.appendChild(tooltip); // 툴팁을 문서의 body에 추가합니다.
+        
+        // 마우스가 벗어날 때 툴팁을 제거합니다.
+        tooltip.addEventListener("mouseout", function() {
+            hideTooltip();
+        });
+    }
+    
+    function hideTooltip() {
+        var tooltips = document.querySelectorAll(".tooltip");
+        tooltips.forEach(function(tooltip) {
+            document.body.removeChild(tooltip);
+        });
+    }
+    </script>
 </body>
 </html>

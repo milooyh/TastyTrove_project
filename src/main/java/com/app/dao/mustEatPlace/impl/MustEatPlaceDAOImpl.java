@@ -78,6 +78,12 @@ public class MustEatPlaceDAOImpl implements MustEatPlaceDAO{
 		return result;
 	}
 
+	@Override
+	public int removeImage(int id) {
+		int result = sqlSessionTemplate.update("mustEatPlace_mapper.removeImage", id);
+		return result;
+	}
+
 	/*
 	@Override
 	public MustEatPlaceMenu getMenuByIdAndName(int menu_id, String menu_name) {
