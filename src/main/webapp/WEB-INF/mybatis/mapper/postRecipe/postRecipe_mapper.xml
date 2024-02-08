@@ -27,6 +27,7 @@
 		<if test="searchKeyword != null and searchKeyword != ''">
 			AND r.recipe_title LIKE '%'||#{searchKeyword}||'%'
 		</if>
+		ORDER BY board_date desc
 	</select>
 	
 <!-- 	레시피 수정 -->
