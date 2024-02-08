@@ -54,4 +54,31 @@ public class UserDAOImpl implements UserDAO{
 		User user = sqlSessionTemplate.selectOne("user_mapper.findUserByUserPassword", userPassword);
 		return user;
 	}
+
+//	닉네임 있나
+	@Override
+	public User findUserByUserNickname(String userNickname) {
+		// TODO Auto-generated method stub
+		User user = sqlSessionTemplate.selectOne("user_mapper.findUserByUserNickname", userNickname);
+		return user;
+	}
+
+//	전화번호있나
+	@Override
+	public User findUserByUserTel(String userTel) {
+		// TODO Auto-generated method stub
+		User user = sqlSessionTemplate.selectOne("user_mapper.findUserByUserTel", userTel);
+		return user;
+	}
+
+//	이메일 있나 확인
+	@Override
+	public User findUserByUserEmail(String userEmail) {
+		// TODO Auto-generated method stub
+		User user = sqlSessionTemplate.selectOne("user_mapper.findUserByUserEmail", userEmail);
+		System.out.println("dao : " + userEmail);
+		return user;
+	}
+
+
 }

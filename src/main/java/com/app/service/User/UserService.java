@@ -8,4 +8,7 @@ public interface UserService {
 	
 	public User findUserByUserId(String userId);
 	public User findUserByUserPassword(String userPassword);
+	public User findUserByUserNickname(String userNickname);
+	public User findUserByUserTel(String userTel);
+	public User findUserByUserEmail(String userEmail);
 }
