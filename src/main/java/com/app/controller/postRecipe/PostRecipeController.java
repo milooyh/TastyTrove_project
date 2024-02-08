@@ -208,7 +208,7 @@ public class PostRecipeController {
 	@RequestMapping("/recipe/recipeInfo")
 	public String recipeInfo(@RequestParam int id, Model model, HttpSession session) {
 		
-		String sessionId = (String)session.getAttribute("memberId");
+		String sessionId = (String)session.getAttribute("userId");
 		
 		System.out.println(sessionId);
 
@@ -227,6 +227,7 @@ public class PostRecipeController {
 		model.addAttribute("recipeType", recipe.getRecipeType());
 		model.addAttribute("boardDate", recipe.getBoardDate());
 		model.addAttribute("fullRecipeFilePath", fullRecipeFilePath);
+		model.addAttribute("userNickname", recipe.getUserNickname());
 		model.addAttribute("sessionId", sessionId);
 
 		return "recipe/recipeInfo";

@@ -13,4 +13,5 @@ public class PostRecipe {
    int recipeFileId;
    String recipeFileName;
    String recipeFilePath;
+   String userNickname;
 }

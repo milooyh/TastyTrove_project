@@ -37,7 +37,7 @@
 </style>
 <body>
 <%
-	session.setAttribute("memberId", "testUser");
+	session.getAttribute("userId");
 %>
 
 	<h1>레시피 목록</h1>

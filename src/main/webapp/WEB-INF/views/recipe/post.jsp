@@ -16,7 +16,7 @@
 </head>
 <body>
 <%
-	String member = (String)session.getAttribute("memberId");
+	String member = (String)session.getAttribute("userId");
 	System.out.println(member);
 %>
 
