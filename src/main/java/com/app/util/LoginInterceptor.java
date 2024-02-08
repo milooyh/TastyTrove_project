@@ -18,12 +18,13 @@ public class LoginInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		System.out.println("prehandle");
-		
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
-		String userId = (String) session.getAttribute("userId");
 
-		if (userId == null || user == null || !user.getUserType().equals(CommonCode.USER_USERTYPE_ADMIN)) {
+		HttpSession session = request.getSession();
+		System.out.println(session.getAttribute("userId"));
+		System.out.println(session.getAttribute("userType"));
+
+		if (session.getAttribute("userId") == null || session.getAttribute("userType") == null
+				|| !session.getAttribute("userType").equals(CommonCode.USER_USERTYPE_ADMIN)) {
 			response.sendRedirect("/login");
 			return false; // 요청 처리 중단
 		}

@@ -37,33 +37,33 @@ public class UserController {
 	}
 
 	@PostMapping("/login")
-	public String loginProcess(User user, HttpSession session) {
+	public String loginProcess(User user, HttpSession session, Model model) {
 
-		User findUser = userService.findUserByLoginId(user);
-		System.out.println(findUser);
+	    User findUser = userService.findUserByLoginId(user);
+	    System.out.println(findUser);
 
-		if (findUser == null) { // 로그인 실패하면 로그인 페이지로 다시
-			System.out.println("로그인 실패");
-			return "user/login";
-		}
+	    if (findUser == null) { // 로그인 실패하면 로그인 페이지로 다시
+	        System.out.println("로그인 실패");
+	        model.addAttribute("errorMessage", "로그인에 실패했습니다");
+	        return "user/login";
+	    }
 
-		session.setAttribute("userId", findUser.getUserId()); // 로그인한 아이디 세션 저장
+	    session.setAttribute("userId", findUser.getUserId()); // 로그인한 아이디 세션 저장
+	    session.setAttribute("userType", findUser.getUserType());
+	    
+	    System.out.println("sesssssssssssion 값 !!!!!!! : " + session.getAttribute("userId"));
+	    
+	    System.out.println("로그인한 회원 유형 : " + findUser.getUserType());
 
-		if (findUser != null) { // 로그인 성공
-			System.out.println("로그인 성공");
-			
-			if (findUser.getUserType().equals(CommonCode.USER_USERTYPE_ADMIN)) {
-				System.out.println("관리자입니다");
-				return "redirect:/admin";
-				
-			} else if (findUser.getUserType().equals(CommonCode.USER_USERTYPE_CUSTOMER)) {
-				System.out.println("회원입니다");
-				return "redirect:/";
-			}
-		}
-
-		return "user/login";
+	    if (findUser.getUserType().equals(CommonCode.USER_USERTYPE_ADMIN)) {
+	        System.out.println("관리자입니다");
+	        return "redirect:/admin";
+	    } else {
+	        System.out.println("회원입니다");
+	        return "redirect:/";
+	    }
 	}
+
 	
 //	로그아웃
 	@RequestMapping("/logout")
