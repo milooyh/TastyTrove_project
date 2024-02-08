@@ -10,19 +10,17 @@
 	
 	<select id="findRecipeInfoById" parameterType="Integer" resultType="PostRecipe">
 		SELECT *
-		FROM RECIPE_BOARD
+		FROM RECIPE_BOARD r, members m
 		WHERE recipe_id = #{recipeId}
-	</select>
+		AND r.member_id = m.user_id
+	</select> 
 	
-<!-- 	<select id="findRecipeList" resultType="PostRecipe"> -->
-<!-- 		SELECT * FROM recipe_board r, recipe_file_info i -->
-<!-- 		WHERE r.recipe_file_id = i.recipe_file_id -->
-<!-- 	</select> -->
-	
+<!-- 	레시피 목록 출력 및 검색 -->
 	<select id = "findRecipeListBySearchCondition" resultType="PostRecipe" parameterType="RecipeSearchCondition">
-		SELECT * FROM recipe_board r, recipe_file_info i
+		SELECT * FROM recipe_board r, recipe_file_info i, members m
 		WHERE 1=1
 		AND r.recipe_file_id = i.recipe_file_id
+		AND r.member_id = m.user_id
 		<if test="recipeType != null and recipeType != ''">
 			AND r.recipe_type = #{recipeType}
 		</if>
@@ -30,6 +28,22 @@
 			AND r.recipe_title LIKE '%'||#{searchKeyword}||'%'
 		</if>
 	</select>
+	
+<!-- 	레시피 수정 -->
+	<update id="modifyRecipePost" parameterType="PostRecipe">
+		UPDATE recipe_board 
+		SET recipe_title = #{recipeTitle},
+			recipe_content = #{recipeContent},
+			recipe_type = #{recipeType}
+		WHERE
+			recipe_id = #{recipeId}
+	</update>
+	
+<!-- 레시피 삭제하기 -->
+	<delete id="removeRecipeById" parameterType="int">
+		DELETE FROM recipe_board
+		WHERE recipe_id = #{recipeId}
+	</delete>
 
 
 </mapper>

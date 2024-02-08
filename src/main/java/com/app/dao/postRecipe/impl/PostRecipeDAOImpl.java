@@ -47,23 +47,31 @@ public class PostRecipeDAOImpl implements PostRecipeDAO {
 		return recipe;
 	}
 
-	//레시피 목록
-	@Override
-	public List<PostRecipe> findRecipeList() {
-		// TODO Auto-generated method stub
-		
-		List<PostRecipe> recipeList = sqlSessionTemplate.selectList("postRecipe_mapper.findRecipeList");
-		
-		return recipeList;
-	}
 
-
+	//레시피 목록 출력 및 조건에 따른 레시피 출력
 	@Override
 	public List<PostRecipe> findRecipeListBySearchCondition(RecipeSearchCondition recipeSearchCondition) {
 		// TODO Auto-generated method stub
 		
 		List<PostRecipe> recipeList = sqlSessionTemplate.selectList("postRecipe_mapper.findRecipeListBySearchCondition", recipeSearchCondition);
 		return recipeList;
+	}
+
+
+	@Override
+	public int modifyRecipe(PostRecipe postRecipe) {
+		// TODO Auto-generated method stub
+		int result = sqlSessionTemplate.update("postRecipe_mapper.modifyRecipePost", postRecipe);
+		return result;
+	}
+
+
+	@Override
+	public int removeRecipeById(int recipeId) {
+		// TODO Auto-generated method stub
+		
+		int result = sqlSessionTemplate.delete("postRecipe_mapper.removeRecipeById", recipeId);
+		return result;
 	}
 
 }

@@ -180,6 +180,18 @@ public class MustEatPlaceController {
 		}
 	}
 	
+	@GetMapping("/removeImage")
+	public String removeImage(@RequestParam String id, Model model) {
+		
+		int intId = Integer.parseInt(id);
+		
+		MustEatPlace mustEatPlace = mustEatPlaceService.findMustEatPlaceById(intId);
+		
+		model.addAttribute("mustEatPlace", mustEatPlace);
+		
+		return "/mustEatPlace/removeImage";
+	}
+	
 	@GetMapping("/upload")
 	public String fileUpload(@RequestParam String id, Model model) {
 		

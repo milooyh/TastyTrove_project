@@ -3,7 +3,7 @@ package com.app.dto.user;
 import lombok.Data;
 
 @Data
-public class User {
+public class UserPasswordChk {
 	int memberId;
 	String userId;
 	String userPassword;
@@ -14,6 +14,4 @@ public class User {
 	String userAddress;
 	String userEmail;
 	String userType;
-	
-	String userPasswordChk;
 }

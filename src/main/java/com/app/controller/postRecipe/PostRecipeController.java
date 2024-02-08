@@ -3,7 +3,6 @@ package com.app.controller.postRecipe;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +37,13 @@ public class PostRecipeController {
 	@RequestMapping("/recipe/post")
 	public String post() {
 
-		return "postRecipe/post";
+		return "recipe/post";
+	}
+	
+	
+	@PostMapping("/recipe")
+	public String postRecipe() {
+		return "redirect:/recipe/post";
 	}
 
 
@@ -84,14 +89,105 @@ public class PostRecipeController {
 
 	}
 	
-//	//레시피 리스트
-//	@GetMapping("/recipe")
-//	public String recipeList(Model model) {
-//		List<PostRecipe> recipeList = postRecipeService.findRecipeList();
-//		model.addAttribute("recipeList", recipeList);
-//		
-//		return "recipe/recipe";
-//	}
+	//레시피 수정 페이지
+	@GetMapping("/recipe/modifyRecipe")
+	public String modifyRecipe(@RequestParam int id, Model model) {
+		
+		PostRecipe recipe = postRecipeService.findRecipeInfoById(id);
+
+		RecipeFileInfo recipeFileInfo = recipeFileService.findRecipeFileInfoByFileId(recipe.getRecipeFileId());
+		
+		String fullRecipeFilePath = recipeFileInfo.getRecipeFilePath() + recipeFileInfo.getRecipeFileName();
+		System.out.println(recipeFileInfo.getRecipeFilePath());
+		System.out.println(recipeFileInfo.getRecipeFileName());
+		
+		model.addAttribute("recipeId", recipe.getRecipeId());
+		model.addAttribute("recipeTitle", recipe.getRecipeTitle());
+		model.addAttribute("memberId", recipe.getMemberId());
+		model.addAttribute("recipeContent", recipe.getRecipeContent());
+		model.addAttribute("recipeType", recipe.getRecipeType());
+		model.addAttribute("boardDate", recipe.getBoardDate());
+		model.addAttribute("recipeFileId", recipe.getRecipeFileId());
+		model.addAttribute("fullRecipeFilePath", fullRecipeFilePath);
+
+		return "recipe/modifyRecipe";
+	}
+	
+	//수정 레시피 저장
+	@PostMapping("/recipe/modifyRecipe")
+	public String modifyRecipeProcess(PostRecipe postRecipe, @RequestParam int id, Model model, RecipeImageRequestFrom requestForm) {
+		
+		postRecipe.setRecipeId(id);
+		
+		System.out.println(postRecipe);
+		System.out.println(requestForm);
+		
+		try {
+			
+			if(requestForm.getRecipeImage().getSize() != 0) {
+				System.out.println("파일도 수정한다.");
+				
+				RecipeFileInfo recipeFileInfo = recipeFileManager.storeFile(requestForm.getRecipeImage());
+				recipeFileInfo.setRecipeFileId(postRecipe.getRecipeFileId());
+				
+				System.out.println(recipeFileInfo);
+				
+				int result = recipeFileService.modifyRecipeFileInfo(recipeFileInfo);
+				
+			}
+
+			
+			int result2 = postRecipeService.modifyRecipe(postRecipe);
+			
+			if(result2 > 0) {
+				System.out.println("수정성공");
+				return "redirect:/recipe";
+			}else {
+				System.out.println("수정실패");
+				return "recipe";
+			}
+			
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		return "redirect:/recipe";
+		
+		
+	}
+	
+	//레시피 삭제
+	@RequestMapping("/recipe/removeRecipe")
+	public String removeRecipeProcess(@RequestParam int id) {
+		System.out.println("/removeRecipe 실행됨 레시피 아이디 : "+id);
+		
+		//아이디에 따른 레시피 찾기
+		PostRecipe recipe = postRecipeService.findRecipeInfoById(id);
+		int recipeFileId = recipe.getRecipeFileId();
+		
+		System.out.println("recipeFileId : " + recipeFileId);
+		
+		//찾은 레시피의 이미지 DB 정보 삭제
+		int result2 = recipeFileService.removeRecipeFileInfo(recipeFileId);
+		int result = postRecipeService.removeRecipeById(id);
+		
+		
+		if(result > 0 && result2 >0) {
+			System.out.println("삭제성공");
+			return "redirect:/recipe";
+		}else {
+			System.out.println("삭제실패");
+			return "recipe/recipe";
+		}
+		
+	}
+
 	
 	//검색기능 추가된 레시피 리스트
 	@GetMapping("/recipe")
@@ -107,17 +203,12 @@ public class PostRecipeController {
 	}
 	
 	
-	
-	@PostMapping("/recipe")
-	public String postRecipe() {
-		return "redirect:/recipe/post";
-	}
 
 	// 레시피 상세
 	@RequestMapping("/recipe/recipeInfo")
 	public String recipeInfo(@RequestParam int id, Model model, HttpSession session) {
 		
-		String sessionId = (String)session.getAttribute("memberId");
+		String sessionId = (String)session.getAttribute("userId");
 		
 		System.out.println(sessionId);
 
@@ -129,12 +220,14 @@ public class PostRecipeController {
 		System.out.println(recipeFileInfo.getRecipeFilePath());
 		System.out.println(recipeFileInfo.getRecipeFileName());
 		
+		model.addAttribute("recipeId", recipe.getRecipeId());
 		model.addAttribute("recipeTitle", recipe.getRecipeTitle());
 		model.addAttribute("memberId", recipe.getMemberId());
 		model.addAttribute("recipeContent", recipe.getRecipeContent());
 		model.addAttribute("recipeType", recipe.getRecipeType());
 		model.addAttribute("boardDate", recipe.getBoardDate());
 		model.addAttribute("fullRecipeFilePath", fullRecipeFilePath);
+		model.addAttribute("userNickname", recipe.getUserNickname());
 		model.addAttribute("sessionId", sessionId);
 
 		return "recipe/recipeInfo";

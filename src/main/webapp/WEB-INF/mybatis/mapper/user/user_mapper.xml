@@ -46,7 +46,7 @@
 	<select id="findUserByUserPassword" resultType="User"
 		parameterType="String">
 		SELECT * FROM MEMBERS
-		WHERE user_pasword = #{userPassword}
+		WHERE user_password = #{userPassword}
 	</select>
 	
 	<select id="findUserByUserName" resultType="User"

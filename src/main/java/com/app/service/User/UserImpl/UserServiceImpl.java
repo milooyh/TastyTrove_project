@@ -41,5 +41,13 @@ public class UserServiceImpl implements UserService{
 		User user = userDAO.findUserByUserId(userId);
 		return user;
 	}
+
+//	비밀번호 조회
+	@Override
+	public User findUserByUserPassword(String userPassword) {
+		// TODO Auto-generated method stub
+		User user = userDAO.findUserByUserPassword(userPassword);
+		return user;
+	}
 	
 }

@@ -7,4 +7,5 @@ public interface UserService {
 	public int saveUser(User user);
 	
 	public User findUserByUserId(String userId);
+	public User findUserByUserPassword(String userPassword);
 }

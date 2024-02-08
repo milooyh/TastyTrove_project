@@ -13,9 +13,11 @@ public interface PostRecipeService {
 	
 	public PostRecipe findRecipeInfoById(int id);
 	
-	public List<PostRecipe> findRecipeList();
-	
 	public List<PostRecipe> findRecipeListBySearchCondition(RecipeSearchCondition recipeSearchCondition);
+	
+	public int modifyRecipe(PostRecipe postRecipe);
+	
+	public int removeRecipeById(int recipeId);
 	
 	
 }
