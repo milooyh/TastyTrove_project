@@ -36,6 +36,8 @@ http://www.springframework.org/schema/context/spring-context.xsd">
 	<context:component-scan base-package="com.app.service" />
 	<context:component-scan base-package="com.app.dao" />
 	<context:component-scan base-package="com.app.util" />
+	<context:component-scan
+		base-package="com.app.config" />
 		
 	<beans:bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -49,8 +51,9 @@ http://www.springframework.org/schema/context/spring-context.xsd">
 	<resources mapping="/image/**" location="/resources/image/" />
 	<resources mapping="/recipeImageFile/**" location="file:///D:/recipeImageFile/" />
 	<resources mapping="/template" location="/resources/unapp-master/" />
-	<resources mapping="/**" location="/resources/" />
-	
+
+	<resources mapping="/resources/**" location="file:////C:/tmp/resources/" />  
+		<resources mapping="/**" location="/resources/" />
 
 
 	<beans:bean id="multipartResolver"

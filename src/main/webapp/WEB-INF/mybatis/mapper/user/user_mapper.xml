@@ -54,43 +54,6 @@
 		SELECT * FROM MEMBERS
 		WHERE user_name = #{userName}
 	</select>
-	
-	<select id="findUserByUserId" resultType="User"
-		parameterType="String">
-		SELECT * FROM MEMBERS
-		WHERE user_id = #{userId}
-	</select>
-	
-	<select id="findUserByUserId" resultType="User"
-		parameterType="String">
-		SELECT * FROM MEMBERS
-		WHERE user_id = #{userId}
-	</select>
-	
-	<select id="findUserByUserId" resultType="User"
-		parameterType="String">
-		SELECT * FROM MEMBERS
-		WHERE user_id = #{userId}
-	</select>
-	
-	<select id="findUserByUserId" resultType="User"
-		parameterType="String">
-		SELECT * FROM MEMBERS
-		WHERE user_id = #{userId}
-	</select>
-	
-	<select id="findUserByUserId" resultType="User"
-		parameterType="String">
-		SELECT * FROM MEMBERS
-		WHERE user_id = #{userId}
-	</select>
-	
-	<select id="findUserByUserId" resultType="User"
-		parameterType="String">
-		SELECT * FROM MEMBERS
-		WHERE user_id = #{userId}
-	</select>
-	
 
 
 </mapper>

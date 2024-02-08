@@ -31,8 +31,8 @@
 		<typeAlias
 			type="com.app.dto.postRecipe.PostRecipeUpdateRecipeType"
 			alias="PostRecipeUpdateRecipeType" />
-		<typeAlias type="com.app.dto.product.Product"
-			alias="Product"></typeAlias>
+		<!-- <typeAlias type="com.app.dto.product.Product"
+			alias="Product"></typeAlias> -->
 		<typeAlias type="com.app.dto.mustEatPlace.MustEatPlace"
 			alias="MustEatPlace"></typeAlias>
 		<typeAlias
