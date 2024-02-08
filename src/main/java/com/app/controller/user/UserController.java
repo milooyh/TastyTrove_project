@@ -66,13 +66,35 @@ public class UserController {
 	@ResponseBody
 	public String checkId(@RequestParam String userId) {
 		User user = userService.findUserByUserId(userId);
-		if (user != null) {
+		if (user == null) {
 			System.out.println("아이디 사용 가능");
 			return "0";
 		} else {
 			System.out.println("아이디 사용 불가");
 		}
 		return "1";
+	}
+
+	@PostMapping("/signup/checkPw")
+	@ResponseBody
+	public String checkPw(@RequestParam String userPassword, @RequestParam String userPasswordChk) {
+		User user = userService.findUserByUserPassword(userPassword);
+		System.out.println("user : " + user);
+		System.out.println("userpw : " + userPassword);
+		System.out.println("pwchk : " + userPasswordChk);
+
+		String result = null;
+		if (user == null && !userPassword.equals(userPasswordChk)) {
+			System.out.println("비밀번호 불일치");
+			result = "1";
+			return result;
+		} else if(user == null && userPassword.equals(userPasswordChk)) {
+			System.out.println("비밀번호 일치");
+			result = "0";
+			return result;
+		}
+		
+		return result;
 	}
 
 	@PostMapping("/signup")

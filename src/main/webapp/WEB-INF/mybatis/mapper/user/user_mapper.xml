@@ -46,50 +46,9 @@
 	<select id="findUserByUserPassword" resultType="User"
 		parameterType="String">
 		SELECT * FROM MEMBERS
-		WHERE user_pasword = #{userPassword}
+		WHERE user_password = #{userPassword}
 	</select>
 	
-	<select id="findUserByUserName" resultType="User"
-		parameterType="String">
-		SELECT * FROM MEMBERS
-		WHERE user_name = #{userName}
-	</select>
-	
-	<select id="findUserByUserId" resultType="User"
-		parameterType="String">
-		SELECT * FROM MEMBERS
-		WHERE user_id = #{userId}
-	</select>
-	
-	<select id="findUserByUserId" resultType="User"
-		parameterType="String">
-		SELECT * FROM MEMBERS
-		WHERE user_id = #{userId}
-	</select>
-	
-	<select id="findUserByUserId" resultType="User"
-		parameterType="String">
-		SELECT * FROM MEMBERS
-		WHERE user_id = #{userId}
-	</select>
-	
-	<select id="findUserByUserId" resultType="User"
-		parameterType="String">
-		SELECT * FROM MEMBERS
-		WHERE user_id = #{userId}
-	</select>
-	
-	<select id="findUserByUserId" resultType="User"
-		parameterType="String">
-		SELECT * FROM MEMBERS
-		WHERE user_id = #{userId}
-	</select>
-	
-	<select id="findUserByUserId" resultType="User"
-		parameterType="String">
-		SELECT * FROM MEMBERS
-		WHERE user_id = #{userId}
-	</select>
 	
 
 
