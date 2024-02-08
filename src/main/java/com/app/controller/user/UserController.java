@@ -18,10 +18,19 @@ import com.app.service.User.UserService;
 
 @Controller
 public class UserController {
+	
 	@Autowired
 	UserService userService;
+	
 
 //	로그인 =====================================
+//	관리자
+	@RequestMapping
+	public String admin(HttpSession session) {
+		return "admin/adminHome";
+	}
+	
+//	로그인
 	@GetMapping("/login")
 	public String login() {
 		return "user/login";
@@ -39,20 +48,29 @@ public class UserController {
 		}
 
 		session.setAttribute("userId", findUser.getUserId()); // 로그인한 아이디 세션 저장
-		System.out.println(session);
 
 		if (findUser != null) { // 로그인 성공
 			System.out.println("로그인 성공");
+			
 			if (findUser.getUserType().equals(CommonCode.USER_USERTYPE_ADMIN)) {
 				System.out.println("관리자입니다");
-				return "/admin/adminHome";
+				return "redirect:/admin";
+				
 			} else if (findUser.getUserType().equals(CommonCode.USER_USERTYPE_CUSTOMER)) {
 				System.out.println("회원입니다");
-				return "/home";
+				return "redirect:/";
 			}
 		}
 
 		return "user/login";
+	}
+	
+//	로그아웃
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		System.out.println("로그아웃 완");
+		return "redirect:/";
 	}
 
 //	회원가입 ====================================
