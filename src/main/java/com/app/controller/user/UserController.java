@@ -48,7 +48,7 @@ public class UserController {
 				return "/admin/adminHome";
 			} else if (findUser.getUserType().equals(CommonCode.USER_USERTYPE_CUSTOMER)) {
 				System.out.println("회원입니다");
-				return "/home";
+				return "redirect:/main";
 			}
 		}
 

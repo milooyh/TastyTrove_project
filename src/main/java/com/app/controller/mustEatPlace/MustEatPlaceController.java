@@ -3,6 +3,8 @@ package com.app.controller.mustEatPlace;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +33,13 @@ public class MustEatPlaceController {
 	MustEatPlaceService mustEatPlaceService;
 
 	@GetMapping("/register")
-	public String must(Model model) {
+	public String must(Model model, HttpSession session) {
 		
-		List<MustEatPlace> mustEatPlaces = mustEatPlaceService.findMustEatPlaceList();
+		String userId = (String) session.getAttribute("userId");
+		
+		System.out.println(userId);
+		
+		List<MustEatPlace> mustEatPlaces = mustEatPlaceService.findMustEatPlaceList(userId);
 		List<MustEatPlaceWithMenu> mustEatPlaceWithMenu = mustEatPlaceService.findMustEatPlaceWithMenu();
 		
         model.addAttribute("mustEatPlaces", mustEatPlaces);
@@ -49,7 +55,7 @@ public class MustEatPlaceController {
 			int result = mustEatPlaceService.saveMustEatPlace(mustEatPlace);
 			
 			if(result > 0) { //저장이 성공
-				return "redirect:/mustEatPlace/must";  //main 요청 경로
+				return "redirect:/must/register";  //main 요청 경로
 			} else { //저장 실패
 				return "/home"; //view 파일경로
 			}

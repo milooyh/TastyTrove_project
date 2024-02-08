@@ -4,7 +4,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 <style>
 
 	body {
@@ -71,10 +70,28 @@
 		<div class="input">별점(1~5)<input type="number" name="asterion" value="${mustEatPlace.asterion}"></div><br>
 		<div class="input">대표메뉴<input type="text" name="representativeMenu" value="${mustEatPlace.representativeMenu}"></div><br>
 		<div class="input">전화번호<input type="text" name="telephoneNumber" value="${mustEatPlace.telephoneNumber}"></div><br>
-		<button type="submit" class="submit">수정하기</button>
+		<button type="submit" class="submit" >수정하기</button>
 	</form>
 	</div>
 	
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	
+	<script>
+	document.addEventListener("DOMContentLoaded", function() {
+	    const asterionInput = document.querySelector('input[name="asterion"]');
+	    const submitButton = document.querySelector('.submit');
+	    
+	    submitButton.addEventListener('click', function(event) {
+	        const asterionValue = parseInt(asterionInput.value);
+
+	        if (asterionValue < 1 || asterionValue > 5) {
+	            event.preventDefault(); // 폼 제출 방지
+	            alert('별점은 1부터 5까지의 값만 입력할 수 있습니다.');
+	        } else {
+	            submitButton.removeAttribute('disabled');
+	        }
+	    });
+	});
+	</script>
 </body>
 </html>

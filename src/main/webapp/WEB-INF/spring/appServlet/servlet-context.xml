@@ -32,25 +32,32 @@ http://www.springframework.org/schema/context/spring-context.xsd">
 	</annotation-driven>
 
 	<!-- 스캔할 bean이 모여있는 패키지 지정 -->
-	<context:component-scan base-package="com.app.controller" />
-	<context:component-scan base-package="com.app.service" />
-	<context:component-scan base-package="com.app.dao" />
-	<context:component-scan base-package="com.app.util" />
-		
+	<context:component-scan
+		base-package="com.app.controller" />
+	<context:component-scan
+		base-package="com.app.service" />
+	<context:component-scan
+		base-package="com.app.dao" />
+	<context:component-scan
+		base-package="com.app.util" />
+
 	<beans:bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/"></beans:property>
 		<beans:property name="suffix" value=".jsp"></beans:property>
 	</beans:bean>
-	
+
 	<resources mapping="/css/**" location="/resources/css/" />
 	<resources mapping="/js/**" location="/resources/js/" />
-	<resources mapping="/fileStorage/**" location="file:///D:/fileStorage/" />
+	<resources mapping="/fileStorage/**"
+		location="file:///D:/fileStorage/" />
 	<resources mapping="/image/**" location="/resources/image/" />
-	<resources mapping="/recipeImageFile/**" location="file:///D:/recipeImageFile/" />
-	<resources mapping="/template" location="/resources/unapp-master/" />
+	<resources mapping="/recipeImageFile/**"
+		location="file:///D:/recipeImageFile/" />
+	<resources mapping="/template"
+		location="/resources/unapp-master/" />
 	<resources mapping="/**" location="/resources/" />
-	
+
 
 
 	<beans:bean id="multipartResolver"
@@ -60,10 +67,10 @@ http://www.springframework.org/schema/context/spring-context.xsd">
 	</beans:bean>
 
 
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 </beans:beans>

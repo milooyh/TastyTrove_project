@@ -2,6 +2,7 @@ package com.app.dao.mustEatPlace;
 
 import java.util.List;
 
+import com.app.dto.mustEatPlace.MainMustEatPlace;
 import com.app.dto.mustEatPlace.MustEatPlace;
 import com.app.dto.mustEatPlace.MustEatPlaceMenu;
 import com.app.dto.mustEatPlace.MustEatPlaceWithMenu;
@@ -10,7 +11,7 @@ public interface MustEatPlaceDAO {
 	
 	public int saveMustEatPlace(MustEatPlace mustEatPlace);
 	
-	public List<MustEatPlace> findMustEatPlaceList();
+	public List<MustEatPlace> findMustEatPlaceList(String userId);
 	
 	public int removeMustEatPlaceById(int id);
 	
@@ -30,6 +31,9 @@ public interface MustEatPlaceDAO {
 	
 	public int removeImage(int id);
 	
+	public List<MainMustEatPlace> findMainMustEatPlaceList();
+	
+	public MainMustEatPlace findMainMustEatPlaceById(int id);
 	/*
 	public MustEatPlaceMenu getMenuByIdAndName(int menu_id, String menu_name);
 

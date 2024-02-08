@@ -149,9 +149,6 @@
 	<h1>나만의 맛집을 등록하세요</h1>
 	<div id="map_add">
 		<div id="map" style="width:40%;height:420px;"></div>
-	
-	    <!-- 주소를 입력받는 폼 -->
-	    
 		    <div class="add_mustEatPlace">
 		    <form id="addressForm" action="" method="post">
 		        <input type="text" id="address" name="place" required placeholder="주소입력" readonly>   
@@ -168,14 +165,14 @@
 	
 	<c:forEach var="mustEatPlaceItem" items="${mustEatPlaces}">
 		<div class="mustEatPlace-info">
-			<p class="restaurant-name" onclick="moveToLocation('${mustEatPlaceItem.place}')" style="font-weight:bold; font-size:1.2rem; cursor:pointer; margin-top:10px">${mustEatPlaceItem.restaurantName}</p>
+			<p class="restaurant-name" onclick="moveToLocation('${mustEatPlaceItem.place}')" style="font-weight:bold; font-size:1.2rem; cursor:pointer; margin-top:10px; margin-bottom:10px;">${mustEatPlaceItem.restaurantName} <img src="<c:url value="/image/click.png"/>" style="width:25px; height:30px; padding-top:5px;"/></p>
             <c:if test="${mustEatPlaceItem.representativeMenuImage == null}">
             	<img src="<c:url value="/image/noPhoto.PNG"/>" onclick="location.href='/must/upload?id=${mustEatPlaceItem.id}'" style="width:200px; height:200px; cursor:pointer; object-fit:cover;"><br>
             </c:if>
             <c:if test="${mustEatPlaceItem.representativeMenuImage != null}">
             	<img src="data:image/jpg;base64,${mustEatPlaceItem.representativeMenuImage}" onclick="location.href='/must/upload?id=${mustEatPlaceItem.id}'" style="width:200px; height:200px; cursor:pointer; border-radius:13px; object-fit:cover;"><br>
             </c:if>
-            <p>${mustEatPlaceItem.place}</p><br>
+            <p style="margin-top:10px;">${mustEatPlaceItem.place}</p><br>
 			<p>${mustEatPlaceItem.review}</p><br>
 			<p>${mustEatPlaceItem.asterion}점</p><br>
 			<button onclick="removeMustEatPlace(${mustEatPlaceItem.id})" class="btn btn-blue">삭제</button>
@@ -204,6 +201,24 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	
+	<script>
+	document.addEventListener("DOMContentLoaded", function() {
+	    const asterionInput = document.querySelector('input[name="asterion"]');
+	    const submitButton = document.querySelector('#addBtn');
+	    
+	    submitButton.addEventListener('click', function(event) {
+	        const asterionValue = parseInt(asterionInput.value);
+
+	        if (asterionValue < 1 || asterionValue > 5) {
+	            event.preventDefault(); // 폼 제출 방지
+	            alert('별점은 1부터 5까지의 값만 입력할 수 있습니다.');
+	        } else {
+	            submitButton.removeAttribute('disabled');
+	        }
+	    });
+	});
+	</script>
 	
 	<script>
 	
@@ -237,8 +252,8 @@
 	<script>
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
         mapOption = {
-            center: new daum.maps.LatLng(37.56107, 126.9822), // 지도의 중심좌표
-            level: 14 // 지도의 확대 레벨
+            center: new daum.maps.LatLng(36.80741, 127.1472), // 지도의 중심좌표
+            level: 5 // 지도의 확대 레벨
         };
 
     //지도를 미리 생성
@@ -310,8 +325,6 @@ function closeOverlay() {
 };
 
 <c:forEach var="mustEatPlaceItem" items="${mustEatPlaces}">
-    
-    
     
 		var geocoder = new kakao.maps.services.Geocoder();
 		

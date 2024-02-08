@@ -9,7 +9,7 @@ public class MustEatPlace {
 	String restaurantName;
 	String place;
 	String review;
-	int rating;
+	int asterion;
 	String telephoneNumber;
 	String representativeMenu;
 	//byte[] representativeMenuImage;

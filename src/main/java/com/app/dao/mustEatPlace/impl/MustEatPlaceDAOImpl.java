@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.app.dao.mustEatPlace.MustEatPlaceDAO;
+import com.app.dto.mustEatPlace.MainMustEatPlace;
 import com.app.dto.mustEatPlace.MustEatPlace;
 import com.app.dto.mustEatPlace.MustEatPlaceMenu;
 import com.app.dto.mustEatPlace.MustEatPlaceWithMenu;
@@ -23,11 +24,13 @@ public class MustEatPlaceDAOImpl implements MustEatPlaceDAO{
 		return result;
 	}
 
+	/*
 	@Override
 	public List<MustEatPlace> findMustEatPlaceList() {
 		List<MustEatPlace> mustEatPlace = sqlSessionTemplate.selectList("mustEatPlace_mapper.findMustEatPlace");
 		return mustEatPlace;
 	}
+	*/
 
 	@Override
 	public int removeMustEatPlaceById(int id) {
@@ -82,6 +85,24 @@ public class MustEatPlaceDAOImpl implements MustEatPlaceDAO{
 	public int removeImage(int id) {
 		int result = sqlSessionTemplate.update("mustEatPlace_mapper.removeImage", id);
 		return result;
+	}
+
+	@Override
+	public List<MainMustEatPlace> findMainMustEatPlaceList() {
+		List<MainMustEatPlace> mainMustEatPlace = sqlSessionTemplate.selectList("mustEatPlace_mapper.mainFindMustEatPlace");
+		return mainMustEatPlace;
+	}
+
+	@Override
+	public MainMustEatPlace findMainMustEatPlaceById(int id) {
+		MainMustEatPlace mainMustEatPlace = sqlSessionTemplate.selectOne("mustEatPlace_mapper.mainFindMustEatPlaceById", id);
+		return mainMustEatPlace;
+	}
+
+	@Override
+	public List<MustEatPlace> findMustEatPlaceList(String userId) {
+		List<MustEatPlace> mustEatPlace = sqlSessionTemplate.selectList("mustEatPlace_mapper.findMustEatPlace", userId);
+		return mustEatPlace;
 	}
 
 	/*

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.dao.mustEatPlace.MustEatPlaceDAO;
+import com.app.dto.mustEatPlace.MainMustEatPlace;
 import com.app.dto.mustEatPlace.MustEatPlace;
 import com.app.dto.mustEatPlace.MustEatPlaceMenu;
 import com.app.dto.mustEatPlace.MustEatPlaceWithMenu;
@@ -23,6 +24,7 @@ public class MustEatPlaceServiceImpl implements MustEatPlaceService{
 		return result;
 	}
 
+	/*
 	@Override
 	public List<MustEatPlace> findMustEatPlaceList() {
 		
@@ -30,6 +32,7 @@ public class MustEatPlaceServiceImpl implements MustEatPlaceService{
 		
 		return mustEatPlace;
 	}
+	*/
 
 	@Override
 	public int removeMustEatPlaceById(int id) {
@@ -90,6 +93,24 @@ public class MustEatPlaceServiceImpl implements MustEatPlaceService{
 	public int removeImage(int id) {
 		int result = mustEatPlaceDAO.removeImage(id);
 		return result;
+	}
+
+	@Override
+	public List<MainMustEatPlace> findMainMustEatPlaceList() {
+		List<MainMustEatPlace> mainMustEatPlace = mustEatPlaceDAO.findMainMustEatPlaceList();
+		return mainMustEatPlace;
+	}
+
+	@Override
+	public MainMustEatPlace findMainMustEatPlaceById(int id) {
+		MainMustEatPlace mainMustEatPlace = mustEatPlaceDAO.findMainMustEatPlaceById(id);
+		return mainMustEatPlace;
+	}
+
+	@Override
+	public List<MustEatPlace> findMustEatPlaceList(String userId) {
+		List<MustEatPlace> mustEatPlace = mustEatPlaceDAO.findMustEatPlaceList(userId);
+		return mustEatPlace;
 	}
 
 	/*
