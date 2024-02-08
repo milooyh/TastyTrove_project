@@ -22,9 +22,9 @@
 
 	<h1>레시피 등록 화면</h1>
 	<!-- 임시작성 -->
-	<form action="" method="post" enctype="multipart/form-data">
+	<form method="post" enctype="multipart/form-data" id="recipeForm">
 		<input type="hidden" name="memberId" value="<%=member %>">
-		제목 <input type="text"name="recipeTitle"> 
+		제목 <input type="text"name="recipeTitle" id="title"> 
 		카테고리 <select id="category" name="recipeType">
 			<option name="category" value="KOR">한식</option>
 			<option name="category" value="CHI">중식</option>
@@ -35,15 +35,44 @@
 
 		<textarea id="summernote" name="recipeContent"></textarea>
 		대표 이미지로 등록할 사진을 선택하세요 <br>
-		<input type="file" name="recipeImage"> <br><br>
+		<input type="file" name="recipeImage" id="fileCheck"><br><br>
 		
-
-		<button>등록</button>
+		<button onclick="submitProc()" type="button" id="submitBtn">등록</button>
 		<button type="button" onclick='postCancle()'>취소</button>
 	</form>
 
 	<script>
+		
+		var file = document.getElementById("fileCheck");
+		var recipeFrom = document.getElementById("recipeForm");
+		var title = document.getElementById("title");
+		var summernote = document.getElementById("summernote");
 
+		
+		function submitProc() {
+			if(title.value.trim() == null || title.value.trim() == ""){
+				console.log('제목입력 요청')
+				alert('제목을 입력해주세요!')
+				title.focus();
+			}else if (summernote.value.trim() == null || summernote.value.trim() == ""){
+				console.log('본문입력 요청')
+				alert('내용을 입력해주세요!')
+				summernote.focus();
+			}else{
+				
+				if(file.value == null || file.value == ''){
+					console.log('첨부파일 존재하지 않음');
+					alert('사진을 첨부해주세요!');
+				}else{
+					console.log('submit 실행');
+					console.log(file.value);
+					recipeFrom.submit();
+					alert('레시피 등록이 완료되었습니다!');
+				}	
+			}
+		}
+	
+	
 		$('#summernote').summernote(
 				{
 					height : 500, // 에디터 높이
@@ -53,10 +82,13 @@
 					lang : "ko-KR", // 한글 설정
 					placeholder : '자신의 레시피를 작성하고 공유해보세요!', //placeholder 설정
 				});
+		
 		function postCancle(){
 			location.href = "/recipe"
 		}
-
+		
+	
 	</script>
+
 </body>
 </html>
