@@ -72,6 +72,12 @@
         SET representative_menu_image = #{representativeMenuImage}
         WHERE id = #{id}
     </update>
+    
+    <update id="removeImage" parameterType="int">
+    	UPDATE MUST_EAT_PLACE
+		SET representative_menu_image = NULL
+		WHERE id = #{id};
+    </update>
 	
 	<!--<resultMap id="mustEatPlaceMenuMap" type="com.app.dto.mustEatPlace.MustEatPlaceMenu">
         <id property="menu_id" column="menu_id"/>

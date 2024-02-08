@@ -3,16 +3,25 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+	<style>
+		img {
+			width:200px;
+			height:200px;
+			object-fit: cover;
+		}
+	</style>
+
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
 	<h1>파일 업로드 페이지</h1>
 	
-	<form action="/must/register" method="post" enctype="multipart/form-data">
+	<form action="/must/upload" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="id" value="${mustEatPlace.id}">
 		<input type="file" name="representativeMenuImage" id="file" />
-		<input type="submit" value="Upload" />
+		<input type="submit" value="Upload" /><br><br>
 		<img src="data:image/jpg;base64,${mustEatPlace.representativeMenuImage}">
 	</form>
 </body>	
