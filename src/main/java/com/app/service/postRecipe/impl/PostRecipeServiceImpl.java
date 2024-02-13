@@ -64,4 +64,11 @@ public class PostRecipeServiceImpl implements PostRecipeService {
 		return result;
 	}
 
+	@Override
+	public int getTotal() {
+		// TODO Auto-generated method stub
+		
+		return postRecipeDAO.getTotal();
+	}
+
 }

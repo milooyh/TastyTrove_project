@@ -45,6 +45,13 @@
 		DELETE FROM recipe_board
 		WHERE recipe_id = #{recipeId}
 	</delete>
+	
+<!-- 	레시피 총 개수 -->
+	<select id="getTotal" resultType="int">
+		SELECT count(*)
+		FROM RECIPE_BOARD
+		ORDER BY board_date desc
+	</select> 
 
 
 </mapper>

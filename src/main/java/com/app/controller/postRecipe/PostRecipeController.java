@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.app.dto.postRecipe.PagingDTO;
 import com.app.dto.postRecipe.PostRecipe;
 import com.app.dto.postRecipe.RecipeImageRequestFrom;
 import com.app.dto.postRecipe.RecipeSearchCondition;
@@ -189,9 +190,24 @@ public class PostRecipeController {
 	}
 
 	
+//	//검색기능 추가된 레시피 리스트
+//	@GetMapping("/recipe")
+//	public String recipeList (Model model, RecipeSearchCondition recipeSearchCondition) {
+//		System.out.println(recipeSearchCondition);
+//		
+//		List<PostRecipe> recipeList = postRecipeService.findRecipeListBySearchCondition(recipeSearchCondition);
+//		
+//		model.addAttribute("recipeList", recipeList);
+//		
+//		System.out.println(recipeList);
+//		
+//		return "recipe/recipe";
+//		
+//	}
+	
 	//검색기능 추가된 레시피 리스트
 	@GetMapping("/recipe")
-	public String recipeList (Model model, RecipeSearchCondition recipeSearchCondition) {
+	public String recipeList (Model model, RecipeSearchCondition recipeSearchCondition, @ModelAttribute("paging")PagingDTO paging) {
 		System.out.println(recipeSearchCondition);
 		
 		List<PostRecipe> recipeList = postRecipeService.findRecipeListBySearchCondition(recipeSearchCondition);
@@ -200,6 +216,9 @@ public class PostRecipeController {
 		
 		System.out.println(recipeList);
 		
+		int total = postRecipeService.getTotal();
+		paging.setTotalRowCount(total);
+		paging.pageSetting();
 		
 		return "recipe/recipe";
 		

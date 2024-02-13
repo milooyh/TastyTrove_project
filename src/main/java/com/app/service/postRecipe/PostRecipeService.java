@@ -19,5 +19,5 @@ public interface PostRecipeService {
 	
 	public int removeRecipeById(int recipeId);
 	
-	
+	public int getTotal();
 }

@@ -118,7 +118,7 @@
 </head>
 <body>
 <%
-	String member = (String)session.getAttribute("memberId");
+	String member = (String)session.getAttribute("userId");
 	System.out.println(member);
 %>
 	<div class="container">
@@ -163,12 +163,16 @@
 
 	<script>
 	
+		var member = document.getElementById("memberId");
 		var recipeFrom = document.getElementById("recipeForm");
 		var title = document.getElementById("title");
 		var summernote = document.getElementById("summernote");
 		
 		function modifyProc() {
-			if(title.value.trim() == null || title.value.trim() == ""){
+			if(member.value == null || member.value == "null"){
+				alert('로그인 후 이용 가능한 서비스입니다.')
+				location.href = "/login"
+			}else if(title.value.trim() == null || title.value.trim() == ""){
 				console.log('제목입력 요청')
 				alert('제목을 입력해주세요!')
 				title.focus();
@@ -195,7 +199,7 @@
 				});
 		
 		function postCancle(){
-			location.href = "/recipe"
+			history.back();
 		}
 
 	</script>

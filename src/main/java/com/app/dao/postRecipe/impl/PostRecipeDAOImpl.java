@@ -74,4 +74,11 @@ public class PostRecipeDAOImpl implements PostRecipeDAO {
 		return result;
 	}
 
+
+	@Override
+	public int getTotal() {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("postRecipe_mapper.getTotal");
+	}
+
 }

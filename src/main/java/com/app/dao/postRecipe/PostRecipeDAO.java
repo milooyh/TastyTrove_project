@@ -18,4 +18,6 @@ public interface PostRecipeDAO {
 	public int modifyRecipe(PostRecipe postRecipe);
 	
 	public int removeRecipeById(int recipeId);
+	
+	public int getTotal();
 }

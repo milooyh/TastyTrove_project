@@ -35,7 +35,7 @@
 	.recipe {
 		display: flex;
 		width: 264px;
-		height: 270px;
+		height: 320px;
 		margin: 10px;
 		align-items: center;
 		justify-content: center;
@@ -52,8 +52,8 @@
 	}
 	
 	.img {
-		width: 200px;
-		height: 200px;
+		width: 240px;
+		height: 240px;
 		object-fit: cover;
 		border-radius: 5px;
 		border: 1px solid gray;
@@ -104,7 +104,7 @@
 	
 	.recipeSearchBtn{
 		width: 100px;
-		height: 30px;
+		height: 40px;
 		background-color: #151B1B;
 		border: 0px;
 		border-radius: 30px;
@@ -120,10 +120,10 @@
 	
 	.searchKeyword{
 		width: 522px;
-		height: 30px;
+		height: 40px;
 		border-radius: 30px;
 		border: 1px solid gray;
-		padding-left: 10px;
+		padding-left: 20px;
 	}
 	
 	a:hover, a:visited, a:link, a:active
@@ -144,8 +144,8 @@
 			<h1 class="title">TasttyTrove Recipe</h1>
 
 			<div class="post">
-				<form action="/recipe" method="post">
-					<button type="submit" class="postBtn">레시피 등록하기</button>
+				<form action="/recipe" method="post" id="postRecipeFrom">
+					<button type="button" class="postBtn" onclick="isLogin()">레시피 등록하기</button>
 				</form>
 			</div>
 
@@ -184,7 +184,22 @@
 					</c:forEach>
 				</div>
 			</div>
+			
 		</div>
 	</div>
+	
+	<script>
+		function isLogin(){
+			
+			var sessionId = '<%=(String)session.getAttribute("userId")%>';
+			if(sessionId == "null"){
+				alert('로그인 후 이용 가능한 서비스입니다.');
+				location.href = "/login";
+			}else{
+				postRecipeFrom.submit();
+			}
+			
+		}
+	</script>
 </body>
 </html>
