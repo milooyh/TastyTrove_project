@@ -15,14 +15,13 @@
 	
 	html, body {
 		height: 100%;
-		background-color: #EDEDED;
+		background-color: #F2F2F2;
 	}
 	
 	.container {
 		display: flex;
 		justify-content: center;
 		width: 100%;
-		padding: 30px;
 	}
 
 
@@ -46,6 +45,7 @@
 		background-color: white;
 		border-radius: 10px;
 		border: 1px solid gray;
+		margin: 30px;
 	
 	}
 	

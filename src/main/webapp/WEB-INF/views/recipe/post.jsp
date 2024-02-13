@@ -22,15 +22,13 @@
 	
 	html, body {
 		height: 100%;
-		background-color: #EDEDED;
+		background-color: #F2F2F2;
 	}
 	
 	.container {
-
 		display: flex;
 		justify-content: center;
 		width: 100%;
-		height: 100%;
 		padding: 30px;
 	}
 	
@@ -40,7 +38,6 @@
 	
 	.postBox{
 		width: 1200px;
-		height: 100%;
 		padding: 30px;
 		background-color: white;
 		border-radius: 10px;

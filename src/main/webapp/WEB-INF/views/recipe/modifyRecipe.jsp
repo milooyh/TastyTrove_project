@@ -22,15 +22,13 @@
 	
 	html, body {
 		height: 100%;
-		background-color: #EDEDED;
+		background-color: #F2F2F2;
 	}
 	
 	.container {
-
 		display: flex;
 		justify-content: center;
 		width: 100%;
-		height: 100%;
 		padding: 30px;
 	}
 	
@@ -127,7 +125,7 @@
 		<div class="modifBox">
 			<h1 class="title">레시피 수정</h1>
 			<!--  -->
-			<form action="" method="post" enctype="multipart/form-data">
+			<form action="" method="post" enctype="multipart/form-data" id="recipeForm">
 				<div class="infoBox1">
 					<div class="infoBox2">
 						<div class="infoBox3">
@@ -141,7 +139,7 @@
 									<option name="category" value="DRT">디저트</option>
 								</select>
 							</div>
-							<input type="text"name="recipeTitle" id="title" value="${recipeTitle}" class="titleInput"> 
+							<input type="text"name="recipeTitle" id="title" value="${recipeTitle}" class="titleInput" placeholder="제목을 입력해주세요"> 
 						</div>
 						<div class="infoBox4">
 							
@@ -155,34 +153,36 @@
 				<textarea id="summernote" name="recipeContent">${recipeContent}</textarea>
 				
 				
-				<button class="Btn">수정완료</button>
+				<button class="Btn" onclick="modifyProc()" type="button" id="modifyBtn">수정완료</button>
 				<button type="button" onclick='postCancle()' class="Btn">취소</button>
-				<!--  -->
-				
-<!-- 			<form action="" method="post" enctype="multipart/form-data"> -->
-<%-- 				제목 <input type="text"name="recipeTitle" value="${recipeTitle}">  --%>
-<!-- 				카테고리  -->
-<!-- 				<select id="category" name="recipeType"> -->
-<!-- 					<option name="category" value="KOR">한식</option> -->
-<!-- 					<option name="category" value="CHI">중식</option> -->
-<!-- 					<option name="category" value="WST">양식</option> -->
-<!-- 					<option name="category" value="JPN">일식</option> -->
-<!-- 					<option name="category" value="DRT">디저트</option> -->
-<!-- 				</select> -->
-		
-<%-- 				<textarea id="summernote" name="recipeContent">${recipeContent}</textarea> --%>
-<!-- 				대표 이미지로 등록할 사진을 선택하세요 <br> -->
-<!-- 				<input type="file" name="recipeImage"> <br><br> -->
-<%-- 				<input type="hidden" name="recipeFileId" value="${recipeFileId }"> --%>
-		
-<!-- 				<button>수정완료</button> -->
-<!-- 				<button type="button" onclick='postCancle()'>취소</button> -->
+
 			</form>
 		</div>
 	
 	</div>
 
 	<script>
+	
+		var recipeFrom = document.getElementById("recipeForm");
+		var title = document.getElementById("title");
+		var summernote = document.getElementById("summernote");
+		
+		function modifyProc() {
+			if(title.value.trim() == null || title.value.trim() == ""){
+				console.log('제목입력 요청')
+				alert('제목을 입력해주세요!')
+				title.focus();
+			}else if (summernote.value.trim() == null || summernote.value.trim() == ""){
+				console.log('본문입력 요청')
+				alert('내용을 입력해주세요!')
+				summernote.focus();
+			}else{
+					console.log('submit 실행');
+					recipeFrom.submit();
+					alert('레시피 수정이 완료되었습니다!');
+				}	
+			}
+		
 
 		$('#summernote').summernote(
 				{

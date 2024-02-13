@@ -16,7 +16,7 @@
 	
 	html, body {
 		height: 100%;
-		background-color: #EDEDED;
+		background-color: #F2F2F2;
 	}
 	
 	.container {
@@ -34,8 +34,8 @@
 	
 	.recipe {
 		display: flex;
-		width: 300px;
-		height: 300px;
+		width: 264px;
+		height: 270px;
 		margin: 10px;
 		align-items: center;
 		justify-content: center;
@@ -52,8 +52,8 @@
 	}
 	
 	.img {
-		width: 235px;
-		height: 235px;
+		width: 200px;
+		height: 200px;
 		object-fit: cover;
 		border-radius: 5px;
 		border: 1px solid gray;
@@ -96,10 +96,9 @@
 	}
 	
 	.recipeListBox2{
-		width: 960px;
+		width: 100%;
 		display: flex;
 		flex-wrap: wrap;
-	
 	}
 	
 	
@@ -142,7 +141,7 @@
 	%>
 	<div class="container">
 		<div class="recipeListBox">
-			<h1 class="title">TastyTrove Recipe</h1>
+			<h1 class="title">TasttyTrove Recipe</h1>
 
 			<div class="post">
 				<form action="/recipe" method="post">
