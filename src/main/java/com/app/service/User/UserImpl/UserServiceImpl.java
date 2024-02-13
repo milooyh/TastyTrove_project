@@ -49,5 +49,29 @@ public class UserServiceImpl implements UserService{
 		User user = userDAO.findUserByUserPassword(userPassword);
 		return user;
 	}
+
+//	별명 있나
+	@Override
+	public User findUserByUserNickname(String userNickname) {
+		// TODO Auto-generated method stub
+		User user = userDAO.findUserByUserNickname(userNickname);
+		return user;
+	}
+
+//	전번있나
+	@Override
+	public User findUserByUserTel(String userTel) {
+		// TODO Auto-generated method stub
+		User user = userDAO.findUserByUserTel(userTel);
+		return user;
+	}
+
+//	이메일 있나
+	@Override
+	public User findUserByUserEmail(String userEmail) {
+		// TODO Auto-generated method stub
+		User user = userDAO.findUserByUserEmail(userEmail);
+		return user;
+	}
 	
 }

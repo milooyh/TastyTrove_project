@@ -145,8 +145,73 @@
 img{
     width: 200px;
     height: 100px;
+    object-fit: cover;
 }
-      </style>
+
+/*  */
+.body{
+    padding: 30px;
+    background-color: #f2f2f2;
+    border-bottom: 1px solid rgb(189, 189, 189);
+    border-top: 1px solid rgb(189, 189, 189);
+}
+
+.listBox{
+    width: 1200px;
+    height: 300px;;
+    background-color: rgb(230, 207, 207);
+    border: 1px solid black;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.listBoxHeader{
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 15px;
+    background-color: #555;
+    font-weight: bolder;
+    color: white;
+}
+
+.fontWhite{
+    color: white;
+}
+
+.listImg{
+    width: 180px;
+    height: 180px;
+    border: 1px solid black;
+    background-color: white;
+}
+
+.listInfo{
+    width: 250px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background-color: #333;
+}
+
+.listText{
+    height: 30px;
+    display: flex;
+    align-items: center;
+    padding-top: 10px;
+}
+
+.listInfoBox{
+    display: flex;
+    justify-content: space-between;
+}
+
+</style>
 </head>
 <body>
 
@@ -168,9 +233,60 @@ img{
         </div>
     </header>
 
+    <!--  -->
+    <div class="body">
+        <div class="recipe listBox">
+            <div class="listBoxHeader">
+                <div class="fontWhite">TasttyTrove Recipe</div>
+                <a>더보기</a>
+            </div>
 
+            <div class="listInfoBox">
+                <div class="listInfo">
+                    <!-- 이미지 -->
+                    <img class="listImg">
+                    <div class="listText">
+                        <div class="text">텍스트 넣는곳</div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <div class="product listBox">
+            <div class="listBoxHeader">
+                <div class="fontWhite">TasttyTrove Product</div>
+                <a>더보기</a>
+            </div>
 
+            <div class="listInfoBox">
+                <div class="listInfo">
+                    <!-- 이미지 -->
+                    <img class="listImg">
+                    <div class="listText">
+                        <div class="text">텍스트 넣는곳</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mustEatPlace listBox">
+            <div class="listBoxHeader">
+                <div class="fontWhite">TasttyTrove MustEatPlace</div>
+                <a>더보기</a>
+            </div>
+
+            <div class="listInfoBox">
+                <div class="listInfo">
+                    <!-- 이미지 -->
+                    <img class="listImg">
+                    <div class="listText">
+                        <div class="text">텍스트 넣는곳</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--  -->
 
 
 

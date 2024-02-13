@@ -18,28 +18,42 @@ import com.app.service.User.UserService;
 
 @Controller
 public class UserController {
+	
 	@Autowired
 	UserService userService;
+	
 
 //	로그인 =====================================
+//	관리자
+	@RequestMapping
+	public String admin(HttpSession session) {
+		return "admin/adminHome";
+	}
+	
+//	로그인
 	@GetMapping("/login")
 	public String login() {
 		return "user/login";
 	}
 
 	@PostMapping("/login")
-	public String loginProcess(User user, HttpSession session) {
+	public String loginProcess(User user, HttpSession session, Model model) {
 
-		User findUser = userService.findUserByLoginId(user);
-		System.out.println(findUser);
+	    User findUser = userService.findUserByLoginId(user);
+	    System.out.println(findUser);
 
-		if (findUser == null) { // 로그인 실패하면 로그인 페이지로 다시
-			System.out.println("로그인 실패");
-			return "user/login";
-		}
+	    if (findUser == null) { // 로그인 실패하면 로그인 페이지로 다시
+	        System.out.println("로그인 실패");
+	        model.addAttribute("errorMessage", "로그인에 실패했습니다");
+	        return "user/login";
+	    }
 
-		session.setAttribute("userId", findUser.getUserId()); // 로그인한 아이디 세션 저장
-		System.out.println(session);
+	    session.setAttribute("userId", findUser.getUserId()); // 로그인한 아이디 세션 저장
+	    session.setAttribute("userType", findUser.getUserType());
+	    
+	    System.out.println("sesssssssssssion 값 !!!!!!! : " + session.getAttribute("userId"));
+	    
+	    System.out.println("로그인한 회원 유형 : " + findUser.getUserType());
 
 		if (findUser != null) { // 로그인 성공
 			System.out.println("로그인 성공");
@@ -52,7 +66,13 @@ public class UserController {
 			}
 		}
 
-		return "user/login";
+	
+//	로그아웃
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		System.out.println("로그아웃 완");
+		return "redirect:/";
 	}
 
 //	회원가입 ====================================
@@ -75,6 +95,7 @@ public class UserController {
 		return "1";
 	}
 
+//	비번 잇나 확인
 	@PostMapping("/signup/checkPw")
 	@ResponseBody
 	public String checkPw(@RequestParam String userPassword, @RequestParam String userPasswordChk) {
@@ -88,15 +109,72 @@ public class UserController {
 			System.out.println("비밀번호 불일치");
 			result = "1";
 			return result;
-		} else if(user == null && userPassword.equals(userPasswordChk)) {
+		} else if (user == null && userPassword.equals(userPasswordChk)) {
 			System.out.println("비밀번호 일치");
 			result = "0";
 			return result;
 		}
-		
+
 		return result;
 	}
 
+//	별명 있나 확인
+	@PostMapping("/signup/checknickname")
+	@ResponseBody
+	public String checkNickname(@RequestParam String userNickname) {
+		User user = userService.findUserByUserNickname(userNickname);
+		if (user == null) {
+			System.out.println("별명 사용 가능");
+			return "0";
+		} else {
+			System.out.println("별명 사용 불가");
+		}
+		return "1";
+	}
+
+//	전번 있나 확인
+	@PostMapping("/signup/checktel")
+	@ResponseBody
+	public String checkTel(@RequestParam String tel1, @RequestParam String tel2, @RequestParam String tel3, User user) {
+		
+//		 전화번호 하나로 합치기
+		String userTel = (tel1.length() == 2 ? "0" + tel1 : tel1) + "-" + (tel2.length() == 3 ? "0" + tel2 : tel2) + "-"
+				+ (tel3.length() == 3 ? "0" + tel3 : tel3);
+		
+		user.setUserTel(userTel);
+		System.out.println("userTel : " + userTel);
+		
+		user = userService.findUserByUserTel(userTel);
+		System.out.println(user);
+		
+		if (user == null) {
+			System.out.println("전번 사용 가능");
+			return "0";
+		} else {
+			System.out.println("전번 사용 불가");
+		}
+		return "1";
+	}
+	
+//	이메일 있나 확인
+	@PostMapping("/signup/checkemail")
+	@ResponseBody
+	public String checkAddress(@RequestParam String userEmail) {
+		System.out.println("email 컨트롤러 불림");
+		
+		User user = userService.findUserByUserEmail(userEmail);
+		System.out.println(userEmail);
+		
+		if (user == null) {
+			System.out.println("이메일 사용 가능");
+			return "0";
+		} else {
+			System.out.println("이메일 사용 불가");
+		}
+		return "1";
+	}
+
+//	회원가입
 	@PostMapping("/signup")
 	public String signupProcess(@ModelAttribute User user, @RequestParam("userId") String userId,
 			@RequestParam("userPassword") String userPassword, @RequestParam("userName") String userName,
@@ -131,10 +209,10 @@ public class UserController {
 		int result = userService.saveUser(user);
 		if (result > 0) {
 			System.out.println("회원가입 성공! result = " + result);
-			return "redirect:/user/login";
+			return "redirect:/login";
 		} else {
 			System.out.println("회원가입 실패... result = " + result);
-			return "user/signup";
+			return "/signup";
 		}
 
 	}
