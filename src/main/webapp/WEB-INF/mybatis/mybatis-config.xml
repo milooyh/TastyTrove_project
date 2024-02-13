@@ -60,8 +60,6 @@
 		<typeAlias type="com.app.dto.postRecipe.RecipeImage" alias="RecipeImage"/>
 		<typeAlias type="com.app.dto.postRecipe.RecipeSearchCondition" alias="RecipeSearchCondition"/>
 		
-		<typeAlias type="com.app.dto.user.UserPasswordChk" alias="UserPasswordChk"></typeAlias>
-
 	</typeAliases>
 
 

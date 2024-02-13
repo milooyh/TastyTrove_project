@@ -198,6 +198,9 @@ public class PostRecipeController {
 		
 		model.addAttribute("recipeList", recipeList);
 		
+		System.out.println(recipeList);
+		
+		
 		return "recipe/recipe";
 		
 	}

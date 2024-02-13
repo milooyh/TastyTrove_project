@@ -47,7 +47,6 @@ public class AdminController {
 	}
 
 //	회원 관리 ======================
-
 //	회원 목록
 	@GetMapping("/member")
 	public String adminMemberList(Model model) {

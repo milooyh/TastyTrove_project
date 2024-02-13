@@ -42,18 +42,43 @@
 		SELECT * FROM MEMBERS
 		WHERE user_id = #{userId}
 	</select>
-	
+
 	<select id="findUserByUserPassword" resultType="User"
 		parameterType="String">
 		SELECT * FROM MEMBERS
-		WHERE user_password = #{userPassword}
+		WHERE user_password =
+		#{userPassword}
+	</select>
+
+	<select id="findUserByUserNickname" resultType="User"
+		parameterType="String">
+		SELECT * FROM MEMBERS
+		WHERE user_nickname =
+		#{userNickname}
+	</select>
+
+	<select id="findUserByUserTel" resultType="User"
+		parameterType="String">
+		SELECT * FROM MEMBERS
+		WHERE user_tel =
+		#{userTel}
 	</select>
 	
+
 	<select id="findUserByUserName" resultType="User"
 		parameterType="String">
 		SELECT * FROM MEMBERS
 		WHERE user_name = #{userName}
 	</select>
+
+	<select id="findUserByUserEmail" resultType="User"
+		parameterType="User">
+		SELECT * FROM MEMBERS
+		WHERE user_email =
+		#{userEmail}
+	</select>
+
+
 
 
 </mapper>
