@@ -180,7 +180,7 @@ img {
 	background-color: white;
 	border: 1px solid black;
 	border-radius: 3px;
-	margin-bottom: 10px;
+	margin-bottom: 30px;
 	display: flex;
 	flex-direction: column;
 }
