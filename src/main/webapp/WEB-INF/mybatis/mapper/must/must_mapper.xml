@@ -2,7 +2,7 @@
 
 <mapper namespace="mustEatPlace_mapper">
 	<insert id="saveMustEatPlace" parameterType="com.app.dto.mustEatPlace.MustEatPlace">
-		INSERT INTO MUST_EAT_PLACE(id, place, restaurant_name, review, asterion, telephone_number, representative_menu) VALUES(NVL((SELECT MAX(id) + 1 FROM MUST_EAT_PLACE),1), #{place}, #{restaurantName}, #{review}, #{asterion}, #{telephoneNumber}, #{representativeMenu})
+		INSERT INTO MUST_EAT_PLACE(id, place, restaurant_name, review, asterion, telephone_number, representative_menu, user_id) VALUES(NVL((SELECT MAX(id) + 1 FROM MUST_EAT_PLACE),1), #{place}, #{restaurantName}, #{review}, #{asterion}, #{telephoneNumber}, #{representativeMenu}, #{userId})
 	</insert>
 	
 	<select id="findMustEatPlace" resultType="com.app.dto.mustEatPlace.MustEatPlace" parameterType="String">
@@ -74,11 +74,11 @@
         WHERE id = #{id}
     </update>
     
-    <update id="removeImage" parameterType="int">
+    <!-- <update id="removeImage" parameterType="int">
     	UPDATE MUST_EAT_PLACE
 		SET representative_menu_image = NULL
 		WHERE id = #{id};
-    </update>
+    </update> -->
 	
 	<select id="mainFindMustEatPlace" resultType="com.app.dto.mustEatPlace.MainMustEatPlace">
 		SELECT * FROM main_must_eat_place
@@ -91,7 +91,7 @@
 		    m.restaurant_name,
 		    m.telephone_number,
 		    m.representative_menu_image,
-		    (SELECT AVG(rating) FROM review) AS avg_rating,
+		    ROUND((SELECT AVG(rating) FROM review WHERE id = m.id), 1) AS rating,
 		    m.opening_hours,
 		    m.closing_hours,
 		    CASE 
@@ -104,8 +104,36 @@
 		WHERE id = #{id}
 	</select>
 	
-	<select id="mainFindMustEatPlaceMenuById">
-		
+	<select id="mainFindMustEatPlaceMenuById" parameterType="int" resultType="com.app.dto.mustEatPlace.MainMustEatPlaceMenuInfo">
+		SELECT * FROM main_menu_info
+		WHERE id = #{id}
 	</select>
+	
+	<select id="mainFindMustEatPlaceReviewById" parameterType="int" resultType="com.app.dto.mustEatPlace.MainMustEatPlaceReview">
+		SELECT * FROM review
+		WHERE id = #{id}
+	</select>
+	
+	<insert id="saveReview" parameterType="com.app.dto.mustEatPlace.MainMustEatPlaceReview">
+		INSERT INTO review (id, review, representative_menu_image, rating, user_id)
+		VALUES (
+		    #{id},
+		    #{review},
+		    #{representativeMenuImage},
+		    #{rating},
+		    #{userId}
+		)
+	</insert>
+	
+	<update id="updateImageReviewPath" parameterType="com.app.dto.mustEatPlace.MainMustEatPlaceReview">
+        UPDATE review 
+        SET representative_menu_image = #{representativeMenuImage}
+        WHERE id = #{id}
+    </update>
+    
+    <delete id="removeReview" parameterType="string">
+        DELETE FROM review
+        WHERE review = #{review}
+    </delete>
 	
 </mapper>

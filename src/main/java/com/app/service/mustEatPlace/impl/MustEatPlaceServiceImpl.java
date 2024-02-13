@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.app.dao.mustEatPlace.MustEatPlaceDAO;
 import com.app.dto.mustEatPlace.MainMustEatPlace;
+import com.app.dto.mustEatPlace.MainMustEatPlaceMenuInfo;
+import com.app.dto.mustEatPlace.MainMustEatPlaceReview;
 import com.app.dto.mustEatPlace.MustEatPlace;
 import com.app.dto.mustEatPlace.MustEatPlaceMenu;
 import com.app.dto.mustEatPlace.MustEatPlaceWithMenu;
@@ -23,16 +25,6 @@ public class MustEatPlaceServiceImpl implements MustEatPlaceService{
 		int result = mustEatPlaceDAO.saveMustEatPlace(mustEatPlace);
 		return result;
 	}
-
-	/*
-	@Override
-	public List<MustEatPlace> findMustEatPlaceList() {
-		
-		List<MustEatPlace> mustEatPlace = mustEatPlaceDAO.findMustEatPlaceList();
-		
-		return mustEatPlace;
-	}
-	*/
 
 	@Override
 	public int removeMustEatPlaceById(int id) {
@@ -113,16 +105,34 @@ public class MustEatPlaceServiceImpl implements MustEatPlaceService{
 		return mustEatPlace;
 	}
 
-	/*
 	@Override
-    public MustEatPlaceMenu getMenuByIdAndName(int menu_id, String menu_name) {
-        return mustEatPlaceDAO.getMenuByIdAndName(menu_id, menu_name);
-    }
+	public List<MainMustEatPlaceMenuInfo> mainFindMustEatPlaceMenuById(int id) {
+		List<MainMustEatPlaceMenuInfo> mainMustEatPlaceMenuInfo = mustEatPlaceDAO.mainFindMustEatPlaceMenuById(id);
+		return mainMustEatPlaceMenuInfo;
+	}
 
-    @Override
-    public void modifyMenu(MustEatPlaceMenu menu) {
-    	mustEatPlaceDAO.modifyMenu(menu);
-    }
-    */
+	@Override
+	public List<MainMustEatPlaceReview> mainFindMustEatPlaceReviewById(int id) {
+		List<MainMustEatPlaceReview> mainMustEatPlaceReview = mustEatPlaceDAO.mainFindMustEatPlaceReviewById(id);
+		return mainMustEatPlaceReview;
+	}
+
+	@Override
+	public int saveReview(MainMustEatPlaceReview mainMustEatPlaceReview) {
+		int result = mustEatPlaceDAO.saveReview(mainMustEatPlaceReview);
+		return result;
+	}
+
+	@Override
+	public int updateImage(MainMustEatPlaceReview mustEatPlaceReview) {
+		int result = mustEatPlaceDAO.updateImage(mustEatPlaceReview);
+		return result;
+	}
+
+	@Override
+	public int removeReview(String review) {
+		int result = mustEatPlaceDAO.removeReview(review);
+		return result;
+	}
 
 }

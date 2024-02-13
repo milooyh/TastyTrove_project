@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import com.app.dao.mustEatPlace.MustEatPlaceDAO;
 import com.app.dto.mustEatPlace.MainMustEatPlace;
+import com.app.dto.mustEatPlace.MainMustEatPlaceMenuInfo;
+import com.app.dto.mustEatPlace.MainMustEatPlaceReview;
 import com.app.dto.mustEatPlace.MustEatPlace;
 import com.app.dto.mustEatPlace.MustEatPlaceMenu;
 import com.app.dto.mustEatPlace.MustEatPlaceWithMenu;
@@ -104,6 +106,37 @@ public class MustEatPlaceDAOImpl implements MustEatPlaceDAO{
 		List<MustEatPlace> mustEatPlace = sqlSessionTemplate.selectList("mustEatPlace_mapper.findMustEatPlace", userId);
 		return mustEatPlace;
 	}
+
+	@Override
+	public List<MainMustEatPlaceMenuInfo> mainFindMustEatPlaceMenuById(int id) {
+		List<MainMustEatPlaceMenuInfo> mainMustEatPlaceMenuInfo = sqlSessionTemplate.selectList("mustEatPlace_mapper.mainFindMustEatPlaceMenuById", id);
+		return mainMustEatPlaceMenuInfo; 
+	}
+
+	@Override
+	public List<MainMustEatPlaceReview> mainFindMustEatPlaceReviewById(int id) {
+		List<MainMustEatPlaceReview> mainMustEatPlaceReview = sqlSessionTemplate.selectList("mustEatPlace_mapper.mainFindMustEatPlaceReviewById", id);
+		return mainMustEatPlaceReview;
+	}
+
+	@Override
+	public int saveReview(MainMustEatPlaceReview mainMustEatPlaceReview) {
+		int result = sqlSessionTemplate.insert("mustEatPlace_mapper.saveReview", mainMustEatPlaceReview);
+		return result;
+	}
+
+	@Override
+	public int updateImage(MainMustEatPlaceReview mustEatPlaceReview) {
+		int result = sqlSessionTemplate.update("mustEatPlace_mapper.updateImageReviewPath", mustEatPlaceReview);
+		return result;
+	}
+
+	@Override
+	public int removeReview(String review) {
+		int result = sqlSessionTemplate.delete("mustEatPlace_mapper.removeReview", review);
+		return result;
+	}
+
 
 	/*
 	@Override

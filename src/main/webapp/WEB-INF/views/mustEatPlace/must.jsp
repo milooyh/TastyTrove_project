@@ -74,6 +74,7 @@
         #map_add {
             display: flex;
             justify-content: center;
+            margin-top:100px;
         }
         
         .mustEatPlace-info{
@@ -124,6 +125,27 @@
 			background-color: #ff5f2e;
 		}
 		
+		.nav-nar2 {
+			width:100%;
+			height:150px;
+			background-color:#074565;
+			color:white;
+			text-align:center;
+			font-size:1.5rem;
+			display:flex;
+			align-items:center;
+			justify-content:center;
+		}
+		
+		.nav-nar2 p {
+		    margin: 0; /* 기본 마진 제거 */
+		}
+		
+		.ment2 {
+			font-size:0.8rem;
+			text-align:center;
+		}
+		
 		.wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
 	    .wrap * {padding: 0;margin: 0;}
 	    .wrap .info {width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
@@ -140,13 +162,18 @@
 	    .info .link {color: #5085BB;}
         
 	</style>
-	
+	<jsp:include page="../main/header.jsp"></jsp:include>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
+	
 	<div class="container">
-	<h1>나만의 맛집을 등록하세요</h1>
+	<div class="nav-nar2">
+		<p class="ment">당신만을 위한</p>
+		<h3>맛집</h3>
+	</div>
+	<div class="ment2">자신만의 맛집을 등록하고, 오늘의 메뉴? 고민하지 마세요</div>
 	<div id="map_add">
 		<div id="map" style="width:40%;height:420px;"></div>
 		    <div class="add_mustEatPlace">
@@ -158,6 +185,7 @@
 		        <input type="number" id="asterion" name="asterion" required placeholder="제 점수는요(1~5)"><br> 
 		        <input type="text" id="telephone_number" name="telephoneNumber" required placeholder="전화번호"><br>
 		        <input type="text" id="representative_menu" name="representativeMenu" required placeholder="대표메뉴">
+		        <input type="hidden" name="userId" value="${userId}">
 		        <button type="submit" id="addBtn" disabled='disabled' class="btn btn-red">추가하기</button>
 		    </form>
 	    </div>
@@ -302,29 +330,29 @@
             }
         }).open();
     }
-</script>
+	</script>
     
-<script>
-
-var clusterer = new kakao.maps.MarkerClusterer({
-    map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
-    averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
-    minLevel: 10 // 클러스터 할 최소 지도 레벨 
-});
-
-var markers = [];
-
-
-</script>
-<script>
-
-var overlay;
-
-function closeOverlay() {
-    overlay.setMap(null);     
-};
-
-<c:forEach var="mustEatPlaceItem" items="${mustEatPlaces}">
+	<script>
+	
+	var clusterer = new kakao.maps.MarkerClusterer({
+	    map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
+	    averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
+	    minLevel: 10 // 클러스터 할 최소 지도 레벨 
+	});
+	
+	var markers = [];
+	
+	
+	</script>
+	<script>
+	
+	var overlay;
+	
+	function closeOverlay() {
+	    overlay.setMap(null);     
+	};
+	
+	<c:forEach var="mustEatPlaceItem" items="${mustEatPlaces}">
     
 		var geocoder = new kakao.maps.services.Geocoder();
 		
@@ -471,4 +499,5 @@ function closeOverlay() {
     }
 </script>
 </body>
+<jsp:include page="../main/footer.jsp"></jsp:include>
 </html>

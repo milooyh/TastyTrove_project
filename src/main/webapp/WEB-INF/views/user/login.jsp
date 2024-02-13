@@ -9,6 +9,9 @@
 <body>
 	<h1>로그인 페이지</h1>
 	<hr>
+	
+	<span id="alertMessage" style="display: none;" th:text="${alertMessage}"></span>
+	
 	<form action="/login" method="post">
 		<label>아이디 : </label><input type="text" id="userId" name="userId"><br>
 		<label>비밀번호 : </label><input type="password" id="userPassword" name="userPassword"><br>
@@ -26,5 +29,6 @@
 			}
 		}
 	</script> -->
+	
 </body>
 </html>

@@ -3,6 +3,8 @@ package com.app.dao.mustEatPlace;
 import java.util.List;
 
 import com.app.dto.mustEatPlace.MainMustEatPlace;
+import com.app.dto.mustEatPlace.MainMustEatPlaceMenuInfo;
+import com.app.dto.mustEatPlace.MainMustEatPlaceReview;
 import com.app.dto.mustEatPlace.MustEatPlace;
 import com.app.dto.mustEatPlace.MustEatPlaceMenu;
 import com.app.dto.mustEatPlace.MustEatPlaceWithMenu;
@@ -34,9 +36,14 @@ public interface MustEatPlaceDAO {
 	public List<MainMustEatPlace> findMainMustEatPlaceList();
 	
 	public MainMustEatPlace findMainMustEatPlaceById(int id);
-	/*
-	public MustEatPlaceMenu getMenuByIdAndName(int menu_id, String menu_name);
-
-    public void modifyMenu(MustEatPlaceMenu menu);
-    */
+	
+	public List<MainMustEatPlaceMenuInfo> mainFindMustEatPlaceMenuById(int id);
+	
+	public List<MainMustEatPlaceReview> mainFindMustEatPlaceReviewById(int id);
+	
+	public int saveReview(MainMustEatPlaceReview mainMustEatPlaceReview);
+	
+	public int updateImage(MainMustEatPlaceReview mustEatPlaceReview);
+	
+	public int removeReview(String review);
 }
