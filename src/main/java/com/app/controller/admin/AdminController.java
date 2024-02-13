@@ -1,10 +1,13 @@
 package com.app.controller.admin;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.tomcat.util.codec.binary.Base64;
+import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,11 +18,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.app.common.CommonCode;
 import com.app.dto.delivery.Delivery;
 import com.app.dto.delivery.DeliverySearchCondition;
+import com.app.dto.mustEatPlace.MainMustEatPlace;
+import com.app.dto.mustEatPlace.MainMustEatPlaceMenuInfo;
 import com.app.dto.mustEatPlace.MustEatPlace;
+import com.app.dto.mustEatPlace.MustEatPlaceMenu;
 import com.app.dto.mustEatPlace.MustEatPlaceSearchCondition;
 import com.app.dto.order.Order;
 import com.app.dto.order.OrderItem;
@@ -342,7 +350,7 @@ public class AdminController {
 //	맛집 모록
 	@GetMapping("/musteatplace")
 	public String findMustEatPlaceList(Model model) {
-		List<MustEatPlace> placeList = adminService.findMustEatPlaceList();
+		List<MainMustEatPlace> placeList = adminService.findMustEatPlaceList();
 		model.addAttribute("placeList", placeList);
 
 		return "/admin/adminMustEatPlace/adminMustEatPlace";
@@ -351,14 +359,14 @@ public class AdminController {
 //	ajax값 넘겨 주기 위한 컨트롤러
 	@GetMapping("/musteatplace/details")
 	@ResponseBody
-	public MustEatPlace getMustDetails(@RequestParam String placeId) {
+	public MainMustEatPlace getMustDetails(@RequestParam String placeId) {
 		System.out.println(placeId);
 		System.out.println("맛집 getUserDatil 호출됨 ㅜㅜㅜ");
 		
 	    int intPlaceId = Integer.parseInt(placeId);
 	    System.out.println(intPlaceId);
 	    
-	    MustEatPlace mustEatPlace = adminService.findMustEatPlaceByPlaceId(intPlaceId);
+	    MainMustEatPlace mustEatPlace = adminService.findMustEatPlaceByPlaceId(intPlaceId);
 	    System.out.println(mustEatPlace);
 	    
 	    return mustEatPlace;
@@ -367,7 +375,7 @@ public class AdminController {
 
 //	맛집별 리뷰
 	@RequestMapping("/musteatplace/content")
-	public String mustEatPlaceReview(@RequestParam String placeId, Model model, MustEatPlace mustEatPlace) {
+	public String mustEatPlaceReview(@RequestParam String placeId, Model model, MainMustEatPlace mustEatPlace) {
 		int intPlaceId = Integer.parseInt(placeId);
 		mustEatPlace = adminService.findMustEatPlaceByPlaceId(intPlaceId);
 
@@ -383,7 +391,7 @@ public class AdminController {
 	}
 
 	@PostMapping("/musteatplace/add")
-	public String saveMustEatPlaceProcess(MustEatPlace mustEatPlace, HttpSession session) {
+	public String saveMustEatPlaceProcess(MainMustEatPlace mustEatPlace, HttpSession session) {
 
 		int result = adminService.saveMustEatPlace(mustEatPlace);
 		System.out.println("adminController result : " + result);
@@ -402,7 +410,7 @@ public class AdminController {
 			Model model) {
 		System.out.println("adminController findMustEatPlaceListBySearchCondition 불림");
 
-		List<MustEatPlace> placeList = adminService.findMustEatPlaceListBySearchCondition(mustEatPlaceSearchCondition);
+		List<MainMustEatPlace> placeList = adminService.findMustEatPlaceListBySearchCondition(mustEatPlaceSearchCondition);
 		model.addAttribute("placeList", placeList);
 
 		return "/admin/adminMustEatPlace/findMustEatPlace";
@@ -410,16 +418,16 @@ public class AdminController {
 
 //	맛집 수정
 	@GetMapping("/musteatplace/update")
-	public String modifyMustEatPlace(@RequestParam String placeId, Model model, MustEatPlace mustEatPlace) {
-		int intPlaceId = Integer.parseInt(placeId);
-		mustEatPlace = adminService.findMustEatPlaceByPlaceId(intPlaceId);
+	public String modifyMustEatPlace(@RequestParam String id, Model model, MainMustEatPlace mustEatPlace) {
+		int intid = Integer.parseInt(id);
+		mustEatPlace = adminService.findMustEatPlaceByPlaceId(intid);
 		model.addAttribute("mustEatPlace", mustEatPlace);
 
 		return "/admin/adminMustEatPlace/modifyMustEatPlace";
 	}
 
 	@PostMapping("/musteatplace/update")
-	public String modifyMustEatPlaceProcess(MustEatPlace mustEatPlace) {
+	public String modifyMustEatPlaceProcess(MainMustEatPlace mustEatPlace) {
 		int result = adminService.modifyMustEatPlace(mustEatPlace);
 		if (result > 0) {
 			System.out.println("맛집 수정 성공");
@@ -429,12 +437,59 @@ public class AdminController {
 			return "/admin/musteatplace/modify";
 		}
 	}
+	
+	@GetMapping("/musteatplace/reomoveMenu")
+	public String modifyMenu(@RequestParam String id, Model model) {
+		
+		int intId = Integer.parseInt(id);
+		
+		List<MainMustEatPlaceMenuInfo> mustEatPlaceMenu = adminService.findMustEatPlaceMenuById(intId);
+		
+		model.addAttribute("mustEatPlaceMenu", mustEatPlaceMenu);
+		
+		return "admin/adminMustEatPlace/removeMenu";
+		
+	}
+	
+	@RequestMapping("/musteatplace/reomoveMenuName")
+	public String removeMenuProcess(@RequestParam String menuName) {
+		int result = adminService.removeMenuByName(menuName);
+		
+		System.out.println(menuName);
+		
+		if(result > 0 ) {
+			return "redirect:/admin/musteatplace";
+		} else {
+			return "/home";
+		}
+	}
+	
+	@GetMapping("/musteatplace/registerMenu")
+	public String saveMenu(@RequestParam("id") int id, Model model) {
+		
+		model.addAttribute("id", id);
+		model.addAttribute("MustEatPlaceMenu", new MainMustEatPlaceMenuInfo());
+		
+		return "admin/adminMustEatPlace/registerMenu";
+	}
+	
+	@PostMapping("/musteatplace/registerMenu")
+	public String saveMenuProcess(@RequestParam("id") int id, @ModelAttribute MustEatPlaceMenu mustEatPlaceMenu, Model model) {
+		
+		int result = adminService.saveMenuInfo(id, mustEatPlaceMenu.getMenuName(), mustEatPlaceMenu.getPrice());
+		
+		if(result > 0) { //저장이 성공
+			return "redirect:/admin/musteatplace";  //main 요청 경로
+		} else { //저장 실패
+			return "/home"; //view 파일경로
+		}
+	}
 
 //	맛집 삭제
 	@GetMapping("/musteatplace/remove")
-	public String removeMustEatPlace(@RequestParam String placeId) {
-		int intPlaceId = Integer.parseInt(placeId);
-		int result = adminService.removeMustEatPlace(intPlaceId);
+	public String removeMustEatPlace(@RequestParam String id) {
+		int intid = Integer.parseInt(id);
+		int result = adminService.removeMustEatPlace(intid);
 		if (result > 0) {
 			System.out.println("맛집 삭제 성공");
 			return "redirect:/admin/musteatplace";
@@ -442,6 +497,76 @@ public class AdminController {
 			System.out.println("맛집 삭제 실패");
 			return "/admin/musteatplace";
 		}
+	}
+	
+	@GetMapping("/musteatplace/upload")
+	public String fileUpload(@RequestParam int id, Model model) {
+		
+		//int intId = Integer.parseInt(id);
+		
+		MainMustEatPlace mustEatPlace = adminService.findMustEatPlaceByPlaceId(id);
+		
+		System.out.println(id);
+		
+		model.addAttribute("mustEatPlace", mustEatPlace);
+		
+		return "/admin/adminMustEatPlace/imageUpload";
+	}
+	
+	@PostMapping("/musteatplace/upload")
+	    public String fileUploadProcess(@RequestParam("representativeMenuImage") MultipartFile file,
+	                                    @RequestParam("id") int id,
+	                                    RedirectAttributes redirectAttributes) {
+			/*
+	        if (file.isEmpty()) {
+	            redirectAttributes.addFlashAttribute("message", "Please select a file to upload.");
+	            return "redirect:/uploadResult";
+	        }
+	        */
+
+	        try {
+	            byte[] imageData = file.getBytes();
+	            MainMustEatPlace mustEatPlace = new MainMustEatPlace();
+	            mustEatPlace.setId(id);
+	            System.out.println(imageData);
+	            System.out.println("----------");
+	            String imageBase64 = null;
+	            try {
+	            	imageBase64 = imageToBase64(imageData);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+	            //mustEatPlace.setRepresentativeMenuImage(imageData);
+	            mustEatPlace.setRepresentativeMenuImage(imageBase64);
+
+	            adminService.updateImageData(mustEatPlace);
+
+	            redirectAttributes.addFlashAttribute("message", "File upload successful!");
+	        } catch (IOException | MyBatisSystemException e) {
+	            e.printStackTrace();
+	            redirectAttributes.addFlashAttribute("message", "File upload failed.");
+	        }
+
+	        return "redirect:/admin/musteatplace/add";
+	    }
+
+	public String imageToBase64(byte[] bt) throws Exception{
+	    String base64Img = "";
+	    
+	        try {
+	            base64Img = new String(Base64.encodeBase64(bt));
+	        } catch (Exception e) {
+	            throw e;
+	        } finally {
+	            try {
+////	                if (fis != null) {
+//	                    fis.close();
+//	                }
+	            } catch (Exception e) {
+	            }
+	        }
+	    
+	    return base64Img;
 	}
 
 //	주문 ======================
@@ -531,6 +656,7 @@ public class AdminController {
 			return "/admin/order/orderitem/update";
 		}
 	}
+	
 	
 	
 //	주문 상태 수정

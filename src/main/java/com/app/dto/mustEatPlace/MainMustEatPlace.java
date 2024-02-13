@@ -9,7 +9,7 @@ public class MainMustEatPlace {
 	String restaurantName;
 	String telephoneNumber;
 	String representativeMenuImage;
-	int rating;
+	double rating;
 	String openingHours;
 	String closingHours;
 	String businessStatus;
