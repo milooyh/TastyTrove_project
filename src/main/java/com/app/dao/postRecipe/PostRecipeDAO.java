@@ -15,9 +15,11 @@ public interface PostRecipeDAO {
 	
 	public List<PostRecipe> findRecipeListBySearchCondition(RecipeSearchCondition recipeSearchCondition);
 	
+	public List<PostRecipe> findRecipeListBySearchCondition2(RecipeSearchCondition recipeSearchCondition);
+	
 	public int modifyRecipe(PostRecipe postRecipe);
 	
 	public int removeRecipeById(int recipeId);
 	
-	public int getTotal();
+	public int getTotal(RecipeSearchCondition recipeSearchCondition);//구현중
 }

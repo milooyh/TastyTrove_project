@@ -2,6 +2,7 @@ package com.app.service.postRecipe;
 
 import java.util.List;
 
+import com.app.dto.postRecipe.PagingDTO;
 import com.app.dto.postRecipe.PostRecipe;
 import com.app.dto.postRecipe.RecipeImage;
 import com.app.dto.postRecipe.RecipeSearchCondition;
@@ -15,9 +16,11 @@ public interface PostRecipeService {
 	
 	public List<PostRecipe> findRecipeListBySearchCondition(RecipeSearchCondition recipeSearchCondition);
 	
+	public List<PostRecipe> findRecipeListBySearchCondition2(RecipeSearchCondition recipeSearchCondition);
+	
 	public int modifyRecipe(PostRecipe postRecipe);
 	
 	public int removeRecipeById(int recipeId);
 	
-	public int getTotal();
+	public int getTotal(RecipeSearchCondition recipeSearchCondition);//구현중
 }

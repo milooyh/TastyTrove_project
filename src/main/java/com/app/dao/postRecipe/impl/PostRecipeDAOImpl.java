@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.app.dao.postRecipe.PostRecipeDAO;
+import com.app.dto.postRecipe.PagingDTO;
 import com.app.dto.postRecipe.PostRecipe;
 import com.app.dto.postRecipe.RecipeImage;
 import com.app.dto.postRecipe.RecipeSearchCondition;
@@ -74,11 +75,19 @@ public class PostRecipeDAOImpl implements PostRecipeDAO {
 		return result;
 	}
 
-
+	//구현중
 	@Override
-	public int getTotal() {
+	public int getTotal(RecipeSearchCondition recipeSearchCondition) {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.selectOne("postRecipe_mapper.getTotal");
+	}
+
+
+	@Override
+	public List<PostRecipe> findRecipeListBySearchCondition2(RecipeSearchCondition recipeSearchCondition) {
+		// TODO Auto-generated method stub
+		List<PostRecipe> recipeList = sqlSessionTemplate.selectList("postRecipe_mapper.findRecipeListBySearchCondition2", recipeSearchCondition);
+		return recipeList;
 	}
 
 }

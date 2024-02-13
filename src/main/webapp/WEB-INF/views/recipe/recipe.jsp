@@ -41,6 +41,11 @@
 		justify-content: center;
 	}
 	
+	.recipe:hover{
+		background-color: #BDD2E6;
+		border-radius: 5px;
+	}
+	
 	.recipe2 {
 		display: flex;
 		flex-direction: column;
@@ -61,6 +66,7 @@
 	
 	.title {
 		margin-bottom: 30px;
+		color: #6aafe6;
 	}
 	
 	.post {
@@ -72,7 +78,7 @@
 	.postBtn {
 		width: 200px;
 		height: 40px;
-		background: #151B1B;
+		background: #6aafe6;
 		border: none;
 		border-radius: 30px;
 		color: white;
@@ -91,7 +97,7 @@
 		padding: 30px;
 		background-color: white;
 		border-radius: 10px;
-		border: 1px solid gray;
+		border: 1px solid #6aafe6;
 	
 	}
 	
@@ -105,7 +111,7 @@
 	.recipeSearchBtn{
 		width: 100px;
 		height: 40px;
-		background-color: #151B1B;
+		background-color: #6aafe6;
 		border: 0px;
 		border-radius: 30px;
 		color: white;
@@ -129,6 +135,41 @@
 	a:hover, a:visited, a:link, a:active
 	{
 	    text-decoration: none;
+	}
+	
+	.page{
+		display: flex;
+		justify-content: center;
+	}
+	
+	.pageBtn{
+		width: 35px;
+		height: 35px;
+		background: white;
+		border: 2px solid #6aafe6;
+		border-radius: 3px;
+		font-size: 25px;
+		font-weight: bolder;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin: 5px;
+		color: black;
+	}
+	
+	.pageBtnBox{
+		width: 100%;
+		display: flex;
+		justify-content: center;
+	}
+	
+	.fontSizeL{
+		font-size: 30px;
+		padding-bottom: 10px;
+	}
+	
+	.black{
+		color: black;
 	}
 
 
@@ -182,6 +223,20 @@
 							</a>
 						</div>
 					</c:forEach>
+				</div>
+			</div>
+			
+			<!-- 페이지-->
+			<div class="page">
+				<div class="pageBtnBox">
+					<div class="pageBtn fontSizeL"><a href="recipe?curPage=1" class="black"> &laquo; </a></div>
+					<c:forEach begin="${recipeSearchCondition.firstPage }"  end="${recipeSearchCondition.lastPage }" var="i">
+					  	<a href="recipe?curPage=${i }"  >  
+					  		<c:if test="${i eq recipeSearchCondition.curPage }">  <div class="pageBtn"><span style="color: #6aafe6">  ${i } </span></div> </c:if>
+					  		<c:if test="${i ne recipeSearchCondition.curPage }">  <div class="pageBtn">${i }</div> </c:if>
+					  	</a>
+					</c:forEach>
+					<div class="pageBtn fontSizeL"><a href="recipe?curPage=${recipeSearchCondition.totalPageCount }" class="black">&raquo;</a></div>
 				</div>
 			</div>
 			

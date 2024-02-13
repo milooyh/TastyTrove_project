@@ -163,13 +163,15 @@
 
 	<script>
 	
-		var member = document.getElementById("memberId");
+		var sessionId = '<%=(String)session.getAttribute("userId")%>';
 		var recipeFrom = document.getElementById("recipeForm");
 		var title = document.getElementById("title");
 		var summernote = document.getElementById("summernote");
 		
+		
 		function modifyProc() {
-			if(member.value == null || member.value == "null"){
+			console.log(sessionId);
+			if(sessionId == null || sessionId == "null"){
 				alert('로그인 후 이용 가능한 서비스입니다.')
 				location.href = "/login"
 			}else if(title.value.trim() == null || title.value.trim() == ""){
