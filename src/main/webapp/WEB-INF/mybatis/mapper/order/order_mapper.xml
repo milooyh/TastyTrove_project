@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.OrderMapper">
+    <!-- 
+   <insert id="saveOrder" parameterType="Order">
+        INSERT INTO orders (order_id, user_id, order_date, order_status, total_price)
+        VALUES (#{orderId}, #{userId}, #{orderDate}, #{orderStatus}, #{totalPrice})
+    </insert> -->
+    <!-- 다른 주문 관련 SQL 작업을 필요에 따라 추가할 수 있습니다. -->
+
+ 
+ <insert id="saveOrder" parameterType="Order">
+    INSERT INTO orders (order_id, user_id, order_date, order_status, total_price)
+    VALUES ((SELECT COALESCE(MAX(order_id), 0) + 1 FROM orders), #{userId}, NOW(), #{orderStatus}, #{totalPrice})
+</insert>
+ <select id="findOrderById" parameterType="int" resultType="Order">
+        SELECT * FROM orders WHERE orderId = #{orderId}
+    </select>
+</mapper>

@@ -39,6 +39,8 @@ public class UserController {
 		}
 
 		session.setAttribute("userId", findUser.getUserId()); // 로그인한 아이디 세션 저장
+		session.setAttribute("memberId" ,findUser.getMemberId());//memberId세션저장
+		session.setAttribute("userType", findUser.getUserType()); // 사용자 유형도 세션에 저장
 		System.out.println(session);
 
 		if (findUser != null) { // 로그인 성공
