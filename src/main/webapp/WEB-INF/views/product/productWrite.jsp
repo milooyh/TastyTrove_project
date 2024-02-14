@@ -67,16 +67,16 @@ body {
     <%@include file="../main/header.jsp"%>
     <form action="<c:url value='/productwrite'/>" method="post" enctype="multipart/form-data">
         <label>상품이름:</label>
-        <input type="text" name="productName"><br>
+        <input type="text" name="productName" required ><br>
         <label>상품설명:</label>
-        <input type="text" name="productContent"><br>
+        <input type="text" name="productContent" required><br>
         <label>상품 가격:</label>
-        <input type="text" name="productPrice"  maxlength="10" placeholder="숫자만입력해주세요"><br>
+        <input type="text" name="productPrice"  maxlength="10" placeholder="숫자만입력해주세요" required><br>
         <label>상품개수:</label>
-        <input type="text" name="productCount"  maxlength="3" placeholder="3자리수만입력가능합니다."><br>
+        <input type="text" name="productCount"  maxlength="3" placeholder="3자리수만입력가능합니다." required><br>
         
         <label>파일:</label>
-        <input type="file" name="uploadFile" accept="image/*"><br>
+        <input type="file" name="uploadFile" accept="image/*" required><br>
         
         <label>뷰 타입 선택:</label>
         <select name="viewType">

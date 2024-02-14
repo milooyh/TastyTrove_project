@@ -24,10 +24,13 @@ import com.app.dto.mustEatPlace.MainMustEatPlaceMenuInfo;
 import com.app.dto.mustEatPlace.MainMustEatPlaceReview;
 import com.app.dto.postRecipe.PostRecipe;
 import com.app.dto.postRecipe.RecipeSearchCondition;
+import com.app.dto.product.Product;
+import com.app.dto.product.ProductSearchCondition;
 import com.app.dto.user.Visitor;
 import com.app.service.admin.AdminService;
 import com.app.service.mustEatPlace.MustEatPlaceService;
 import com.app.service.postRecipe.PostRecipeService;
+import com.app.service.product.ProductService;
 
 @Controller
 public class MainController {
@@ -41,12 +44,18 @@ public class MainController {
 	@Autowired
 	PostRecipeService postRecipeService;
 	
+	@Autowired
+	ProductService productService;
+	
 	@GetMapping("/main")
 	public String main(Model model, RecipeSearchCondition recipeSearchCondition, HttpServletRequest request,
-			Visitor visitor) {
+			Visitor visitor, ProductSearchCondition productSearchCondition) {
 		
 		List<MainMustEatPlace> mainMustEatPlace = mustEatPlaceService.findMainMustEatPlaceList();
+
+		List<Product> productList = productService.findProductListBySearchCondition(productSearchCondition);
 		
+		model.addAttribute("productList", productList);
 		model.addAttribute("mainMustEatPlace", mainMustEatPlace);
 		
 //		테스트용(MJ)
