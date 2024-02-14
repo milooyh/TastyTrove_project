@@ -8,7 +8,7 @@
 
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true" />
-		 <setting name="jdbcTypeForNull" value="NULL"/> 
+		<setting name="jdbcTypeForNull" value="NULL" />
 	</settings>
 
 
@@ -28,8 +28,11 @@
 		<typeAlias
 			type="com.app.dto.postRecipe.PostRecipeUpdateRecipeType"
 			alias="PostRecipeUpdateRecipeType" />
-		<!-- <typeAlias type="com.app.dto.product.Product"
-			alias="Product"></typeAlias> -->
+		<typeAlias type="com.app.dto.product.Product"
+			alias="Product"></typeAlias>
+		<typeAlias type="com.app.dto.product.ProductSearchCondition"
+			alias="ProductSearchCondition"></typeAlias>
+
 		<typeAlias type="com.app.dto.mustEatPlace.MustEatPlace"
 			alias="MustEatPlace"></typeAlias>
 		<typeAlias
@@ -56,14 +59,21 @@
 			type="com.app.dto.payment.ModifyPaymentAmountByOrderId"
 			alias="ModifyPaymentAmountByOrderId"></typeAlias>
 
-		<typeAlias type="com.app.dto.util.RecipeFileInfo" alias="RecipeFileInfo"/>
-		<typeAlias type="com.app.dto.postRecipe.RecipeImage" alias="RecipeImage"/>
-		<typeAlias type="com.app.dto.postRecipe.RecipeSearchCondition" alias="RecipeSearchCondition"/>
-		
+		<typeAlias type="com.app.dto.util.RecipeFileInfo"
+			alias="RecipeFileInfo" />
+		<typeAlias type="com.app.dto.postRecipe.RecipeImage"
+			alias="RecipeImage" />
+		<typeAlias
+			type="com.app.dto.postRecipe.RecipeSearchCondition"
+			alias="RecipeSearchCondition" />
+
 		<typeAlias type="com.app.dto.user.Visitor" alias="Visitor"></typeAlias>
-		<typeAlias type="com.app.dto.schedule.Schedule" alias="Schedule"></typeAlias>
-		
-		
+		<typeAlias type="com.app.dto.schedule.Schedule"
+			alias="Schedule"></typeAlias>
+
+
+
+
 	</typeAliases>
 
 

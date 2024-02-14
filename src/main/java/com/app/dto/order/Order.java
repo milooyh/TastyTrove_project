@@ -9,7 +9,8 @@ public class Order {
 
 	private int orderId;
 	private String userId;
-	private Date orderDate;
+	private String memberId;
+	private String orderDate;
 	private String orderStatus;
 	double totalPrice;
 }
