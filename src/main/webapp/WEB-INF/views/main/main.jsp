@@ -299,9 +299,9 @@ a:hover, a:visited, a:link, a:active
     </header>
     
     <div class="nav-nar2">
-			<p class="ment">먹기위해 사는 사람들</p>
-		</div>
-		<div class="ment2">오늘도 배불리 먹기위해 달려보자</div>
+		<p class="ment">먹기위해 사는 사람들</p>
+	</div>
+	<div class="ment2">오늘도 배불리 먹기위해 달려보자</div>
     
     <div class="body">
 		<div class="recipe listBox">

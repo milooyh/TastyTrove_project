@@ -10,9 +10,9 @@
 <body>
 	<script>
 	    var msg = "<c:out value='${alertMessage}'/>";
-	    var url = "<c:out value='${url}'/>";
+	    var url1 = "<c:out value='${url1}'/>";
 	    alert(msg);
-	    location.href = url;
+	    location.href = url1;
 	</script>
 </body>
 </html>

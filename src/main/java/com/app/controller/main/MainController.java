@@ -108,7 +108,7 @@ public class MainController {
 		if(userId == null) {
 			model.addAttribute("alertMessage", "로그인 이후에 사용 가능합니다.");
 			model.addAttribute("url1", "/login");
-			return "alert";
+			return "alert1";
 		}
 		
 		return "/main/saveReview";

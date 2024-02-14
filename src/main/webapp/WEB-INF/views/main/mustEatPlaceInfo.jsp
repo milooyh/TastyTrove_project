@@ -19,17 +19,47 @@
 	}
 	
 	.restaurant-info {
-		
+		margin-top:4%;
 	}
+	
+	p {
+		margin-top:4%;
+	}
+	
+	.nav-nar2 {
+			width:100%;
+			height:150px;
+			background-color:#074565;
+			color:white;
+			text-align:center;
+			font-size:1.5rem;
+			display:flex;
+			align-items:center;
+			justify-content:center;
+		}
+		
+		.nav-nar2 p {
+		    margin: 0; /* 기본 마진 제거 */
+		}
+		
+		.ment2 {
+			font-size:0.8rem;
+			text-align:center;
+		}
 	
 	body {
 		background-color:#f0f0f3;
 	}
 </style>
+<jsp:include page="../main/header.jsp"></jsp:include>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
+	<div class="nav-nar2">
+		<p class="ment">먹기위해 사는 사람들</p>
+	</div>
+	<div class="ment2">오늘도 배불리 먹기위해 달려보자</div>
 	<div class="container">
 		<h1>${mainMustEatPlaceById.restaurantName}</h1>
 		<div class="restaurant-info">
@@ -63,10 +93,10 @@
 		            document.write('<p>' + stars + '</p>');
 		        </script>
 		    </div>
-		    <img src="data:image/jpg;base64,${mainMustEatPlaceReviewByIdItem.representativeMenuImage}">
 			<p>${mainMustEatPlaceReviewByIdItem.review}</p>
+			<c:if test="${mainMustEatPlaceReviewByIdItem.userId eq userId}">
 			<button onclick="removeReview('${mainMustEatPlaceReviewByIdItem.review}')" class="btn btn-blue">메뉴 삭제</button>
-			<button onclick="location.href='/main/mustEatPlaceInfo/reviewUpload?id=${mainMustEatPlaceReviewByIdItem.id}'">이미지 업로드</button>
+			</c:if>
 		</c:forEach>
 		</div>
 	</div>
@@ -84,4 +114,5 @@
 	}
 	</script>
 </body>
+<jsp:include page="../main/footer.jsp"></jsp:include>
 </html>
