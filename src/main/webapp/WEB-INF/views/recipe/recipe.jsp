@@ -121,6 +121,7 @@
 		color: white;
 		cursor: pointer;
 		margin: 2px 0px;
+		font-weight: bolder;
 	}
 	
 	.recipeSearchBtn:hover{
@@ -195,6 +196,12 @@
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
+	
+	hr{
+		background: #6aafe6;
+		height:1px;
+  	  	border:0;
+	}
 
 
 </style>
@@ -226,6 +233,7 @@
 					<button name="recipeType" value="WST" class="recipeSearchBtn">양식</button>
 					<button name="recipeType" value="JPN" class="recipeSearchBtn">일식</button>
 					<button name="recipeType" value="DRT" class="recipeSearchBtn">디저트</button>
+					<button name="recipeType" value="ETC" class="recipeSearchBtn">기타</button>
 					<br> 
 					<div class="recipeSearchTh"> 키워드 검색</div><input type="text"
 						name="searchKeyword" class="searchKeyword">
