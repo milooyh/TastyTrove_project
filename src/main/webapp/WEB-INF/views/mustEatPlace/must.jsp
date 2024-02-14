@@ -74,6 +74,7 @@
         #map_add {
             display: flex;
             justify-content: center;
+            margin-top:100px;
         }
         
         .mustEatPlace-info{
@@ -124,6 +125,27 @@
 			background-color: #ff5f2e;
 		}
 		
+		.nav-nar2 {
+			width:100%;
+			height:150px;
+			background-color:#074565;
+			color:white;
+			text-align:center;
+			font-size:1.5rem;
+			display:flex;
+			align-items:center;
+			justify-content:center;
+		}
+		
+		.nav-nar2 p {
+		    margin: 0; /* 기본 마진 제거 */
+		}
+		
+		.ment2 {
+			font-size:0.8rem;
+			text-align:center;
+		}
+		
 		.wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
 	    .wrap * {padding: 0;margin: 0;}
 	    .wrap .info {width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
@@ -140,18 +162,20 @@
 	    .info .link {color: #5085BB;}
         
 	</style>
-	
+	<jsp:include page="../main/header.jsp"></jsp:include>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
+	
 	<div class="container">
-	<h1>나만의 맛집을 등록하세요</h1>
+	<div class="nav-nar2">
+		<p class="ment">당신만을 위한</p>
+		<h3>맛집</h3>
+	</div>
+	<div class="ment2">자신만의 맛집을 등록하고, 오늘의 메뉴? 고민하지 마세요</div>
 	<div id="map_add">
 		<div id="map" style="width:40%;height:420px;"></div>
-	
-	    <!-- 주소를 입력받는 폼 -->
-	    
 		    <div class="add_mustEatPlace">
 		    <form id="addressForm" action="" method="post">
 		        <input type="text" id="address" name="place" required placeholder="주소입력" readonly>   
@@ -161,6 +185,7 @@
 		        <input type="number" id="asterion" name="asterion" required placeholder="제 점수는요(1~5)"><br> 
 		        <input type="text" id="telephone_number" name="telephoneNumber" required placeholder="전화번호"><br>
 		        <input type="text" id="representative_menu" name="representativeMenu" required placeholder="대표메뉴">
+		        <input type="hidden" name="userId" value="${userId}">
 		        <button type="submit" id="addBtn" disabled='disabled' class="btn btn-red">추가하기</button>
 		    </form>
 	    </div>
@@ -168,14 +193,14 @@
 	
 	<c:forEach var="mustEatPlaceItem" items="${mustEatPlaces}">
 		<div class="mustEatPlace-info">
-			<p class="restaurant-name" onclick="moveToLocation('${mustEatPlaceItem.place}')" style="font-weight:bold; font-size:1.2rem; cursor:pointer; margin-top:10px">${mustEatPlaceItem.restaurantName}</p>
+			<p class="restaurant-name" onclick="moveToLocation('${mustEatPlaceItem.place}')" style="font-weight:bold; font-size:1.2rem; cursor:pointer; margin-top:10px; margin-bottom:10px;">${mustEatPlaceItem.restaurantName} <img src="<c:url value="/image/click.png"/>" style="width:25px; height:30px; padding-top:5px;"/></p>
             <c:if test="${mustEatPlaceItem.representativeMenuImage == null}">
             	<img src="<c:url value="/image/noPhoto.PNG"/>" onclick="location.href='/must/upload?id=${mustEatPlaceItem.id}'" style="width:200px; height:200px; cursor:pointer; object-fit:cover;"><br>
             </c:if>
             <c:if test="${mustEatPlaceItem.representativeMenuImage != null}">
             	<img src="data:image/jpg;base64,${mustEatPlaceItem.representativeMenuImage}" onclick="location.href='/must/upload?id=${mustEatPlaceItem.id}'" style="width:200px; height:200px; cursor:pointer; border-radius:13px; object-fit:cover;"><br>
             </c:if>
-            <p>${mustEatPlaceItem.place}</p><br>
+            <p style="margin-top:10px;">${mustEatPlaceItem.place}</p><br>
 			<p>${mustEatPlaceItem.review}</p><br>
 			<p>${mustEatPlaceItem.asterion}점</p><br>
 			<button onclick="removeMustEatPlace(${mustEatPlaceItem.id})" class="btn btn-blue">삭제</button>
@@ -204,6 +229,24 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	
+	<script>
+	document.addEventListener("DOMContentLoaded", function() {
+	    const asterionInput = document.querySelector('input[name="asterion"]');
+	    const submitButton = document.querySelector('#addBtn');
+	    
+	    submitButton.addEventListener('click', function(event) {
+	        const asterionValue = parseInt(asterionInput.value);
+
+	        if (asterionValue < 1 || asterionValue > 5) {
+	            event.preventDefault(); // 폼 제출 방지
+	            alert('별점은 1부터 5까지의 값만 입력할 수 있습니다.');
+	        } else {
+	            submitButton.removeAttribute('disabled');
+	        }
+	    });
+	});
+	</script>
 	
 	<script>
 	
@@ -237,8 +280,8 @@
 	<script>
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
         mapOption = {
-            center: new daum.maps.LatLng(37.56107, 126.9822), // 지도의 중심좌표
-            level: 14 // 지도의 확대 레벨
+            center: new daum.maps.LatLng(36.80741, 127.1472), // 지도의 중심좌표
+            level: 5 // 지도의 확대 레벨
         };
 
     //지도를 미리 생성
@@ -287,31 +330,29 @@
             }
         }).open();
     }
-</script>
+	</script>
     
-<script>
-
-var clusterer = new kakao.maps.MarkerClusterer({
-    map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
-    averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
-    minLevel: 10 // 클러스터 할 최소 지도 레벨 
-});
-
-var markers = [];
-
-
-</script>
-<script>
-
-var overlay;
-
-function closeOverlay() {
-    overlay.setMap(null);     
-};
-
-<c:forEach var="mustEatPlaceItem" items="${mustEatPlaces}">
-    
-    
+	<script>
+	
+	var clusterer = new kakao.maps.MarkerClusterer({
+	    map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
+	    averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
+	    minLevel: 10 // 클러스터 할 최소 지도 레벨 
+	});
+	
+	var markers = [];
+	
+	
+	</script>
+	<script>
+	
+	var overlay;
+	
+	function closeOverlay() {
+	    overlay.setMap(null);     
+	};
+	
+	<c:forEach var="mustEatPlaceItem" items="${mustEatPlaces}">
     
 		var geocoder = new kakao.maps.services.Geocoder();
 		
@@ -458,4 +499,5 @@ function closeOverlay() {
     }
 </script>
 </body>
+<jsp:include page="../main/footer.jsp"></jsp:include>
 </html>

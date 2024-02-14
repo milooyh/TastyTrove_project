@@ -27,7 +27,7 @@
 		</div>
 	<form>
 		<p>검색기준</p>
-		<lable><input type="checkbox" name="placeId">맛집번호</lable>
+		<lable><input type="checkbox" name="id">맛집번호</lable>
 		<lable><input type="checkbox" name="restaurantName">맛집명</lable>
 		<lable><input type="checkbox" name="place">주소</lable>
 		<lable><input type="text" name="searchKeyword" placeholder="검색어를 입력하세요."></lable>
@@ -41,17 +41,25 @@
 				<th>맛집명</th>
 				<th>주소</th>
 				<th>별점</th>
+				<th>전화번호</th>
+				<th>오픈시간</th>
+				<th>마감시간</th>
+				<th>타입</th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach var="place" items="${placeList}">
 				<tr>
-					<td>${place.placeId}</td>
+					<td>${place.id}</td>
 					<td>${place.restaurantName}</td>
 					<td>${place.place}</td>
 					<td>${place.rating}</td>
-					<td><button>맛집정보수정</button>
-					<td><button>맛집삭제</button>
+					<td>${place.telephoneNumber}</td>
+					<td>${place.openingHours}</td>
+					<td>${place.closingHours}</td>
+					<td>${place.type}</td>
+					<td><button onclick="location.href='/admin/musteatplace/registerMenu?id=${place.id}'" class="btn btn-blue">메뉴 추가</button></td>
+					<td><button onclick="location.href='/admin/musteatplace/reomoveMenu?id=${place.id}'" class="btn btn-blue">메뉴 삭제</button></td>
 				</tr>
 			</c:forEach>
 		</tbody>

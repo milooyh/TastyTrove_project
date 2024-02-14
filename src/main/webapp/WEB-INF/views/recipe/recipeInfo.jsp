@@ -127,9 +127,9 @@
 				<div class="sessionUserBox">
 					<c:if test="${memberId == sessionId}">
 					
-						<button onclick="location.href='/recipe/modifyRecipe?id=${recipeId}'" class="Btn2">수정</button>
+						<button onclick="modifyProc()" class="Btn2">수정</button>
 					
-						<button onclick="location.href='/recipe/removeRecipe?id=${recipeId}'" id="removeRecipeBtn" class="Btn2">삭제</button>
+						<button onclick="removeProc()" id="removeRecipeBtn" class="Btn2">삭제</button>
 						
 					</c:if>
 				</div>
@@ -162,17 +162,7 @@
 						</tr>
 
 					</table>
-<%-- 					<div> 작성자 : ${userNickname}</div> --%>
-<%-- 					<div> 작성일자 : ${boardDate}</div> --%>
-<!-- 					<div> 카테고리 :  -->
-<%-- 						<c:choose> --%>
-<%-- 							<c:when test="${recipeType == 'KOR'}">한식</c:when> --%>
-<%-- 							<c:when test="${recipeType == 'CHI'}">중식</c:when> --%>
-<%-- 							<c:when test="${recipeType == 'JPN'}">일식</c:when> --%>
-<%-- 							<c:when test="${recipeType == 'WST'}">양식</c:when> --%>
-<%-- 							<c:when test="${recipeType == 'DRT'}">디저트</c:when> --%>
-<%-- 						</c:choose>	 --%>
-<!-- 					</div> -->
+
 				</div>
 			</div>
 			<div class="recipeContent"> ${recipeContent} </div>
@@ -180,9 +170,33 @@
 	</div>
 	
 	<script>
+		
+		var sessionId = '<%=(String)session.getAttribute("userId")%>';
+			
+		function modifyProc(){
+			
+			if(sessionId == "null"){
+				alert('로그인 후 이용가능한 서비스입니다.');
+				location.href = "/login"
+			}else{
+				location.href='/recipe/modifyRecipe?id=${recipeId}'
+			}
+		}
+		
+		function removeProc(){
+			
+			if(sessionId == "null"){
+				alert('로그인 후 이용가능한 서비스입니다.');
+				location.href = "/login"
+			}else{
+				location.href='/recipe/removeRecipe?id=${recipeId}'
+			}
+		}
+		
 		function back(){
 			history.back();
 		}
+		
 	</script>
 </body>
 </html>

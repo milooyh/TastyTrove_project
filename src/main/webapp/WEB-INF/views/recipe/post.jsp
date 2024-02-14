@@ -121,7 +121,7 @@
 		<div class="postBox">
 			<h1 class="title">나만의 레시피를 등록하세요!</h1>
 			<form method="post" enctype="multipart/form-data" id="recipeForm">
-				<input type="hidden" name="memberId" value="<%=member %>">
+				<input type="hidden" name="memberId" value="<%=member %>" id="memberId">
 				<div class="infoBox1">
 					<div class="infoBox2">
 						<div class="infoBox3">
@@ -155,7 +155,8 @@
 	</div>
 
 	<script>
-		
+	
+		var member = document.getElementById("memberId");
 		var file = document.getElementById("fileCheck");
 		var recipeFrom = document.getElementById("recipeForm");
 		var title = document.getElementById("title");
@@ -163,7 +164,10 @@
 
 		
 		function submitProc() {
-			if(title.value.trim() == null || title.value.trim() == ""){
+			if(member.value == null || member.value == "null"){
+				alert('로그인 후 이용 가능한 서비스입니다.')
+				location.href = "/login"
+			}else if(title.value.trim() == null || title.value.trim() == ""){
 				console.log('제목입력 요청')
 				alert('제목을 입력해주세요!')
 				title.focus();

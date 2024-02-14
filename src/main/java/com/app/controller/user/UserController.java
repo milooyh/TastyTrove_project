@@ -55,14 +55,16 @@ public class UserController {
 	    
 	    System.out.println("로그인한 회원 유형 : " + findUser.getUserType());
 
-	    if (findUser.getUserType().equals(CommonCode.USER_USERTYPE_ADMIN)) {
-	        System.out.println("관리자입니다");
-	        return "redirect:/admin";
-	    } else {
-	        System.out.println("회원입니다");
-	        return "redirect:/";
-	    }
-	}
+		if (findUser != null) { // 로그인 성공
+			System.out.println("로그인 성공");
+			if (findUser.getUserType().equals(CommonCode.USER_USERTYPE_ADMIN)) {
+				System.out.println("관리자입니다");
+				return "/admin/adminHome";
+			} else if (findUser.getUserType().equals(CommonCode.USER_USERTYPE_CUSTOMER)) {
+				System.out.println("회원입니다");
+				return "redirect:/main";
+			}
+		}
 
 	
 //	로그아웃

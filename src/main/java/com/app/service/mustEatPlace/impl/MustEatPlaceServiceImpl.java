@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.dao.mustEatPlace.MustEatPlaceDAO;
+import com.app.dto.mustEatPlace.MainMustEatPlace;
+import com.app.dto.mustEatPlace.MainMustEatPlaceMenuInfo;
+import com.app.dto.mustEatPlace.MainMustEatPlaceReview;
 import com.app.dto.mustEatPlace.MustEatPlace;
 import com.app.dto.mustEatPlace.MustEatPlaceMenu;
 import com.app.dto.mustEatPlace.MustEatPlaceWithMenu;
@@ -21,14 +24,6 @@ public class MustEatPlaceServiceImpl implements MustEatPlaceService{
 	public int saveMustEatPlace(MustEatPlace mustEatPlace) {
 		int result = mustEatPlaceDAO.saveMustEatPlace(mustEatPlace);
 		return result;
-	}
-
-	@Override
-	public List<MustEatPlace> findMustEatPlaceList() {
-		
-		List<MustEatPlace> mustEatPlace = mustEatPlaceDAO.findMustEatPlaceList();
-		
-		return mustEatPlace;
 	}
 
 	@Override
@@ -92,16 +87,52 @@ public class MustEatPlaceServiceImpl implements MustEatPlaceService{
 		return result;
 	}
 
-	/*
 	@Override
-    public MustEatPlaceMenu getMenuByIdAndName(int menu_id, String menu_name) {
-        return mustEatPlaceDAO.getMenuByIdAndName(menu_id, menu_name);
-    }
+	public List<MainMustEatPlace> findMainMustEatPlaceList() {
+		List<MainMustEatPlace> mainMustEatPlace = mustEatPlaceDAO.findMainMustEatPlaceList();
+		return mainMustEatPlace;
+	}
 
-    @Override
-    public void modifyMenu(MustEatPlaceMenu menu) {
-    	mustEatPlaceDAO.modifyMenu(menu);
-    }
-    */
+	@Override
+	public MainMustEatPlace findMainMustEatPlaceById(int id) {
+		MainMustEatPlace mainMustEatPlace = mustEatPlaceDAO.findMainMustEatPlaceById(id);
+		return mainMustEatPlace;
+	}
+
+	@Override
+	public List<MustEatPlace> findMustEatPlaceList(String userId) {
+		List<MustEatPlace> mustEatPlace = mustEatPlaceDAO.findMustEatPlaceList(userId);
+		return mustEatPlace;
+	}
+
+	@Override
+	public List<MainMustEatPlaceMenuInfo> mainFindMustEatPlaceMenuById(int id) {
+		List<MainMustEatPlaceMenuInfo> mainMustEatPlaceMenuInfo = mustEatPlaceDAO.mainFindMustEatPlaceMenuById(id);
+		return mainMustEatPlaceMenuInfo;
+	}
+
+	@Override
+	public List<MainMustEatPlaceReview> mainFindMustEatPlaceReviewById(int id) {
+		List<MainMustEatPlaceReview> mainMustEatPlaceReview = mustEatPlaceDAO.mainFindMustEatPlaceReviewById(id);
+		return mainMustEatPlaceReview;
+	}
+
+	@Override
+	public int saveReview(MainMustEatPlaceReview mainMustEatPlaceReview) {
+		int result = mustEatPlaceDAO.saveReview(mainMustEatPlaceReview);
+		return result;
+	}
+
+	@Override
+	public int updateImage(MainMustEatPlaceReview mustEatPlaceReview) {
+		int result = mustEatPlaceDAO.updateImage(mustEatPlaceReview);
+		return result;
+	}
+
+	@Override
+	public int removeReview(String review) {
+		int result = mustEatPlaceDAO.removeReview(review);
+		return result;
+	}
 
 }

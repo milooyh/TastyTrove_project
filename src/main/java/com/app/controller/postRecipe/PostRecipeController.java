@@ -127,10 +127,12 @@ public class PostRecipeController {
 			if(requestForm.getRecipeImage().getSize() != 0) {
 				System.out.println("파일도 수정한다.");
 				
-				RecipeFileInfo recipeFileInfo = recipeFileManager.storeFile(requestForm.getRecipeImage());
-				recipeFileInfo.setRecipeFileId(postRecipe.getRecipeFileId());
+				int recipeId = postRecipe.getRecipeId();
 				
-				System.out.println(recipeFileInfo);
+				System.out.println(recipeId);
+				
+				RecipeFileInfo recipeFileInfo = recipeFileManager.storeFile(requestForm.getRecipeImage());
+				recipeFileInfo.setRecipeFileId(recipeId);
 				
 				int result = recipeFileService.modifyRecipeFileInfo(recipeFileInfo);
 				
@@ -189,17 +191,37 @@ public class PostRecipeController {
 	}
 
 	
-	//검색기능 추가된 레시피 리스트
+//	//검색기능 추가된 레시피 리스트
+//	@GetMapping("/recipe")
+//	public String recipeList (Model model, RecipeSearchCondition recipeSearchCondition) {
+//		System.out.println(recipeSearchCondition);
+//		
+//		List<PostRecipe> recipeList = postRecipeService.findRecipeListBySearchCondition(recipeSearchCondition);
+//		
+//		model.addAttribute("recipeList", recipeList);
+//		
+//		System.out.println(recipeList);
+//		
+//		return "recipe/recipe";
+//		
+//	}
+	
+	//검색기능 + 페이징 추가된 레시피 리스트
 	@GetMapping("/recipe")
-	public String recipeList (Model model, RecipeSearchCondition recipeSearchCondition) {
+	public String recipeList (Model model, @ModelAttribute("recipeSearchCondition")RecipeSearchCondition recipeSearchCondition) {
 		System.out.println(recipeSearchCondition);
+		
+		
+		int total = postRecipeService.getTotal(recipeSearchCondition);
+		recipeSearchCondition.setTotalRowCount(total);
+		recipeSearchCondition.pageSetting();
+		
 		
 		List<PostRecipe> recipeList = postRecipeService.findRecipeListBySearchCondition(recipeSearchCondition);
 		
 		model.addAttribute("recipeList", recipeList);
 		
 		System.out.println(recipeList);
-		
 		
 		return "recipe/recipe";
 		

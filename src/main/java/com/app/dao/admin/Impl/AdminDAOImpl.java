@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import com.app.dao.admin.AdminDAO;
 import com.app.dto.delivery.Delivery;
 import com.app.dto.delivery.DeliverySearchCondition;
+import com.app.dto.mustEatPlace.MainMustEatPlace;
+import com.app.dto.mustEatPlace.MainMustEatPlaceMenuInfo;
 import com.app.dto.mustEatPlace.MustEatPlace;
 import com.app.dto.mustEatPlace.MustEatPlaceSearchCondition;
 import com.app.dto.order.Order;
@@ -188,29 +190,29 @@ public class AdminDAOImpl implements AdminDAO {
 //	======================================
 //	맛집목록조회
 	@Override
-	public List<MustEatPlace> findMustEatPlaceList() {
+	public List<MainMustEatPlace> findMustEatPlaceList() {
 		// TODO Auto-generated method stub
 		System.out.println("adminDAO findMustEatPlaceList 불림");
 
-		List<MustEatPlace> placeList = sqlSessionTemplate.selectList("admin_mapper.findMustEatPlaceList");
+		List<MainMustEatPlace> placeList = sqlSessionTemplate.selectList("admin_mapper.findMustEatPlaceList");
 
 		return placeList;
 	}
 
 //	맛집번호로 맛집 조회
 	@Override
-	public MustEatPlace findMustEatPlaceByPlaceId(int placeId) {
+	public MainMustEatPlace findMustEatPlaceByPlaceId(int placeId) {
 		// TODO Auto-generated method stub
 		System.out.println("adminDAO findMustEatPlaceByPlaceId 불림");
 		System.out.println("DAO : "+ placeId);
-		MustEatPlace mustEatPlace = sqlSessionTemplate.selectOne("admin_mapper.findMustEatPlaceByPlaceId", placeId);
+		MainMustEatPlace mustEatPlace = sqlSessionTemplate.selectOne("admin_mapper.findMustEatPlaceByPlaceId", placeId);
 
 		return mustEatPlace;
 	}
 
 //	맛집 저장
 	@Override
-	public int saveMustEatPlace(MustEatPlace mustEatPlace) {
+	public int saveMustEatPlace(MainMustEatPlace mustEatPlace) {
 		// TODO Auto-generated method stub
 		System.out.println("adminDAO saveMustEatPlace 불림");
 
@@ -220,19 +222,19 @@ public class AdminDAOImpl implements AdminDAO {
 
 //	맛집 검색하기
 	@Override
-	public List<MustEatPlace> findMustEatPlaceListBySearchCondition(
+	public List<MainMustEatPlace> findMustEatPlaceListBySearchCondition(
 			MustEatPlaceSearchCondition mustEatPlaceSearchCondition) {
 		// TODO Auto-generated method stub
 		System.out.println("adminDAO findMustEatPlaceListBySearchCondition 불림");
 
-		List<MustEatPlace> placeList = sqlSessionTemplate
+		List<MainMustEatPlace> placeList = sqlSessionTemplate
 				.selectList("admin_mapper.findMustEatPlaceListBySearchCondition", mustEatPlaceSearchCondition);
 		return placeList;
 	}
 
 //	맛집 수정
 	@Override
-	public int modifyMustEatPlace(MustEatPlace mustEatPlace) {
+	public int modifyMustEatPlace(MainMustEatPlace mustEatPlace) {
 		// TODO Auto-generated method stub
 		System.out.println("adminDAO modifyMustEatPlace 불림");
 
@@ -247,6 +249,36 @@ public class AdminDAOImpl implements AdminDAO {
 		System.out.println("adminDAO removeMustEatPlace 불림");
 		int result = sqlSessionTemplate.delete("admin_mapper.removeMustEatPlace", placeId);
 		return result;
+	}
+	
+//  맛집 이미지 업로드
+	@Override
+	public int updateImageData(MainMustEatPlace mustEatPlace) {
+		int result = sqlSessionTemplate.update("admin_mapper.updateImagePath", mustEatPlace);
+		
+		return result;
+	}
+	
+	@Override
+	public int saveMenuInfo(MainMustEatPlaceMenuInfo mustEatPlaceMenu) {
+		// TODO Auto-generated method stub
+		int result = sqlSessionTemplate.insert("admin_mapper.saveMenuById", mustEatPlaceMenu);
+		return result;
+	}
+
+
+	@Override
+	public int removeMenuByName(String menuName) {
+		// TODO Auto-generated method stub
+		int result = sqlSessionTemplate.delete("admin_mapper.removeMenuByName", menuName);
+		return result;
+	}
+	
+	@Override
+	public List<MainMustEatPlaceMenuInfo> findMustEatPlaceMenuById(int id) {
+		// TODO Auto-generated method stub
+		List<MainMustEatPlaceMenuInfo> mainMustEatPlaceMenuInfo = sqlSessionTemplate.selectList("admin_mapper.findMustEatPlaceMenuById", id);
+		return mainMustEatPlaceMenuInfo;
 	}
 
 //	주문 =============================
@@ -433,6 +465,8 @@ public class AdminDAOImpl implements AdminDAO {
 		int result = sqlSessionTemplate.update("admin_mapper.modifyDeliveryStatus", delivery);
 		return result;
 	}
+
+
 
 
 
