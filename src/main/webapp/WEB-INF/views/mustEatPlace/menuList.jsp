@@ -6,6 +6,10 @@
 <head>
 
 <style>
+
+		body {
+		background-color:#e2e6e9;
+	}
 	
 	 * {
 		margin:0;
@@ -24,6 +28,27 @@
         box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
 		text-decoration: none;
 	}
+	
+	.nav-nar2 {
+			width:100%;
+			height:150px;
+			background-color:#074565;
+			color:white;
+			text-align:center;
+			font-size:1.5rem;
+			display:flex;
+			align-items:center;
+			justify-content:center;
+		}
+		
+		.nav-nar2 p {
+		    margin: 0; /* 기본 마진 제거 */
+		}
+		
+		.ment2 {
+			font-size:0.8rem;
+			text-align:center;
+		}
 	
 	input {
             border-radius: 15px;
@@ -49,33 +74,39 @@
 		}
 		
 	.deleteMenu {
-		margin-left: auto;
-    	margin-right: auto;
+		display:block;
+		margin:0 auto;
 	}
 		
 	body {
 		background-color:#f0f0f0;
 	}
+	
+	
 </style>
 
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<jsp:include page="../main/header.jsp"></jsp:include>
 </head>
 <body>
-	<h1>메뉴 삭제 페이지</h1>
 
 	<div class="container">
-	<c:forEach var="mustEatPlaceMenuItem" items="${mustEatPlaceMenu}">
-		<div class="deleteMenu">
-		<input type="hidden" name="menuId" value="${mustEatPlaceMenuItem.menuId}">
-		메뉴 : <input type="text" name="menuName" value="${mustEatPlaceMenuItem.menuName}" readonly>
-		가격 : <input type="number" name="price" value="${mustEatPlaceMenuItem.price}" readonly>
-		<button class="btn" onclick="removeMenu('${mustEatPlaceMenuItem.menuName}')">삭제하기</button><br>
-		</div>
-	</c:forEach>
+	<div class="nav-nar2">
+		<p class="ment">당신만을 위한</p>
+		<h3>맛집</h3>
 	</div>
-	
-	
+	<div class="ment2">자신만의 맛집을 등록하고, 오늘의 메뉴? 고민하지 마세요</div>
+    <c:forEach var="mustEatPlaceMenuItem" items="${mustEatPlaceMenu}">
+        <div class="deleteMenu">
+            <input type="hidden" name="menuId" value="${mustEatPlaceMenuItem.menuId}">
+            메뉴 : <input type="text" name="menuName" value="${mustEatPlaceMenuItem.menuName}" readonly>
+            가격 : <input type="number" name="price" value="${mustEatPlaceMenuItem.price}" readonly>
+            <button class="btn btn-sm" onclick="removeMenu('${mustEatPlaceMenuItem.menuName}')">삭제하기</button><br>
+        </div>
+    </c:forEach>
+</div>
+
 	<script>
 	
 	function removeMenu(menuName){
@@ -89,4 +120,5 @@
 	}
 	</script>
 </body>
+<jsp:include page="../main/footer.jsp"></jsp:include>
 </html>

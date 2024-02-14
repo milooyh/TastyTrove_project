@@ -33,18 +33,27 @@
 					<th>맛집명</th>
 					<th>주소</th>
 					<th>평균별점</th>
+					<th>전화번호</th>
+					<th>오픈시간</th>
+					<th>마감시간</th>
+					<th>타입</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach var="place" items="${placeList}">
 					<tr>
-						<td>${place.placeId}</td>
+						<td>${place.id}</td>
 						<td>${place.restaurantName}</td>
 						<td>${place.place}</td>
 						<td>${place.rating}</td>
+						<td>${place.telephoneNumber}</td>
+						<td>${place.openingHours}</td>
+						<td>${place.closingHours}</td>
+						<td>${place.type}</td>
 						<td><button
-								onclick="location.href='/admin/musteatplace/update?placeId=${place.placeId}'">맛집정보수정</button></td>
-						<td><button onclick="confirmDelete(${place.placeId})">맛집삭제</button></td>
+								onclick="location.href='/admin/musteatplace/update?id=${place.id}'">맛집정보수정</button></td>
+						<td><button onclick="confirmDelete(${place.id})">맛집삭제</button></td>
+						<td><button onclick="location.href='/admin/musteatplace/upload?id=${place.id}'">이미지 추가</button></td>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -63,11 +72,11 @@
 			</div>
 		</div>
 		<script>
-		function confirmDelete(placeId) {
+		function confirmDelete(id) {
 			var result = confirm("맛집 정보를 삭제하시겠습니까?");
 
 			if (result) {
-				location.href = '/admin/musteatplace/remove?placeId=' + placeId;
+				location.href = '/admin/musteatplace/remove?id=' + id;
 			}
 		}
 		
@@ -89,8 +98,8 @@
 		var restaurantnameCells = document.querySelectorAll(".content table tbody tr td:nth-child(2)");
 		restaurantnameCells.forEach(function(cell) {
 		    cell.addEventListener("click", function() {
-		        var placeId = this.parentNode.firstChild.textContent; // 클릭한 행의 첫 번째 열(맛집번호)의 값을 가져옵니다.
-		        openMemberModal(placeId);
+		        var id = this.parentNode.firstChild.textContent; // 클릭한 행의 첫 번째 열(맛집번호)의 값을 가져옵니다.
+		        openMemberModal(id);
 		    });
 		    // 툴팁 추가
 		    cell.addEventListener("mouseover", function(event) {
@@ -117,7 +126,7 @@
 
 
 		// 모달창 열기 함수
-		function openMemberModal(placeId) {
+		function openMemberModal(id) {
 		    console.log("openMemberModal 함수 호출 !!");
 		    var modal = document.getElementById('mustModal');
 		    modal.style.display = "block";
@@ -129,7 +138,7 @@
 		        url: '/admin/musteatplace/details',
 		        type: 'GET',
 		        data: {
-		            placeId: placeId // 맛집 번호를 매개변수로 전달
+		            id: id // 맛집 번호를 매개변수로 전달
 		        },
 		        success: function(mustEatPlace) {
 		            console.log(mustEatPlace);

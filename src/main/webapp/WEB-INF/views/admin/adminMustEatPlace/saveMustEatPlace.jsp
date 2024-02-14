@@ -33,6 +33,14 @@
 		<label>장소 : </label><input type="text"
 			id="place" name="place">
 		<br>
+		<label for="place">전화번호:</label>
+        <input type="text" id="place" name=telephoneNumber value="${mustEatPlace.telephoneNumber}" /><br>
+        <label for="place">오픈시간:</label>
+        <input type="text" id="place" name="openingHours" value="${mustEatPlace.openingHours}" /><br>
+        <label for="place">마감시간:</label>
+        <input type="text" id="place" name="closingHours" value="${mustEatPlace.closingHours}" /><br>
+        <label for="place">타입:</label>
+        <input type="text" id="place" name="type" value="${mustEatPlace.type}" /><br>
 		<button type="submit">맛집등록하기</button>
 	</form>
 	<br>
