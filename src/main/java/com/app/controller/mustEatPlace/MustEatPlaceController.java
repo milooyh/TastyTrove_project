@@ -54,9 +54,8 @@ public class MustEatPlaceController {
 		return "/mustEatPlace/must";
 	}
 	
-	@ResponseBody
 	@PostMapping("/register")
-	public String addMustEatPlaceProcess(@ModelAttribute MustEatPlace mustEatPlace, @RequestBody String place, Model model) {
+	public String addMustEatPlaceProcess(@ModelAttribute MustEatPlace mustEatPlace, Model model) {
 			
 		int result = mustEatPlaceService.saveMustEatPlace(mustEatPlace);
 			
