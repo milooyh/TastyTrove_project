@@ -26,15 +26,16 @@
 				href="/admin/delivery/search">배송내역검색</a></span><span>
 		</div>
 
-		<table>
+		<table id="memberTable">
 			<thead>
 				<tr>
-					<th>배송번호</th>
-					<th>전체주문번호</th>
-					<th>배송일시</th>
+					<th style="width:5%">배송번호</th>
+					<th style="width:5%">전체주문번호</th>
+					<th style="width:15%">배송일시</th>
 					<th>배송상태</th>
-					<th>배송주소</th>
-					<th>배송비</th>
+					<th style="width:20%">배송주소</th>
+					<th style="width:10%">배송비</th>
+					<th>주문상태수정</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -62,7 +63,7 @@
 							<td>${delivery.deliveryFee}</td> <input type="hidden"
 								name="deliveryId" value="${delivery.deliveryId}">
 							<td><button
-									onclick="confirmModify('${delivery.deliveryId}')">주문상태수정</button>
+									onclick="confirmModify('${delivery.deliveryId}')">수정하기</button>
 							</td>
 						</form>
 					</tr>
@@ -70,8 +71,23 @@
 			</tbody>
 		</table>
 		<br>
-		<button onclick="location.href='/admin/delivery/search'">배송검색</button>
-		<script>
+		<div class="pagination">
+			<c:if test="${currentPage > 1}">
+				<a href="javascript:void(0)" onclick="goToPage(${currentPage - 1})">이전</a>
+			</c:if>
+
+			<span>${currentPage} / ${totalPages}</span>
+
+			<c:if test="${currentPage < totalPages}">
+				<a href="javascript:void(0)" onclick="goToPage(${currentPage + 1})">다음</a>
+			</c:if>
+		</div>
+	</div>
+	<script>
+	function goToPage(pageNumber) {
+	    location.href = '/admin/delivery?page=' + pageNumber + '&pageSize=${pageSize}';
+	}
+	
 			function confirmModify(deliveryId) {
 				var result = confirm("배송상태를 수정할까요?");
 				if (result) {

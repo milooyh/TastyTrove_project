@@ -1,0 +1,321 @@
+@charset "UTF-8";
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+}
+
+body{
+	height:1800px;
+}
+
+.header {
+	width: 100%;
+	height: 50px;
+	background-color: transparent;
+	display: flex;
+	justify-content: space-between;
+	border-bottom: 1px solid gray;
+	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+	position: fixed;
+	top: 0;
+	left:0;
+	z-index: 1;
+}
+
+
+.header-logo {
+	width: 20%;
+	height: 100%;
+	display: flex;
+}
+
+.header-title {
+	width: 50%;
+	height: 100%;
+	color: #3084F9;
+	margin-left: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	
+	cursor:pointer;
+}
+
+.header-title a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.header-nav {
+	width: 10%;
+	height: 100%;
+	display: flex;
+	margin-right: 5px;
+	justify-content: space-around;
+	align-items: center;
+	float: left;
+}
+
+.nav {
+	width: 20%;
+	height: 2000px;
+	position: relative;
+	top: 50px;
+	background-color: #0E0C28;
+	color: #A4AADB;
+	z-index: 10;
+}
+
+.nav-item-menu {
+	width: 90%;
+	height: 50px;
+	margin: auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.nav-item {
+    width: 90%;
+    height:50px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.1s, color 0.1s, height 0.3s;
+}
+
+
+.nav-item a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.nav-item:hover {
+	background-color: #242849;
+	color: white;
+}
+
+
+.nav-item-submenu {
+    display: none;
+    width:100%;
+    text-align:center;
+    margin-top:10px;
+}
+
+.submenu-title{
+	height:20px;
+}
+
+.submenu-title:hover{
+	height:20px;
+	color:yellow;
+}
+
+
+.content {
+	width: 79%;
+	height: 100%;
+	position: relative;
+	top: -1900px;
+	left: 290px;
+}
+
+.content-nav {
+	width: 100%;
+	height: 350px;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.content-nav-item{
+	width: 60%;
+	height: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	font-size: 20px;
+}
+
+.visit-count {
+	width: 250px;
+	height: 95px;
+	margin: 5px;
+	border-radius: 0.5rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	font-weight: bold;
+	background-color:lightgray;
+}
+
+.content-nav-clock{
+	width:40%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-top: 10px;
+}
+
+.content-clock{
+	width: 250px;
+	height: 95px;
+	margin-right: 20px;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	border-radius: 0.5rem;
+	font-size: 40px;
+	background-color:black;
+	color:white;
+}
+
+.saleTable-title{
+	margin-top: 10px;
+	text-align: center;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.saleTable {
+    display: inline-block;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+	width: 250px;
+	height:300px;
+}
+
+.saleTable table {
+    width: 100%;
+    border: 1px solid #ddd; /* 테두리 스타일 지정 */
+}
+
+.saleTable th,
+.saleTable td {
+    padding: 10px; /* 셀 안의 여백 설정 */
+    text-align: left;
+    border-bottom: 1px solid #ddd; /* 아래쪽 테두리 설정 */
+}
+
+.saleTable th {
+    background-color: #f2f2f2; /* 헤더 셀 배경색 지정 */
+}
+
+.saleTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* 짝수 행 배경색 지정 */
+}
+
+.saleTable tbody tr:hover {
+    background-color: #f2f2f2; /* 마우스 오버시 배경색 변경 */
+}
+
+.saleTable tbody td:last-child {
+    text-align: right; /* 매출액 열의 텍스트 오른쪽 정렬 */
+}
+
+
+.content-chart{
+	width: 100%;
+	height: 280px;
+	display: flex;
+	justify-content: space-evenly;
+	margin-top: 20px;
+	
+}
+
+.content-chart-item{
+	width: 250px;
+	height: 200px;
+}
+
+.content-chart-bar{
+	width: 400px;
+}
+
+.calendar {
+	margin-top: 20px;
+	width: 100%;
+	height: 600px;
+	display: flex;
+	justify-content: space-around;
+}
+
+#calendar {
+	width: 60%;
+	height: 500px;
+	margin-left: 30px;
+}
+
+.calendar-content{
+	border: 1px solid black;
+}
+
+#scheduleForm {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.saleTable-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+form{
+	width: 300px;
+	height: 400px;
+}
+
+form div {
+    margin-bottom: 10px;
+}
+
+form label {
+    display: block;
+    font-weight: bold;
+}
+
+form input[type="text"],
+form input[type="date"],
+form textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-top: 4px;
+    margin-bottom: 10px;
+}
+
+form textarea {
+    height: 50px;
+}
+
+form input[type="submit"] {
+    background-color: #3788D8;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form input[type="submit"]:hover {
+    background-color: #3788D8;
+}
+
+#map{
+	margin-top: 20px;
+}
+

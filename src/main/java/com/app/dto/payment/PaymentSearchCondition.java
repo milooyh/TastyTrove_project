@@ -11,4 +11,6 @@ public class PaymentSearchCondition {
 	String paymentAmount;
 	
 	String searchKeyword;
+	Integer minPrice; // 추가된 필드
+	Integer maxPrice; // 추가된 필드
 }

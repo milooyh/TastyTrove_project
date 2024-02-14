@@ -10,6 +10,8 @@ public class OrderSearchCondition {
 	String orderDate;
 	String orderStatus;
 	String totalPrice;
-	
+
 	String searchKeyword;
+	Integer minPrice; // 추가된 필드
+	Integer maxPrice; // 추가된 필드
 }

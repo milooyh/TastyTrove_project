@@ -1,6 +1,8 @@
 package com.app.dao.admin.Impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +22,10 @@ import com.app.dto.postRecipe.PostRecipe;
 import com.app.dto.postRecipe.PostRecipeSearchCondition;
 import com.app.dto.postRecipe.PostRecipeUpdateRecipeType;
 import com.app.dto.product.Product;
+import com.app.dto.schedule.Schedule;
 import com.app.dto.user.User;
 import com.app.dto.user.UserSearchCondition;
+import com.app.dto.user.Visitor;
 
 @Repository
 public class AdminDAOImpl implements AdminDAO {
@@ -39,7 +43,6 @@ public class AdminDAOImpl implements AdminDAO {
 
 		return userList;
 	}
-	
 
 //	조건에 따라 회원 정보 검색
 	@Override
@@ -140,16 +143,16 @@ public class AdminDAOImpl implements AdminDAO {
 
 		return result;
 	}
-	
+
 //	레시피 조건 검색
 	@Override
 	public List<PostRecipe> findPostRecipeListBySearchCondition(PostRecipeSearchCondition postRecipeSearchCondition) {
 		// TODO Auto-generated method stub
 		System.out.println("adminDAO findPostRecipeListBySearchCondition 불림");
-		List<PostRecipe> recipeList = sqlSessionTemplate.selectList("admin_mapper.findPostRecipeListBySearchCondition", postRecipeSearchCondition);
+		List<PostRecipe> recipeList = sqlSessionTemplate.selectList("admin_mapper.findPostRecipeListBySearchCondition",
+				postRecipeSearchCondition);
 		return recipeList;
 	}
-
 
 //	상품 =================================================
 //	상품 찾기
@@ -202,7 +205,7 @@ public class AdminDAOImpl implements AdminDAO {
 	public MustEatPlace findMustEatPlaceByPlaceId(int placeId) {
 		// TODO Auto-generated method stub
 		System.out.println("adminDAO findMustEatPlaceByPlaceId 불림");
-		System.out.println("DAO : "+ placeId);
+		System.out.println("DAO : " + placeId);
 		MustEatPlace mustEatPlace = sqlSessionTemplate.selectOne("admin_mapper.findMustEatPlaceByPlaceId", placeId);
 
 		return mustEatPlace;
@@ -309,7 +312,6 @@ public class AdminDAOImpl implements AdminDAO {
 		return orderItem;
 	}
 
-
 //	전체주문번호로 주문목록조회
 	@Override
 	public List<OrderItem> findOrderItemListByOrderId(int orderId) {
@@ -328,7 +330,7 @@ public class AdminDAOImpl implements AdminDAO {
 		int result = sqlSessionTemplate.update("admin_mapper.modifyTotalPrice", orderId);
 		return result;
 	}
-	
+
 //	주문번호로 전체주문목록 조회
 	@Override
 	public Order findOrderByOrderId(int orderId) {
@@ -387,7 +389,7 @@ public class AdminDAOImpl implements AdminDAO {
 		int result = sqlSessionTemplate.update("admin_mapper.modifyPaymentAmount", orderId);
 		return result;
 	}
-	
+
 //	결제 방법 변경
 	@Override
 	public int ModifyPaymentMethod(Payment payment) {
@@ -396,6 +398,7 @@ public class AdminDAOImpl implements AdminDAO {
 		int result = sqlSessionTemplate.update("admin_mapper.modifyPaymentMethod", payment);
 		return result;
 	}
+
 //	배송 =================================
 //	배송 목록 조회
 	@Override
@@ -434,11 +437,171 @@ public class AdminDAOImpl implements AdminDAO {
 		return result;
 	}
 
+//	조회수
+	@Override
+	public int saveVisitor(Visitor visitor) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO saveVisit 불림");
+		int result = sqlSessionTemplate.insert("admin_mapper.saveVisitor", visitor);
+		return result;
+	}
+
+//	조회수 카운트
+	@Override
+	public int getVisitorCount(String pageUrl) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAo findVisitCount 불림");
+		int result = sqlSessionTemplate.selectOne("admin_mapper.getVisitorCount", pageUrl);
+		return result;
+	}
+
+//	일정 조회
+	@Override
+	public List<Schedule> findSchedule() {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO findSchedule 불림");
+		List<Schedule> scheduleList = sqlSessionTemplate.selectList("admin_mapper.findSchedule");
+		return scheduleList;
+	}
+
+//	일정 추가
+	@Override
+	public int saveSchedule(Schedule schedule) {
+		// TODO Auto-generated method stub
+		System.out.println("adiminDAO saveSchedule 불림");
+		int result = sqlSessionTemplate.insert("admin_mapper.saveSchedule", schedule);
+		return result;
+	}
+
+//	타입별 회원 찾기 =============================
+	@Override
+	public int getUserCountByUserType(String userType) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO getUserCountByUserType 불림");
+		int result = sqlSessionTemplate.selectOne("admin_mapper.getUserCountByUserType", userType);
+		return result;
+	}
+	
+
+	@Override
+	public int getRecipeCountByRecipeType(String recipeType) {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO getRecipeCountByUserType 불림");
+		int result = sqlSessionTemplate.selectOne("admin_mapper.getRecipeCountByRecipeType", recipeType);
+		return result;
+	}
+	
+	@Override
+	public List<Map<String, Object>> getUserCountByRecipe() {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO getUserCountByRecipe 불림");
+		List<Map<String, Object>> map = sqlSessionTemplate.selectList("admin_mapper.getUserCountByRecipe");
+		return map;
+	}
+	
+	@Override
+	public List<Map<String, Object>> getTotalAmountByMonth() {
+		// TODO Auto-generated method stub
+		System.out.println("adminDAO getTotalAmountByMonth 불림");
+		List<Map<String, Object>> map = sqlSessionTemplate.selectList("admin_mapper.getTotalAmountByMonth");
+		return map;
+	}
+
+
+//	페이지 분할 ==================================
+	@Override
+	public int getUserCount() {
+		// TODO Auto-generated method stub
+		int result = sqlSessionTemplate.selectOne("admin_mapper.getUserCount");
+		return result;
+	}
+
+	@Override
+	public List<User> findUserListByPage(Map<String, Integer> params) {
+		// TODO Auto-generated method stub
+
+		List<User> userList = sqlSessionTemplate.selectList("admin_mapper.findUserListByPage", params);
+		return userList;
+	}
+
+	@Override
+	public int getRecipeCount() {
+		// TODO Auto-generated method stub
+		int result = sqlSessionTemplate.selectOne("admin_mapper.getRecipeCount");
+		return result;
+	}
+
+	@Override
+	public List<PostRecipe> findRecipeListByPage(Map<String, Integer> params) {
+		// TODO Auto-generated method stub
+		List<PostRecipe> recipeList = sqlSessionTemplate.selectList("admin_mapper.findRecipeListByPage", params);
+		return recipeList;
+	}
+
+	@Override
+	public int getOrderCount() {
+		// TODO Auto-generated method stub
+		int result = sqlSessionTemplate.selectOne("admin_mapper.getOrderCount");
+		return result;
+	}
+
+	@Override
+	public List<Order> findOrderListByPage(Map<String, Integer> params) {
+		// TODO Auto-generated method stub
+		List<Order> orderList = sqlSessionTemplate.selectList("admin_mapper.findOrderListByPage", params);
+		return orderList;
+	}
+
+	@Override
+	public int getPaymentCount() {
+		// TODO Auto-generated method stub
+		int result = sqlSessionTemplate.selectOne("admin_mapper.getPaymentCount");
+		return result;
+	}
+
+	@Override
+	public List<Payment> findPaymentListByPage(Map<String, Integer> params) {
+		// TODO Auto-generated method stub
+		List<Payment> paymentList = sqlSessionTemplate.selectList("admin_mapper.findPaymentListByPage", params);
+		return paymentList;
+	}
+
+	@Override
+	public int getDeliveryCount() {
+		// TODO Auto-generated method stub
+		int result = sqlSessionTemplate.selectOne("admin_mapper.getDeliveryCount");
+		return result;
+	}
+
+	@Override
+	public List<Delivery> findDeliveryListByPage(Map<String, Integer> params) {
+		// TODO Auto-generated method stub
+		List<Delivery> deliveryList = sqlSessionTemplate.selectList("admin_mapper.findDeliveryListByPage", params);
+		return deliveryList;
+	}
+
+	@Override
+	public int getPlaceCount() {
+		// TODO Auto-generated method stub
+		int result = sqlSessionTemplate.selectOne("admin_mapper.getPlaceCount");
+		return result;
+	}
+
+	@Override
+	public int getProductCount() {
+		// TODO Auto-generated method stub
+		int result = sqlSessionTemplate.selectOne("admin_mapper.getProductCount");
+		return result;
+	}
+
+	@Override
+	public int getTotalAmount() {
+		// TODO Auto-generated method stub
+		int result = sqlSessionTemplate.selectOne("admin_mapper.getTotalAmount");
+		return result;
+	}
 
 
 
-
-
-
-
+	
 }

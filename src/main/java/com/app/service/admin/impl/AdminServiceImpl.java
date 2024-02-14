@@ -1,6 +1,8 @@
 package com.app.service.admin.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,8 +21,10 @@ import com.app.dto.postRecipe.PostRecipe;
 import com.app.dto.postRecipe.PostRecipeSearchCondition;
 import com.app.dto.postRecipe.PostRecipeUpdateRecipeType;
 import com.app.dto.product.Product;
+import com.app.dto.schedule.Schedule;
 import com.app.dto.user.User;
 import com.app.dto.user.UserSearchCondition;
+import com.app.dto.user.Visitor;
 import com.app.service.admin.AdminService;
 
 @Service
@@ -74,7 +78,6 @@ public class AdminServiceImpl implements AdminService {
 
 		return user;
 	}
-
 
 //	회원 정보 수정
 	@Override
@@ -141,7 +144,7 @@ public class AdminServiceImpl implements AdminService {
 
 		return result;
 	}
-	
+
 //	레시피 조건 검색
 	@Override
 	public List<PostRecipe> findPostRecipeListBySearchCondition(PostRecipeSearchCondition postRecipeSearchCondition) {
@@ -150,7 +153,6 @@ public class AdminServiceImpl implements AdminService {
 		List<PostRecipe> recipeList = adminDAO.findPostRecipeListBySearchCondition(postRecipeSearchCondition);
 		return recipeList;
 	}
-
 
 //	상품==========================
 //	상품 목록 조회
@@ -221,7 +223,7 @@ public class AdminServiceImpl implements AdminService {
 			MustEatPlaceSearchCondition mustEatPlaceSeartchCondition) {
 		// TODO Auto-generated method stub
 		System.out.println("adminService findMustEatPlaceListBySearchCondition 불림");
-		
+
 		List<MustEatPlace> placeList = adminDAO.findMustEatPlaceListBySearchCondition(mustEatPlaceSeartchCondition);
 		return placeList;
 	}
@@ -231,7 +233,7 @@ public class AdminServiceImpl implements AdminService {
 	public int modifyMustEatPlace(MustEatPlace mustEatPlace) {
 		// TODO Auto-generated method stub
 		System.out.println("adminService modifyMustEatPlace 불림");
-		
+
 		int result = adminDAO.modifyMustEatPlace(mustEatPlace);
 		return result;
 	}
@@ -241,7 +243,7 @@ public class AdminServiceImpl implements AdminService {
 	public int removeMustEatPlace(int placeId) {
 		// TODO Auto-generated method stub
 		System.out.println("adminService removeMustEatPlace 불림");
-		int result  = adminDAO.removeMustEatPlace(placeId);
+		int result = adminDAO.removeMustEatPlace(placeId);
 		return result;
 	}
 
@@ -273,6 +275,7 @@ public class AdminServiceImpl implements AdminService {
 		List<Order> orderList = adminDAO.findOrderListBySearchCondition(orderSearchCondition);
 		return orderList;
 	}
+
 //	개별 주문 정보 수정
 	@Override
 	public int modifyOrderItem(OrderItem orderItem) {
@@ -281,6 +284,7 @@ public class AdminServiceImpl implements AdminService {
 		int result = adminDAO.modifyOrderItem(orderItem);
 		return result;
 	}
+
 //	개별주문번호로 히원찾기
 	@Override
 	public OrderItem findOrderItemByMemberId(int orderItemId) {
@@ -316,7 +320,7 @@ public class AdminServiceImpl implements AdminService {
 		int result = adminDAO.modifyTotalPrice(orderId);
 		return result;
 	}
-	
+
 //	주문번호로 전체주문목록 조회
 	@Override
 	public Order findOrderByOrderId(int orderId) {
@@ -325,7 +329,7 @@ public class AdminServiceImpl implements AdminService {
 		Order order = adminDAO.findOrderByOrderId(orderId);
 		return order;
 	}
-	
+
 //	주문상태 수정
 	@Override
 	public int modifyOrderStatus(Order order) {
@@ -334,7 +338,6 @@ public class AdminServiceImpl implements AdminService {
 		int result = adminDAO.modifyOrderStatus(order);
 		return result;
 	}
-
 
 //	결제 ===============
 //	결제목록조회
@@ -363,7 +366,7 @@ public class AdminServiceImpl implements AdminService {
 		List<Payment> paymentList = adminDAO.findPaymentListBySearchCondition(paymentSearchCondition);
 		return paymentList;
 	}
-	
+
 //	결제 총액 변동
 	@Override
 	public int modifyPaymentAmount(int orderId) {
@@ -382,7 +385,6 @@ public class AdminServiceImpl implements AdminService {
 		return result;
 	}
 
-	
 //	배송 ===============================
 //	배송 목록 조회
 	@Override
@@ -392,7 +394,7 @@ public class AdminServiceImpl implements AdminService {
 		List<Delivery> deliveryList = adminDAO.findDeliveryList();
 		return deliveryList;
 	}
-	
+
 //	배송번호로 조회
 	@Override
 	public Delivery findDeliveryByDeliveryId(int deliveryId) {
@@ -420,9 +422,171 @@ public class AdminServiceImpl implements AdminService {
 		return result;
 	}
 
+//	조회수
+	@Override
+	public int saveVisitor(Visitor visitor) {
+		// TODO Auto-generated method stub
+		System.out.println("adminService saveVisit 불림");
+
+		int result = adminDAO.saveVisitor(visitor);
+
+		return result;
+	}
+
+//	조회수 카운트
+	@Override
+	public int getVisitorCount(String pageUrl) {
+		// TODO Auto-generated method stub
+		System.out.println("adminService findVisitCount 불림");
+		int result = adminDAO.getVisitorCount(pageUrl);
+		return result;
+	}
+
+//	일정 조회
+	@Override
+	public List<Schedule> findSchedule() {
+		// TODO Auto-generated method stub
+		System.out.println("amdinServicer findSchedule 불림");
+		List<Schedule> scheduleList = adminDAO.findSchedule();
+		return scheduleList;
+	}
+
+//	일정 저장
+	@Override
+	public int saveSchedule(Schedule schedule) {
+		// TODO Auto-generated method stub
+		System.out.println("adminSErvice saveSchedule 불림");
+		int result = adminDAO.saveSchedule(schedule);
+		return result;
+	}
+
+//	유저타입 ===================
+	@Override
+	public int getUserCountByUserType(String userType) {
+		// TODO Auto-generated method stub
+		System.out.println("adminSErvice getUserCountByUserType 불림");
+		int result = adminDAO.getUserCountByUserType(userType);
+		return result;
+	}
+	
+	@Override
+	public int getRecipeCountByRecipeType(String recipeType) {
+		// TODO Auto-generated method stub
+		System.out.println("adminSErvice getrecipeCountByUserType 불림");
+		int result = adminDAO.getRecipeCountByRecipeType(recipeType);
+		return result;
+	}
+	
+	@Override
+	public List<Map<String, Object>> getUserCountByRecipe() {
+		// TODO Auto-generated method stub
+		System.out.println("adminSErvice getUserCountByRecipe() 불림");
+		List<Map<String, Object>> map = adminDAO.getUserCountByRecipe();
+		return map;
+	}
+
+	@Override
+	public List<Map<String, Object>> getTotalAmountByMonth() {
+		// TODO Auto-generated method stub
+		System.out.println("adminSErvice getTotalAmountByMonth() 불림");
+		List<Map<String, Object>> map = adminDAO.getTotalAmountByMonth();
+		return map;
+	}
 
 
 
+
+//	페이지 분할=====================
+	@Override
+	public int getUserCount() {
+		// TODO Auto-generated method stub
+		int result = adminDAO.getUserCount();
+		return result;
+	}
+
+	@Override
+	public List<User> findUserListByPage(Map<String, Integer> params) {
+		// TODO Auto-generated method stub
+		List<User> userList = adminDAO.findUserListByPage(params);
+		return userList;
+	}
+
+	@Override
+	public int getRecipeCount() {
+		// TODO Auto-generated method stub
+		int result = adminDAO.getRecipeCount();
+		return result;
+	}
+
+	@Override
+	public List<PostRecipe> findRecipeListByPage(Map<String, Integer> params) {
+		// TODO Auto-generated method stub
+		List<PostRecipe> recipeList = adminDAO.findRecipeListByPage(params);
+		return recipeList;
+	}
+
+	@Override
+	public int getOrderCount() {
+		// TODO Auto-generated method stub
+		int result = adminDAO.getOrderCount();
+		return result;
+	}
+
+	@Override
+	public List<Order> findOrderListByPage(Map<String, Integer> params) {
+		// TODO Auto-generated method stub
+		List<Order> orderList = adminDAO.findOrderListByPage(params);
+		return orderList;
+	}
+
+	@Override
+	public int getPaymentCount() {
+		// TODO Auto-generated method stub
+		int result = adminDAO.getPaymentCount();
+		return result;
+	}
+
+	@Override
+	public List<Payment> findPaymentListByPage(Map<String, Integer> params) {
+		// TODO Auto-generated method stub
+		List<Payment> paymentList = adminDAO.findPaymentListByPage(params);
+		return paymentList;
+	}
+
+	@Override
+	public int getDeliveryCount() {
+		// TODO Auto-generated method stub
+		int result = adminDAO.getDeliveryCount();
+		return result;
+	}
+
+	@Override
+	public List<Delivery> findDeliveryListByPage(Map<String, Integer> params) {
+		// TODO Auto-generated method stub
+		List<Delivery> deliveryList = adminDAO.findDeliveryListByPage(params);
+		return deliveryList;
+	}
+
+	@Override
+	public int getPlaceCount() {
+		// TODO Auto-generated method stub
+		int result = adminDAO.getPlaceCount();
+		return result;
+	}
+
+	@Override
+	public int getProductCount() {
+		// TODO Auto-generated method stub
+		int result = adminDAO.getProductCount();
+		return result;
+	}
+
+	@Override
+	public int getTotalAmount() {
+		// TODO Auto-generated method stub
+		int result = adminDAO.getTotalAmount();
+		return result;
+	}
 
 
 }
