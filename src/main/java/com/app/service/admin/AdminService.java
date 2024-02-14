@@ -170,5 +170,7 @@ public interface AdminService {
 	public int getProductCount();
 
 	public int getTotalAmount();
+	
+	public List<MainMustEatPlace> findPlaceListByPage(Map<String, Integer> params);
 
 }

@@ -648,6 +648,13 @@ public class AdminDAOImpl implements AdminDAO {
 		return result;
 	}
 
+	@Override
+	public List<MainMustEatPlace> findPlaceListByPage(Map<String, Integer> params) {
+		// TODO Auto-generated method stub
+		List<MainMustEatPlace> placeList = sqlSessionTemplate.selectList("admin_mapper.findPlaceListByPage", params);
+		return placeList;
+	}
+
 
 
 	

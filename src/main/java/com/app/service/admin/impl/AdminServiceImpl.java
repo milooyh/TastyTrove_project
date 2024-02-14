@@ -641,5 +641,12 @@ public class AdminServiceImpl implements AdminService {
 		return result;
 	}
 
+	@Override
+	public List<MainMustEatPlace> findPlaceListByPage(Map<String, Integer> params) {
+		// TODO Auto-generated method stub
+		List<MainMustEatPlace> placeList = adminDAO.findPlaceListByPage(params);
+		return placeList;
+	}
+
 
 }
