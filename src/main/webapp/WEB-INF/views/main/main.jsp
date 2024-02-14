@@ -287,16 +287,15 @@ a:hover, a:visited, a:link, a:active
 			</div>
 			
 			<div class="listInfoBox">
-<%-- 				<c:forEach var="" items="" begin="0" end="5"> --%>
+ 				<c:forEach var="product" items="${productList}" begin="0" end="5"> 
 					<div class="listInfo">
-						<a href="" class="recipeLink"> 
-						<img
-							src=""
+						<a href="/product" class="recipeLink"> 
+						<img src="${product.uploadFile}" alt="${product.productName}"
 							class="listImg"> 
-							<br>텍스트 넣을 곳
+							<br>${product.productName}
 						</a>
 					</div>
-<%-- 				</c:forEach> --%>
+ 				</c:forEach> 
 			</div>
 		</div>
 
