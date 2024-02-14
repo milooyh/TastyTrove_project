@@ -52,7 +52,7 @@
 	.Btn {
 		width: 200px;
 		height: 40px;
-		background: #151B1B;
+		background: #6aafe6;
 		border: none;
 		border-radius: 30px;
 		color: white;
@@ -62,10 +62,18 @@
 		margin-top: 15px;
 	}
 	
+	.Btn:hover{
+		background-color: #6888e0;
+	}
+	
+	.Btn2:hover{
+		background-color: #6888e0;
+	}
+	
 	.Btn2 {
 		width: 100px;
 		height: 40px;
-		background: #151B1B;
+		background: #6aafe6;
 		border: none;
 		border-radius: 30px;
 		color: white;
@@ -114,6 +122,17 @@
 
 	}
 	
+	.recipeTitle{
+ 		width: 750px; 
+ 		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	
+	.recipeInfo2{
+		width: 750px;
+	}
+	
 </style>
 
 </head>
@@ -137,32 +156,33 @@
 			<div class="recipeHeader">
 					<div class="imgBox"> <img src="${fullRecipeFilePath}" class="img"> </div>
 					<div class="recipeInfo">
-					<div class="recipeTitle"> <h1> ${recipeTitle} </h1></div>
-					<table>
-						
-						<tr>
-							<th>작성자</th>
-							<td>${userNickname}</td>
-						</tr>
-
-						<tr>
-							<th>작성일자</th>
-							<td>${boardDate}</td>
-						</tr>
-						
-						<tr>
-							<th>작성일자</th>
-							<c:choose>
-								<c:when test="${recipeType == 'KOR'}"> <td>한식</td> </c:when>
-								<c:when test="${recipeType == 'CHI'}"> <td>중식</td> </c:when>
-								<c:when test="${recipeType == 'JPN'}"> <td>일식</td> </c:when>
-								<c:when test="${recipeType == 'WST'}"> <td>양식</td> </c:when>
-								<c:when test="${recipeType == 'DRT'}"> <td>디저트</td> </c:when>
-							</c:choose>	
-						</tr>
-
-					</table>
-
+					<div class="recipeTitle"> <h1 class="recipeTitle"> ${recipeTitle} </h1></div>
+					<div class="recipeInfo2">
+						<table>
+							
+							<tr>
+								<th>작성자</th>
+								<td>${userNickname}</td>
+							</tr>
+	
+							<tr>
+								<th>작성일자</th>
+								<td>${boardDate}</td>
+							</tr>
+							
+							<tr>
+								<th>작성일자</th>
+								<c:choose>
+									<c:when test="${recipeType == 'KOR'}"> <td>한식</td> </c:when>
+									<c:when test="${recipeType == 'CHI'}"> <td>중식</td> </c:when>
+									<c:when test="${recipeType == 'JPN'}"> <td>일식</td> </c:when>
+									<c:when test="${recipeType == 'WST'}"> <td>양식</td> </c:when>
+									<c:when test="${recipeType == 'DRT'}"> <td>디저트</td> </c:when>
+								</c:choose>	
+							</tr>
+	
+						</table>
+					</div>
 				</div>
 			</div>
 			<div class="recipeContent"> ${recipeContent} </div>

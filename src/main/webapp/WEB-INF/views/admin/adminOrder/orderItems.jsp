@@ -25,7 +25,7 @@
 				- </span><span><a href="/admin/order/search">주문내역검색</a></span><span>
 		</div>
 
-		<table>
+		<table id="memberTable">
 			<thead>
 				<tr>
 					<th>개별주문번호</th>
@@ -33,6 +33,7 @@
 					<th>주문개수</th>
 					<th>상픔가격</th>
 					<th>총계</th>
+					<th>주문개수수정</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -44,14 +45,15 @@
 						<td>${order.productPrice}</td>
 						<td>${order.totalPrice}</td>
 						<td><button
-								onclick="location.href='/admin/order/orderitem/update?orderItemId=${order.orderItemId}'">주문개수수정</button></td>
+								onclick="location.href='/admin/order/orderitem/update?orderItemId=${order.orderItemId}'">수정하기</button></td>
 
 					</tr>
 				</c:forEach>
 			</tbody>
 			<br>
-			<button onclick="location.href='/admin/order'">전체주문목록</button>
 		</table>
+		<button onclick="location.href='/admin/order'" id="searchButton"
+			style="display: block; margin: auto;">전체주문목록</button>
 	</div>
 </body>
 </html>

@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/adminMustEatPlace.css?after"
+	href="${pageContext.request.contextPath}/css/adminMember.css?after"
 	type="text/css" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -26,17 +26,20 @@
 				href="/admin/musteatplace/search">맛집검색</a></span><span> - </span><span><a
 				href="/admin/musteatplace/add">맛집추가</a></span>
 		</div>
-		<table>
+		<table id="memberTable">
 			<thead>
 				<tr>
-					<th>맛집번호</th>
+					<th style="width:1%">맛집번호</th>
 					<th>맛집명</th>
-					<th>주소</th>
+					<th style="width:10%">주소</th>
 					<th>평균별점</th>
-					<th>전화번호</th>
+					<th style="width:10%">전화번호</th>
 					<th>오픈시간</th>
 					<th>마감시간</th>
-					<th>타입</th>
+					<th>유형</th>
+					<th style="width:10%">맛집정보수정</th>
+					<th style="width:10%">맛집삭제</th>
+					<th style="width:10%">이미지추가</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -51,17 +54,14 @@
 						<td>${place.closingHours}</td>
 						<td>${place.type}</td>
 						<td><button
-								onclick="location.href='/admin/musteatplace/update?id=${place.id}'">맛집정보수정</button></td>
-						<td><button onclick="confirmDelete(${place.id})">맛집삭제</button></td>
-						<td><button onclick="location.href='/admin/musteatplace/upload?id=${place.id}'">이미지 추가</button></td>
+								onclick="location.href='/admin/musteatplace/update?id=${place.id}'">수정하기</button></td>
+						<td><button onclick="confirmDelete(${place.id})">삭제하기</button></td>
+						<td><button onclick="location.href='/admin/musteatplace/upload?id=${place.id}'">추가하기</button></td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
 		<br>
-		<button onclick="location.href='/admin/musteatplace/add'">맛집추가</button>
-		<button onclick="location.href='/admin/musteatplace/search'">맛집검색</button>
-
 
 		<!-- 모달창 -->
 		<div id="mustModal" class="modal">

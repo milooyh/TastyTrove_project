@@ -4,8 +4,8 @@
 	width: 80%;
 	height: 100%;
 	position: relative;
-	top: -900px;
 	left: 300px;
+	top: -1900px;
 }
 
 .content-title {
@@ -21,41 +21,14 @@
 	margin-top: 5px;
 }
 
-a{
-	text-decoration:none;
-	color:inherit;
-	cursor:pointer;
+a {
+	text-decoration: none;
+	color: inherit;
+	cursor: pointer;
 }
 
-a:hover{
-	color:#3084F9;
-}
-
-table {
-	border-collapse: collapse;
-	width: 80%;
-}
-
-th, td {
-	border: 1px solid #dddddd;
-	text-align: left;
-	padding: 8px;
-	width:20px;
-}
-
-th {
-	background-color: #f2f2f2; /* 헤더의 배경색 */
-	font-weight: bold; /* 헤더 텍스트 굵게 */
-}
-
-/* 짝수 번째 행의 배경색을 바꾸기 위한 스타일 */
-tbody tr:nth-child(even) {
-	background-color: #f9f9f9;
-}
-
-/* 홀수 번째 행의 배경색을 바꾸기 위한 스타일 */
-tbody tr:nth-child(odd) {
-	background-color: #ffffff; /* 짝수 번째 행과 대비되도록 밝은 배경색 */
+a:hover {
+	color: #3084F9;
 }
 
 /* 모달 스타일 */
@@ -77,24 +50,24 @@ tbody tr:nth-child(odd) {
 	padding: 20px;
 	border: 1px solid #888;
 	width: 60%;
-	height:500px;
-	margin:auto;
-	position:relative;
+	height: 500px;
+	margin: auto;
+	position: relative;
 	left: 100px;
-	top:200px;
-	
+	top: 200px;
 }
 
-.modal-title{
-	font-size :25px;
-	width:200px;
-	height:50px;
-	margin:auto;
-	text-align:center;
+.modal-title {
+	font-size: 25px;
+	width: 200px;
+	height: 50px;
+	margin: auto;
+	text-align: center;
+	font-weight:bold;
 }
 
-#recipeContent{
-	margin-top:30px;
+#memberDetails{
+	margin: 0 auto;
 }
 
 /* 모달 닫기 버튼 스타일 */
@@ -111,12 +84,141 @@ tbody tr:nth-child(odd) {
 	cursor: pointer;
 }
 
+.memberImg {
+	width: 100px;
+	height: 150px;
+}
 
 .tooltip {
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
-    padding: 5px;
-    border-radius: 3px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-    font-size: 12px;
+	background-color: #f9f9f9;
+	border: 1px solid #ccc;
+	padding: 5px;
+	border-radius: 3px;
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+	font-size: 12px;
 }
+
+/*테이블*/
+#memberTable{
+	width: 97%;
+	border-collapse: collapse;
+}
+
+#memberTable th {
+	background-color: #f2f2f2;
+}
+
+#memberTable tr:nth-child(even) {
+	background-color: #f9f9f9;
+}
+
+.member-row td:first-child {
+	cursor: pointer;
+}
+
+#memberTable td button {
+	background-color: #3788D8;
+	color: white;
+	border: none;
+	padding: 6px 10px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	border-radius: 4px;
+	cursor: pointer;
+
+}
+
+#memberTable td button:hover {
+	background-color: #2c6193;
+}
+
+#memberTable th, #memberTable td {
+	padding: 8px;
+	border: none;
+	text-align: center; /* 텍스트 중앙 정렬 */
+	vertical-align: middle; /* 수직 중앙 정렬 */
+	height: 8px; /* 테이블 행의 높이 설정 */
+}
+
+/* 각 열에 맞게 너비 설정 */
+#memberTable th:nth-child(1), #memberTable td:nth-child(1) {
+	width: 10%; /* 회원번호 열 너비 */
+}
+
+#memberTable th:nth-child(2), #memberTable td:nth-child(2) {
+	width: 20%; /* 아이디 열 너비 */
+}
+
+#memberTable th:nth-child(3), #memberTable td:nth-child(3) {
+	width: 20%; /* 비밀번호 열 너비 */
+}
+
+#memberTable th:nth-child(4), #memberTable td:nth-child(4) {
+	width: 10%; /* 이름 열 너비 */
+}
+
+#memberTable th:nth-child(5), #memberTable td:nth-child(5) {
+	width: 10%; /* 유형 열 너비 */
+}
+
+#memberTable th:nth-child(6), #memberTable td:nth-child(6), #memberTable th:nth-child(7),
+	#memberTable td:nth-child(7) {
+	width: 10%; /* 수정하기, 삭제하기 버튼 열 너비 */
+}
+
+.memberProfile {
+    display: flex;
+    align-items: center;
+    height:250px;
+}
+
+.memberProfile .memberImg {
+    flex:1;
+    max-width:50%;
+    height:90%;
+    margin-bottom:10px;
+}
+
+.memberInfo {
+    flex: 1; /* 남은 공간을 회원 정보가 차지하도록 설정 */
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+}
+
+#memberTable.modalTable {
+    width: 100%; /* 테이블 너비를 조정하여 전체 너비를 차지하도록 함 */
+}
+
+.modal-title{
+	font-size:18px;
+	font-weight:bold;
+}
+
+#recipeContent{
+	margin-top : 30px;
+}
+
+/*이동 버튼*/
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: 2px solid transparent;
+    transition: font-weight 0.3s; /* hover 시에 글자 두꺼워지는 효과 */
+}
+
+.pagination a:hover {
+    font-weight: bold; /* hover 시에 글자 두꺼워지도록 설정 */
+}
+
+

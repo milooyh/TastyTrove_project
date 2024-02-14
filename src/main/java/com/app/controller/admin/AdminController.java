@@ -2,8 +2,12 @@ package com.app.controller.admin;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -36,9 +40,14 @@ import com.app.dto.payment.PaymentSearchCondition;
 import com.app.dto.postRecipe.PostRecipe;
 import com.app.dto.postRecipe.PostRecipeSearchCondition;
 import com.app.dto.product.Product;
+
 import com.app.dto.product.ProductSearchCondition;
+
+import com.app.dto.schedule.Schedule;
+
 import com.app.dto.user.User;
 import com.app.dto.user.UserSearchCondition;
+import com.app.dto.user.Visitor;
 import com.app.service.admin.AdminService;
 import com.app.service.product.ProductService;
 
@@ -48,38 +57,122 @@ public class AdminController {
 	@Autowired
 	AdminService adminService;
 	
+
 	@Autowired
 	ProductService productSerive;
 
+//	로그아웃
+	@GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        return "redirect:/"; 
+    }
+
+
 //	관리자메인 ======================
-	@GetMapping("/")
-	public String adminHome() {
+	@GetMapping("")
+	public String adminHome(Visitor visitor, Model model) {
+		System.out.println("관리자메인 컨트롤러");
+
+		// 방문자수 반영
+		int visitCnt = adminService.getVisitorCount("/");
+		int userCnt = adminService.getUserCount();
+		int recipeCnt = adminService.getRecipeCount();
+		int placeCnt = adminService.getPlaceCount();
+		int productCnt = adminService.getProductCount();
+		int totalAmount = adminService.getTotalAmount();
+
+		model.addAttribute("visitCount", visitCnt);
+		model.addAttribute("userCount", userCnt);
+		model.addAttribute("recipeCount", recipeCnt);
+		model.addAttribute("placeCount", placeCnt);
+		model.addAttribute("productCount", productCnt);
+		model.addAttribute("totalAmount", totalAmount);
+
 		return "/admin/adminHome";
 	}
 
-//	회원 관리 ======================
+	// 캘린더 일정 불러오기
+	@GetMapping("/schedulelist")
+	@ResponseBody
+	public List<Schedule> getScheduleList() {
+		return adminService.findSchedule();
+	}
+
+	// 캘린더 일정 추가
+	@PostMapping("/addschedule")
+	public String addSchedule(@ModelAttribute Schedule schedule) {
+
+		adminService.saveSchedule(schedule);
+		return "redirect:/admin";
+	}
+
+//	회원 도넛
+	@GetMapping("/userTypeCount")
+	@ResponseBody
+	public Map<String, Integer> getCount() {
+		Map<String, Integer> count = new HashMap<>();
+		count.put("cusCount", adminService.getUserCountByUserType("CUS"));
+		count.put("admCount", adminService.getUserCountByUserType("ADM"));
+		System.out.println(count);
+		return count;
+	}
+
+//	월매출
+	@GetMapping("/monthlySales")
+	@ResponseBody
+	public List<Map<String, Object>> monthlySales() {
+		List<Map<String, Object>> map = adminService.getTotalAmountByMonth();
+		System.out.println("월매출 !!! : " + map);
+		return map;
+	}
+
 //	회원 목록
 	@GetMapping("/member")
-	public String adminMemberList(Model model) {
+	public String adminMemberList(Model model, @RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "10") int pageSize) {
 		System.out.println("adminController 회원 정보 부르기");
 
-		List<User> userList = adminService.findUserList();
+		int startRow = (page - 1) * pageSize + 1;
+		int endRow = startRow + pageSize - 1;
+
+		Map<String, Integer> params = new HashMap<>();
+		params.put("startRow", startRow);
+		params.put("endRow", endRow);
+		System.out.println(params);
+
+		List<User> userList = adminService.findUserListByPage(params);
 		model.addAttribute("userList", userList);
+
+		int userCount = adminService.getUserCount();
+		int totalPages = (int) Math.ceil((double) userCount / pageSize);
+
+		System.out.println("User count: " + userCount);
+		System.out.println("Total pages: " + totalPages);
+
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("pageSize", pageSize);
 
 		return "/admin/adminMember/adminMember";
 	}
-	
+
 //	ajax값 넘겨 주기 위한 컨트롤러
 	@GetMapping("/member/details")
 	@ResponseBody
 	public User getUserDetails(@RequestParam String memberId) {
+		System.out.println("ajax멤버아이디" + memberId);
 		System.out.println("getUserDatil 호출됨 ㅜㅜㅜ");
-	    int intMemberId = Integer.parseInt(memberId);
-	    User user = adminService.findUserByMemberId(intMemberId);
-	    return user;
+
+		int intMemberId = Integer.parseInt(memberId);
+		System.out.println("ajax멤버아이디" + intMemberId);
+		User user = adminService.findUserByMemberId(intMemberId);
+		System.out.println("ussssssssss=============" + user);
+		return user;
 	}
-
-
 
 //	조건에 따른 회원 검색
 	@GetMapping("/member/search")
@@ -215,16 +308,53 @@ public class AdminController {
 	}
 
 //	======================
+//	레시피 도넛
+	@GetMapping("/recipeTypeCount")
+	@ResponseBody
+	public Map<String, Integer> getRecipeCount() {
+		Map<String, Integer> count = new HashMap<>();
+		count.put("korCount", adminService.getRecipeCountByRecipeType("KOR"));
+		count.put("chiCount", adminService.getRecipeCountByRecipeType("CHI"));
+		count.put("jpnCount", adminService.getRecipeCountByRecipeType("JPN"));
+		count.put("wtnCount", adminService.getRecipeCountByRecipeType("WTN"));
+		count.put("drtCount", adminService.getRecipeCountByRecipeType("DRT"));
+		count.put("etcCount", adminService.getRecipeCountByRecipeType("ETC"));
+		System.out.println(count);
+		return count;
+	}
+
+//	레시피 작성 회원 순위
+	@GetMapping("/postRecipeUserCount")
+	@ResponseBody
+	public List<Map<String, Object>> postRecipeUserCount() {
+		List<Map<String, Object>> map = adminService.getUserCountByRecipe();
+		System.out.println("map ::::::::::: " + map);
+		return map;
+	}
+
 //	레시피 목록
 	@GetMapping("/recipeboard")
-	public String findRecipeList(Model model) {
+	public String findRecipeList(Model model, @RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "10") int pageSize) {
 		System.out.println("adminController 레시피 정보 부르기");
 
-		List<PostRecipe> postRecipeList = adminService.findPostRecipeList();
+		int startRow = (page - 1) * pageSize + 1;
+		int endRow = startRow + pageSize - 1;
+
+		Map<String, Integer> params = new HashMap<>();
+		params.put("startRow", startRow);
+		params.put("endRow", endRow);
+		System.out.println(params);
+
+		List<PostRecipe> postRecipeList = adminService.findRecipeListByPage(params);
 		model.addAttribute("postRecipeList", postRecipeList);
 
-		// 컨트롤러에서 allRecipeTypes를 추가하는 부분
-		model.addAttribute("allRecipeTypes", Arrays.asList("KOR", "CHI", "JPN", "WST", "DRT", "ETC"));
+		int recipeCount = adminService.getRecipeCount();
+		int totalPages = (int) Math.ceil((double) recipeCount / pageSize);
+
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("pageSize", pageSize);
 
 		return "/admin/adminPostRecipe/adminRecipeBoard";
 	}
@@ -240,28 +370,27 @@ public class AdminController {
 
 		return "/admin/adminPostRecipe/recipeContent";
 	}
-	
+
 //	ajax값 넘겨 주기 위한 컨트롤러
 	@GetMapping("/recipeboard/details")
 	@ResponseBody
 	public PostRecipe getRecipeDetails(@RequestParam String recipeId) {
 		System.out.println("레시피 getUserDatil 호출됨 ㅜㅜㅜ");
-	    int intRecipeId = Integer.parseInt(recipeId);
-	    PostRecipe recipe = adminService.findPostRecipeById(intRecipeId);
-	    return recipe;
+		int intRecipeId = Integer.parseInt(recipeId);
+		PostRecipe recipe = adminService.findPostRecipeById(intRecipeId);
+		return recipe;
 	}
 
 //	레시피 카테고리 수정
 	@GetMapping("/recipeboard/update")
-	public String updateRecipeType(@RequestParam String recipeId, Model model,
-			PostRecipe postRecipe) {
+	public String updateRecipeType(@RequestParam String recipeId, Model model, PostRecipe postRecipe) {
 		System.out.println("recipeId : " + recipeId);
-		
+
 		int intRecipeId = Integer.parseInt(recipeId);
 		postRecipe.setRecipeId(intRecipeId);
 
 		postRecipe = adminService.findPostRecipeById(intRecipeId);
-		
+
 		model.addAttribute("postRecipe", postRecipe);
 
 		return "/admin/adminPostRecipe";
@@ -272,7 +401,7 @@ public class AdminController {
 
 		System.out.println("adminController 레시피 카테고리 수정하기");
 		int result = adminService.modifyRecipeType(postRecipe);
-		
+
 		if (result > 0) {
 			System.out.println("레시피 카테고리 변경 성공");
 			return "redirect:/admin/recipeboard";
@@ -281,15 +410,16 @@ public class AdminController {
 			return "admin/adminPostRecipe/adminRecipeBoard";
 		}
 	}
-	
+
 //	레시피 조건 검색
 	@GetMapping("/recipeboard/search")
-	public String findPostRecipeListBySearchCondition(PostRecipeSearchCondition postRecipeSearchCondition, Model model) {
+	public String findPostRecipeListBySearchCondition(PostRecipeSearchCondition postRecipeSearchCondition,
+			Model model) {
 		List<PostRecipe> recipeList = adminService.findPostRecipeListBySearchCondition(postRecipeSearchCondition);
 		model.addAttribute("recipeList", recipeList);
-		
+
 		return "admin/adminPostRecipe/findRecipeBoard";
-		
+
 	}
 
 //	레시피 삭제
@@ -309,7 +439,6 @@ public class AdminController {
 			return "admin/adminPostRecipe/adminRecipeBoard";
 		}
 	}
-
 
 //	상품 ==============================================================
 //	상품 목록
@@ -360,7 +489,7 @@ public class AdminController {
 
 		return "/admin/adminMustEatPlace/adminMustEatPlace";
 	}
-	
+
 //	ajax값 넘겨 주기 위한 컨트롤러
 	@GetMapping("/musteatplace/details")
 	@ResponseBody
@@ -577,9 +706,25 @@ public class AdminController {
 //	주문 ======================
 //	주문 목록 조회
 	@GetMapping("/order")
-	public String findOrderList(Model model) {
-		List<Order> orderList = adminService.findOrderList();
+	public String findOrderList(Model model, @RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "10") int pageSize) {
+		int startRow = (page - 1) * pageSize + 1;
+		int endRow = startRow + pageSize - 1;
+
+		Map<String, Integer> params = new HashMap<>();
+		params.put("startRow", startRow);
+		params.put("endRow", endRow);
+		System.out.println(params);
+
+		List<Order> orderList = adminService.findOrderListByPage(params);
 		model.addAttribute("orderList", orderList);
+
+		int orderCount = adminService.getOrderCount();
+		int totalPages = (int) Math.ceil((double) orderCount / pageSize);
+
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("pageSize", pageSize);
 
 		return "/admin/adminOrder/adminOrder";
 	}
@@ -612,9 +757,15 @@ public class AdminController {
 
 //	주문 목록 검색
 	@GetMapping("/order/search")
-	public String findOrderBySearchCondition(OrderSearchCondition orderSearchCondition, Model model) {
+	public String findOrderBySearchCondition(@RequestParam(value = "minPrice", required = false) Integer minPrice,
+			@RequestParam(value = "maxPrice", required = false) Integer maxPrice,
+			OrderSearchCondition orderSearchCondition, Model model) {
+		orderSearchCondition.setMinPrice(minPrice);
+		orderSearchCondition.setMaxPrice(maxPrice);
+
 		List<Order> orderList = adminService.findOrderListBySearchCondition(orderSearchCondition);
 		model.addAttribute("orderList", orderList);
+
 		return "/admin/adminOrder/findOrder";
 	}
 
@@ -638,8 +789,9 @@ public class AdminController {
 			@RequestParam String orderId, OrderItem orderItem) {
 		System.out.println("adminController modifyOrderItemProc 불림");
 
-		System.out.println("orderItemId : " + orderItemId + "orderItemCount : " + orderItemCount + "orderId :" +  orderId);
-		
+		System.out
+				.println("orderItemId : " + orderItemId + "orderItemCount : " + orderItemCount + "orderId :" + orderId);
+
 		int intOrderItemCount = Integer.parseInt(orderItemCount);
 		int intOrderItemId = Integer.parseInt(orderItemId);
 		int intOrderId = Integer.parseInt(orderId);
@@ -652,8 +804,11 @@ public class AdminController {
 
 		int result1 = adminService.modifyOrderItem(orderItem);
 		int result2 = adminService.modifyTotalPrice(intOrderId);
-		
-		if (result1 > 0 && result2 > 0) {
+		int result3 = adminService.modifyPaymentAmount(intOrderId);
+
+		System.out.println(result3);
+
+		if (result1 > 0 && result2 > 0 && result3 > 0) {
 			System.out.println("개별 주문 수정 성공");
 			return "redirect:/admin/order";
 		} else {
@@ -661,6 +816,7 @@ public class AdminController {
 			return "/admin/order/orderitem/update";
 		}
 	}
+
 	
 	
 	
@@ -671,12 +827,12 @@ public class AdminController {
 		int intOrderId = Integer.parseInt(orderId);
 		order.setOrderId(intOrderId);
 		order = adminService.findOrderByOrderId(intOrderId);
-		
+
 		model.addAttribute("order", order);
 		System.out.println("model : " + model);
 		return "/admin/adminOrder";
 	}
-	
+
 	@PostMapping("/order/update")
 	public String modifyOrderStatusProcess(Order order) {
 		System.out.println("admin controller modifyOrderStatusProcess 불림");
@@ -691,39 +847,62 @@ public class AdminController {
 			return "/admin/adminOrder/adminOrder";
 		}
 	}
-	
+
 //	결제=============================
 	@GetMapping("/payment")
-	public String findPaymentList(Model model) {
-		List<Payment> paymentList = adminService.findPaymentList();
+	public String findPaymentList(Model model, @RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "10") int pageSize) {
+
+		int startRow = (page - 1) * pageSize + 1;
+		int endRow = startRow + pageSize - 1;
+
+		Map<String, Integer> params = new HashMap<>();
+		params.put("startRow", startRow);
+		params.put("endRow", endRow);
+		System.out.println(params);
+
+		List<Payment> paymentList = adminService.findPaymentListByPage(params);
 		model.addAttribute("paymentList", paymentList);
-		
+
+		int paymentCount = adminService.getPaymentCount();
+		int totalPages = (int) Math.ceil((double) paymentCount / pageSize);
+
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("pageSize", pageSize);
+
 		return "/admin/adminPayment/adminPayment";
 	}
-	
+
 	@GetMapping("/payment/search")
-	public String findPaymentListBySearchCondition(PaymentSearchCondition paymentSearchCondition, Model model) {
+	public String findPaymentListBySearchCondition(@RequestParam(value = "minPrice", required = false) Integer minPrice,
+			@RequestParam(value = "maxPrice", required = false) Integer maxPrice,
+			PaymentSearchCondition paymentSearchCondition, Model model) {
+		
+		paymentSearchCondition.setMinPrice(minPrice);
+		paymentSearchCondition.setMaxPrice(maxPrice);
+		
 		List<Payment> paymentList = adminService.findPaymentListBySearchCondition(paymentSearchCondition);
 		model.addAttribute("paymentList", paymentList);
-		
+
 		return "/admin/adminPayment/findPayment";
 	}
-	
+
 	@GetMapping("/payment/update")
 	public String modifyPayment(@RequestParam String paymentId, Payment payment, Model model) {
 		int intPaymentId = Integer.parseInt(paymentId);
 		payment.setPaymentId(intPaymentId);
-		
+
 		payment = adminService.findPaymentByPaymentId(intPaymentId);
 		model.addAttribute("payment", payment);
 		return "/admin/adminPayment/modifyPayment";
 	}
-	
+
 	@PostMapping("/payment/update")
 	public String modifyPaymentProc(Payment payment) {
 		System.out.println("adminController modifyPaymentMethod 불림");
 		int result = adminService.modifyPaymentMethod(payment);
-		if(result > 0) {
+		if (result > 0) {
 			System.out.println("결제 방법 변경 셩공");
 			return "redirect:/admin/payment";
 		} else {
@@ -731,44 +910,61 @@ public class AdminController {
 			return "/admin/adminPayment/adminPayment";
 		}
 	}
-	
-	
+
 //	배송 ==============
 	@GetMapping("/delivery")
-	public String findDeliveryList(Model model) {
-		List<Delivery> deliveryList = adminService.findDeliveryList();
+	public String findDeliveryList(Model model, @RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "10") int pageSize) {
+
+		int startRow = (page - 1) * pageSize + 1;
+		int endRow = startRow + pageSize - 1;
+
+		Map<String, Integer> params = new HashMap<>();
+		params.put("startRow", startRow);
+		params.put("endRow", endRow);
+		System.out.println(params);
+
+		List<Delivery> deliveryList = adminService.findDeliveryListByPage(params);
 		model.addAttribute("deliveryList", deliveryList);
+
+		int deliveryCount = adminService.getDeliveryCount();
+		int totalPages = (int) Math.ceil((double) deliveryCount / pageSize);
+
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("pageSize", pageSize);
+
 		return "/admin/adminDelivery/adminDelivery";
-		
+
 	}
-	
+
 	@GetMapping("/delivery/search")
 	public String findDeliveryListBySearchCondition(DeliverySearchCondition deliverySearhCondition, Model model) {
 		List<Delivery> deliveryList = adminService.findDeliveryListBySearchCondition(deliverySearhCondition);
 		model.addAttribute("deliveryList", deliveryList);
 		return "/admin/adminDelivery/findDelivery";
 	}
-	
+
 //	배송 상태 변경
 	@GetMapping("/delivery/update")
 	public String modifyDeliveryStatus(@RequestParam String deliveryId, Model model, Delivery delivery) {
 		System.out.println("adminController modifyDeliveryStatus 불림");
-		
+
 		int intDeliveryId = Integer.parseInt(deliveryId);
 		delivery.setDeliveryId(intDeliveryId);
-		
+
 		delivery = adminService.findDeliveryByDeliveryId(intDeliveryId);
 		model.addAttribute("delivery", delivery);
-		
+
 		return "/admin/adminDelivery/adminDelivery";
 	}
-	
+
 	@PostMapping("/delivery/update")
 	public String modifyDeliveryStatusProc(Delivery delivery) {
 		System.out.println("admin Controller modifyDeliveryStatus 불림");
-		
+
 		int result = adminService.modifyDeliveryStatus(delivery);
-		if(result > 0) {
+		if (result > 0) {
 			System.out.println("배송 상태 변경 셩공");
 			return "redirect:/admin/delivery";
 		} else {
@@ -776,7 +972,5 @@ public class AdminController {
 			return "/admin/adminDelivery/adminDelivery";
 		}
 	}
-	
-	
 
 }

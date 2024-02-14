@@ -157,6 +157,7 @@
 		<if test="recipeType!= null and recipeType!= ''">
 			AND recipe_type = #{recipeType}
 		</if>
+		order by recipe_id
 	</select>
 
 	<!--상품 정보 찾기 ================================================================ -->
@@ -315,8 +316,11 @@
 		<if test="memberId!= null and memberId!= ''">
 			AND member_id LIKE '%' || #{searchKeyword} || '%'
 		</if>
-		<if test="totalPrice != null and totalPrice!= ''">
-			AND total_price LIKE '%' || #{searchKeyword} || '%'
+		<if test="minPrice != null">
+			AND total_price >= #{minPrice}
+		</if>
+		<if test="maxPrice != null">
+			AND #{maxPrice} >= total_price
 		</if>
 		<if test="orderDate != null and orderDate!= ''">
 			AND order_date LIKE '%' || #{orderDate} || '%'
@@ -388,8 +392,11 @@
 		<if test="orderId!= null and orderId!= ''">
 			AND order_id LIKE '%' || #{searchKeyword} || '%'
 		</if>
-		<if test="paymentAmount!= null and paymentAmount!= ''">
-			AND payment_amount LIKE '%' || #{searchKeyword} || '%'
+		<if test="minPrice != null">
+			AND payment_amount >= #{minPrice}
+		</if>
+		<if test="maxPrice != null">
+			AND #{maxPrice} >= payment_amount
 		</if>
 		<if test="paymentDate!= null and paymentDate!= ''">
 			AND payment_date LIKE '%' || #{paymentDate} || '%'
@@ -461,23 +468,216 @@
 	<update id="modifyPaymentAmount"
 		parameterType="ModifyPaymentAmountByOrderId">
 		update payments
-		set payment_amount = (select
-		o.total_price + d.delivery_fee
-		from orders o, deliveries d
-		where
-		o.order_id = d.order_id
-		and o.order_id = #{orderId})
-		where order_id =
-		#{orderId};
+		set payment_amount = (select total_price
+		from orders
+		where order_id = #{orderId})
+		where order_id = #{orderId}
 	</update>
 
 	<update id="modifyDeliveryStatus" parameterType="Delivery">
-		UPDATE DELIVERIES
+		UPDATE
+		DELIVERIES
 		SET
 		delivery_status = #{deliveryStatus}
 		WHERE
-		delivery_id = #{deliveryId}
+		delivery_id =
+		#{deliveryId}
 	</update>
+
+	<!-- 방문자수 -->
+	<insert id="saveVisitor" parameterType="Visitor">
+		INSERT INTO
+		visitor
+		(user_id, page_url, visit_date)
+		VALUES ( #{userId}, #{pageUrl},
+		SYSDATE)
+	</insert>
+
+	<select id="getVisitorCount" resultType="int"
+		parameterType="String">
+		SELECT COUNT(*) FROM visitor
+		WHERE page_url = #{pageUrl}
+	</select>
+
+	<!-- 캘린더 -->
+	<select id="findSchedule" resultType="Schedule">
+		select * from schedule
+		order by schedule_id
+	</select>
+
+	<insert id="saveSchedule" parameterType="Schedule">
+		INSERT INTO schedule
+		(schedule_id, subject, start_date, end_date, memo)
+		VALUES ((SELECT
+		NVL(MAX(schedule_id), 0)+1 FROM schedule), #{subject},
+		#{startDate},
+		#{endDate}, #{memo})
+	</insert>
+
+	<!-- 통계 -->
+	<select id="getUserCountByUserType" resultType="int"
+		parameterType="String">
+		SELECT COUNT(*) FROM MEMBERS WHERE user_type =
+		#{userType}
+	</select>
+
+	<select id="getRecipeCountByRecipeType" resultType="int"
+		parameterType="String">
+		SELECT COUNT(*) FROM RECIPE_BOARD WHERE recipe_type =
+		#{recipeType}
+	</select>
+
+	<select id="getUserCountByRecipe" resultType="java.util.Map">
+		select member_id,
+		count(*) from recipe_board
+		group by member_id
+		order by member_id
+	</select>
+
+	<select id="getTotalAmountByMonth" resultType="java.util.Map">
+		SELECT
+		TO_CHAR(TO_DATE(order_date, 'YYYY-MM-DD HH24:MI:SS'), 'MM') as month,
+		SUM(total_price) as totalAmount
+		FROM orders
+		WHERE order_status != 'C'
+		GROUP BY TO_CHAR(TO_DATE(order_date, 'YYYY-MM-DD HH24:MI:SS'), 'MM')
+		order by sum(total_price) desc
+	</select>
+
+
+	<!-- 회원수 -->
+	<select id="getUserCount" resultType="int">
+		SELECT COUNT(*) FROM
+		MEMBERS
+	</select>
+
+	<select id="findUserListByPage" parameterType="map"
+		resultType="User">
+		SELECT *
+		FROM (
+		SELECT
+		t.*,
+		ROWNUM AS rnum
+		FROM (
+		SELECT *
+		FROM
+		members
+		ORDER BY member_id
+		) t
+		)
+		WHERE rnum BETWEEN #{startRow} AND
+		#{endRow}
+	</select>
+
+	<!-- 레시피 수 -->
+	<select id="getRecipeCount" resultType="int">
+		SELECT COUNT(*) FROM
+		RECIPE_BOARD
+	</select>
+
+	<select id="findRecipeListByPage" parameterType="map"
+		resultType="PostRecipe">
+		SELECT *
+		FROM (
+		SELECT
+		t.*,
+		ROWNUM AS rnum
+		FROM (
+		SELECT *
+		FROM
+		RECIPE_BOARD
+		ORDER BY recipe_id
+		) t
+		)
+		WHERE rnum BETWEEN #{startRow} AND
+		#{endRow}
+	</select>
+
+	<select id="getOrderCount" resultType="int">
+		SELECT COUNT(*) FROM
+		ORDERS
+	</select>
+
+	<select id="findOrderListByPage" parameterType="map"
+		resultType="Order">
+		SELECT *
+		FROM (
+		SELECT
+		t.*,
+		ROWNUM AS rnum
+		FROM (
+		SELECT *
+		FROM
+		ORDERS
+		ORDER BY order_id
+		) t
+		)
+		WHERE rnum BETWEEN #{startRow} AND
+		#{endRow}
+	</select>
+
+	<select id="getPaymentCount" resultType="int">
+		SELECT COUNT(*) FROM
+		PAYMENTS
+	</select>
+
+	<select id="findPaymentListByPage" parameterType="map"
+		resultType="Payment">
+		SELECT *
+		FROM (
+		SELECT
+		t.*,
+		ROWNUM AS rnum
+		FROM (
+		SELECT *
+		FROM
+		payments
+		ORDER BY payment_id
+		) t
+		)
+		WHERE rnum BETWEEN #{startRow} AND
+		#{endRow}
+	</select>
+
+	<select id="getDeliveryCount" resultType="int">
+		SELECT COUNT(*) FROM
+		deliveries
+	</select>
+
+	<select id="getPlaceCount" resultType="int">
+		SELECT COUNT(*) FROM
+		must_eat_place
+	</select>
+
+	<select id="getProductCount" resultType="int">
+		SELECT COUNT(*) FROM
+		product
+	</select>
+
+	<select id="getTotalAmount" resultType="int">
+		SELECT SUM(total_price)
+		FROM orders
+		WHERE order_status != 'C'
+	</select>
+
+	<select id="findDeliveryListByPage" parameterType="map"
+		resultType="Delivery">
+		SELECT *
+		FROM (
+		SELECT
+		t.*,
+		ROWNUM AS rnum
+		FROM (
+		SELECT *
+		FROM
+		deliveries
+		ORDER BY delivery_id
+		) t
+		)
+		WHERE rnum BETWEEN #{startRow} AND
+		#{endRow}
+	</select>
+
 
 
 

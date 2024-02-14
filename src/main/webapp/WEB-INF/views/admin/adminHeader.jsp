@@ -16,17 +16,18 @@
 <body>
 	<div class="header">
 		<div class="header-logo">
-			<img class="logo" src="${path}/image/LOGO.jpg">
+			<img class="logo" src="${path}/image/logo2.png">
 			<div class="header-title">
 				<a href="/admin">ADMIN PAGE</a>
 			</div>
 		</div>
 
 		<div class="header-nav">
-			<div>
+			<div class="session">
 				<i class="fa-solid fa-circle-user"></i> <span>관리자
 					"${userId}"님</span>
 			</div>
+			<button id="logoutbtn" onclick="logout()">로그아웃</button>
 		</div>
 	</div>
 
@@ -90,6 +91,12 @@
 
 
 	<script>
+	function logout() {
+	    if (confirm("로그아웃하시겠습니까?")) {
+	        location.href = '/logout';
+	    }
+	}
+	
 	document.addEventListener("DOMContentLoaded", function() {
 	    const navItems = document.querySelectorAll('.nav-item');
 	    const subMenus = document.querySelectorAll('.nav-item-submenu');
