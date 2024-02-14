@@ -64,12 +64,20 @@
 		#{userTel}
 	</select>
 	
+
+	<select id="findUserByUserName" resultType="User"
+		parameterType="String">
+		SELECT * FROM MEMBERS
+		WHERE user_name = #{userName}
+	</select>
+
 	<select id="findUserByUserEmail" resultType="User"
 		parameterType="User">
 		SELECT * FROM MEMBERS
 		WHERE user_email =
 		#{userEmail}
 	</select>
+
 
 
 

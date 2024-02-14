@@ -7,10 +7,27 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/adminMustEatPlace.css?after"
+	type="text/css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <style>
+ .table-container {
+    display: flex;
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: start; /* 상단 정렬 */
+    height: 100%; /* 부모 컨테이너의 높이를 전체 화면으로 설정 */
+   
+    }
 table {
+	margin:auto;
 	border-collapse: collapse;
 	text-align: center;
+	margin-top: -800px; /* 상단 여백 설정 */
+	margin-left: 340px;
+    width: 70%; /* 테이블의 너비를 80%로 설정 */
+    
 }
 
 th, td {
@@ -18,21 +35,19 @@ th, td {
 }
 </style>
 </head>
+<%@include file="../adminHeader.jsp"%>
 <body>
-	<h1>상품 목록</h1>
-	<a href="/admin/recipeboard">레시피게시판관리</a>
-	<br>
-	<a href="/admin/musteatplace">맛집관리</a>
-	<br>
-	<a href="/admin/product">상품관리</a>
-	<br>
-	<a href="/admin/order">주문관리</a>
-	<br>
-	<a href="/admin/payment">결제관리</a>
-	<br>
-	<a href="/admin/delivery">배송관리</a>
-	<br>
-	<hr>
+<h1>상품목록</h1>
+<div class="content">
+		<div class="content-title">상품 내역 목록</div>
+		<hr>
+		<div class="content-nav">
+			<span>상품관리</span><span> - </span><span><a
+				href="/admin/findproduct">상품내역목록</a></span><span> - </span><span><a
+				href="/admin/Content/search">상품내역검색</a></span>
+		</div>
+	</div>
+	<div class="table-container">
 	<table>
 		<thead>
 			<tr>
@@ -40,8 +55,9 @@ th, td {
 				<th>상품명</th>
 				<th>가격</th>
 				<th>재고수량</th>
-				<th>이미지</th>
-				<th>카테고리</th>
+				<th>수정</th>
+				<th>삭제</th>
+				
 			</tr>
 		</thead>
 		<tbody>
@@ -51,8 +67,7 @@ th, td {
 					<td><a href="/admin/product/content?productId=${product.productId}">${product.productName}</a></td>
 					<td>${product.productPrice}</td>
 					<td>${product.productCount}</td>
-					<td>${product.productImage}</td>
-					<td>${product.productType}</td>
+				
 					
 					<td><button
 							onclick="location.href='/admin/member/update?memberId=${user.memberId}'"> 상품정보수정</button></td>
@@ -62,6 +77,7 @@ th, td {
 			</c:forEach>
 		</tbody>
 	</table>
+	</div>
 	<br>
 	<button onclick="location.href='/admin/product/add'">상품추가</button>
 	<button onclick="location.href='/admin/product/search'">상품검색</button>

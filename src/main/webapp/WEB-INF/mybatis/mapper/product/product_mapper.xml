@@ -7,7 +7,7 @@
         INSERT INTO PRODUCT (product_id, product_name, product_content, product_price, product_count, uploadFile, viewType)
         VALUES (product_id_seq.NEXTVAL, #{productName}, #{productContent}, #{productPrice}, #{productCount}, #{uploadFile}, #{viewType})
     </insert> -->
-  <insert id="saveProduct" parameterType="com.app.dto.product.Product">
+  	<insert id="saveProduct" parameterType="com.app.dto.product.Product">
         INSERT INTO PRODUCT (product_id, product_name, product_content, product_price, product_count, uploadFile, viewType)
         VALUES (product_id_seq.NEXTVAL, #{productName}, #{productContent}, #{productPrice}, #{productCount}, #{uploadFile}, #{viewType})
     </insert> 

@@ -260,7 +260,9 @@ a:hover, a:visited, a:link, a:active
 		<ul class="nav-menu">
 			<li>레시피</li>
 			<li>맛집</li>
-			<li>스토어</li>
+			<a href="/product"><li>스토어</li></a>
+			<li>랭킹</li>
+			<li>EVENT</li>
 		</ul>
 		<div class="header-icons">
 			<span class="material-icons">검색</span> <span class="material-icons">장바구니</span>
@@ -302,20 +304,19 @@ a:hover, a:visited, a:link, a:active
 		<div class="product listBox">
 			<div class="listBoxHeader">
 				<div class="fontWhite">TasttyTrove Product</div>
-				<a>더보기</a>
+				<a href="/product">더보기</a>
 			</div>
 			
 			<div class="listInfoBox">
-<%-- 				<c:forEach var="" items="" begin="0" end="5"> --%>
+ 				<c:forEach var="product" items="${productList}" begin="0" end="5"> 
 					<div class="listInfo">
-						<a href="" class="recipeLink"> 
-						<img
-							src=""
+						<a href="/product" class="recipeLink"> 
+						<img src="${product.uploadFile}" alt="${product.productName}"
 							class="listImg"> 
-							<br>텍스트 넣을 곳
+							<br>${product.productName}
 						</a>
 					</div>
-<%-- 				</c:forEach> --%>
+ 				</c:forEach> 
 			</div>
 		</div>
 

@@ -49,7 +49,7 @@ public class UserController {
 
 	    session.setAttribute("userId", findUser.getUserId()); // 로그인한 아이디 세션 저장
 	    session.setAttribute("userType", findUser.getUserType());
-	    
+	    session.setAttribute("memberId" ,findUser.getMemberId());//memberId세션저장
 	    System.out.println("sesssssssssssion 값 !!!!!!! : " + session.getAttribute("userId"));
 	    
 	    System.out.println("로그인한 회원 유형 : " + findUser.getUserType());
@@ -64,9 +64,8 @@ public class UserController {
 				return "redirect:/main";
 			}
 		}
-		
-		return "user/login";
-	}
+			return "user/login";
+		}
 
 //	로그아웃
 	@RequestMapping("/logout")

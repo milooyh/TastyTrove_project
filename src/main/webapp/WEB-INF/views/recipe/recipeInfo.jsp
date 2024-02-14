@@ -178,6 +178,7 @@
 									<c:when test="${recipeType == 'JPN'}"> <td>일식</td> </c:when>
 									<c:when test="${recipeType == 'WST'}"> <td>양식</td> </c:when>
 									<c:when test="${recipeType == 'DRT'}"> <td>디저트</td> </c:when>
+									<c:when test="${recipeType == 'ETC'}"> <td>기타</td> </c:when>
 								</c:choose>	
 							</tr>
 	

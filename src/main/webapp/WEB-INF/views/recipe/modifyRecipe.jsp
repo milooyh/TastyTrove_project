@@ -34,6 +34,7 @@
 	
 	.title {
 		height: 70px;
+		color: #6aafe6;
 	}
 	
 	.modifBox{
@@ -42,7 +43,7 @@
 		padding: 30px;
 		background-color: white;
 		border-radius: 10px;
-		border: 1px solid gray;
+		border: 1px solid #6aafe6;
 	}
 	
 	.infoBox1{
@@ -53,7 +54,7 @@
 	.infoBox2{
 		width: 100%;
 		height: 100px;
-		border: 2px solid gray;
+		border: 2px solid #6aafe6;
 		border-radius: 5px;
 		padding: 10px;
 		display: flex;
@@ -91,7 +92,7 @@
 	.Btn {
 		width: 200px;
 		height: 40px;
-		background: #151B1B;
+		background: #6aafe6;
 		border: none;
 		border-radius: 30px;
 		color: white;
@@ -137,6 +138,7 @@
 									<option name="category" value="WST">양식</option>
 									<option name="category" value="JPN">일식</option>
 									<option name="category" value="DRT">디저트</option>
+									<option name="category" value="ETC">기타</option>
 								</select>
 							</div>
 							<input type="text"name="recipeTitle" id="title" value="${recipeTitle}" class="titleInput" placeholder="제목을 입력해주세요"> 

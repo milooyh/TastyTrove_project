@@ -53,11 +53,10 @@ public class PostRecipeController {
 		
 		
 		System.out.println(requestForm);
-		//파일첨부 안하면 등록 페이지로 이동
-		//스크립트로 파일 없을 시 경고 창 뜨게끔 구현 고려
-		if(requestForm.getRecipeImage().getSize() == 0) {
-			return "redirect:/recipe/post";
-		}
+
+//		if(requestForm.getRecipeImage().getSize() == 0) {
+//			return "redirect:/recipe/post";
+//		}
 
 		try {
 			RecipeFileInfo recipeFileInfo = recipeFileManager.storeFile(requestForm.getRecipeImage());

@@ -28,5 +28,7 @@ public interface ProductService {
 		public int modifyProduct(Product product);
 		
 		public int removeProductById(int productId);
+		
+		
 
 }

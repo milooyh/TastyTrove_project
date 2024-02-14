@@ -18,7 +18,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -40,13 +39,17 @@ import com.app.dto.payment.Payment;
 import com.app.dto.payment.PaymentSearchCondition;
 import com.app.dto.postRecipe.PostRecipe;
 import com.app.dto.postRecipe.PostRecipeSearchCondition;
-import com.app.dto.postRecipe.PostRecipeUpdateRecipeType;
 import com.app.dto.product.Product;
+
+import com.app.dto.product.ProductSearchCondition;
+
 import com.app.dto.schedule.Schedule;
+
 import com.app.dto.user.User;
 import com.app.dto.user.UserSearchCondition;
 import com.app.dto.user.Visitor;
 import com.app.service.admin.AdminService;
+import com.app.service.product.ProductService;
 
 @Controller
 @RequestMapping("/admin")
@@ -54,6 +57,10 @@ public class AdminController {
 	@Autowired
 	AdminService adminService;
 	
+
+	@Autowired
+	ProductService productSerive;
+
 //	로그아웃
 	@GetMapping("/logout")
     public String logout(HttpServletRequest request) {
@@ -63,6 +70,7 @@ public class AdminController {
         }
         return "redirect:/"; 
     }
+
 
 //	관리자메인 ======================
 	@GetMapping("")
@@ -435,12 +443,14 @@ public class AdminController {
 //	상품 ==============================================================
 //	상품 목록
 	@GetMapping("/product")
-	public String findProductList(Model model) {
-		List<Product> productList = adminService.findProductList();
+	public String findProductList(Model model,ProductSearchCondition productSearchCondition) {
+		//List<Product> productList = adminService.findProductList();
+		//model.addAttribute("productList", productList);
+		List<Product> productList = productSerive.findProductListBySearchCondition(productSearchCondition);
 		model.addAttribute("productList", productList);
-
 		return "admin/adminProduct/adminProduct";
 	}
+	
 
 	@RequestMapping("/product/content")
 	public String productReview(@RequestParam String productId, Model model, Product product) {

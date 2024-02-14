@@ -6,7 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>상품 목록 페이지</title>
+
 <style>
 body {
         font-family: Arial, sans-serif;
@@ -47,7 +49,7 @@ body {
         box-sizing: border-box;
     }
     button {
-        background-color: #5cb85c;
+        background-color: #6aafe6;
         color: white;
         padding: 10px 20px;
         border: none;
@@ -56,13 +58,13 @@ body {
         display: block; /* Makes the button fill the width */
     }
     button:hover {
-        background-color: #4cae4c;
+        background-color: #0056b3;
     }
 </style>
 </head>
 <body>
 	
-     <h1>상품 등록 페이지</h1>
+    <%@include file="../main/header.jsp"%>
     <form action="<c:url value='/productwrite'/>" method="post" enctype="multipart/form-data">
         <label>상품이름:</label>
         <input type="text" name="productName"><br>
@@ -85,6 +87,8 @@ body {
         
         <button type="submit">상품 등록</button>
     </form>
+    <%@include file="../main/footer.jsp"%>
+    
     <script>
    
     document.addEventListener('DOMContentLoaded', function() {

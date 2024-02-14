@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.app.dto.product.Product;
 import com.app.dto.product.ProductSearchCondition;
+import com.app.service.User.UserService;
 import com.app.service.product.ProductService;
 
 
@@ -25,7 +26,8 @@ import com.app.service.product.ProductService;
 @Controller
 public class ProductController {
 		
-	
+	@Autowired
+	UserService userService;
     
 	@Autowired
 	ProductService productService;
@@ -199,5 +201,9 @@ public class ProductController {
 	    }
 	}
 
+	
+	
+	
+	
 	
 }
