@@ -58,7 +58,7 @@ public class UserController {
 			System.out.println("로그인 성공");
 			if (findUser.getUserType().equals(CommonCode.USER_USERTYPE_ADMIN)) {
 				System.out.println("관리자입니다");
-				return "/admin/adminHome";
+				return "redirect:/admin";
 			} else if (findUser.getUserType().equals(CommonCode.USER_USERTYPE_CUSTOMER)) {
 				System.out.println("회원입니다");
 				return "redirect:/main";

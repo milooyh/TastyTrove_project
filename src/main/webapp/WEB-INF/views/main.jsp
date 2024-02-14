@@ -264,8 +264,18 @@ a:hover, a:visited, a:link, a:active
 		</ul>
 		<div class="header-icons">
 			<span class="material-icons">검색</span> <span class="material-icons">장바구니</span>
-			<span class="material-icons">로그인</span>
-			<span class="material-icons"><button onclick="/logout">로그아웃</button></span>
+			<c:choose>
+				<c:when test="${not empty userId}">
+					<!-- 사용자가 로그인한 경우 -->
+					<p>${userId}님</p>
+				</c:when>
+				<c:otherwise>
+					<!-- 사용자가 로그인하지 않은 경우 -->
+					<a href="/login"><span class="material-icons">로그인</span></a>
+				</c:otherwise>
+			</c:choose>
+
+			<a href="/logout"><span class="material-icons">로그아웃</span></a>
 		</div>
 	</header>
 

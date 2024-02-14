@@ -47,6 +47,7 @@
 					"${userId}"님</span>
 			</div>
 			<button id="logoutbtn" onclick="logout()">로그아웃</button>
+			<button id="logoutbtn" onclick="location.href='/main'">메인</button>
 		</div>
 	</div>
 

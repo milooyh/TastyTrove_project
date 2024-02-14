@@ -250,14 +250,23 @@ a:hover, a:visited, a:link, a:active
             <li><a href="/recipe">레시피</a></li>
             <li><a href="/must/register">맛집</a></li>
             <li><a href="/product">스토어</a></li>
-            <li>랭킹</li>
-            <li>EVENT</li>
+
         </ul>
         <div class="header-icons">
             <span class="material-icons">검색</span>
             <span class="material-icons">장바구니</span>
-            <a href="/login"><span class="material-icons">로그인</span></a>
-            <a href="/logout"><span class="material-icons">로그아웃</span></a>
+            <c:choose>
+				<c:when test="${not empty userId}">
+					<!-- 사용자가 로그인한 경우 -->
+					<p>${userId}님</p>
+				</c:when>
+				<c:otherwise>
+					<!-- 사용자가 로그인하지 않은 경우 -->
+					<a href="/login"><span class="material-icons">로그인</span></a>
+				</c:otherwise>
+			</c:choose>
+
+			<a href="/logout"><span class="material-icons">로그아웃</span></a>
         </div>
     </header>
     
