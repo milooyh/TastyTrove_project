@@ -106,6 +106,24 @@
 		<br>
 
 		<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			// 각 체크박스 요소를 가져옴
+			var checkboxes = document
+					.querySelectorAll('#searchTable input[type="checkbox"]');
+
+			// 각 체크박스에 이벤트 리스너 추가
+			checkboxes.forEach(function(checkbox) {
+				checkbox.addEventListener('change', function() {
+					// 모든 체크박스의 checked 속성을 false로 설정
+					checkboxes.forEach(function(cb) {
+						cb.checked = false;
+					});
+					// 현재 체크된 체크박스의 checked 속성을 true로 설정
+					this.checked = true;
+				});
+			});
+		});
+		
 		// 최소 가격 변경 시 호출되는 함수
 	    function updateMinPrice(value) {
 	        document.getElementById("minPriceValue").textContent = value + "원";

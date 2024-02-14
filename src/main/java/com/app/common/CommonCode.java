@@ -25,7 +25,7 @@ public interface CommonCode {
 	public String DELIVERY_DELIVERYSTATUS_DURING = "D";
 	public String DELIVERY_DELIVERYSTATUS_COMPLETED = "C";
 	
-	String ROOM_VIEWTYPE_OCEAN = "OCN";	//오션뷰
-	String ROOM_VIEWTYPE_CITY = "CTY";	//시티뷰
-	String ROOM_VIEWTYPE_MOUTAIN = "MOT";	//마운틴뷰	
+	String ROOM_VIEWTYPE_OCEAN = "OCN";	//오션뷰 밀키트
+	String ROOM_VIEWTYPE_CITY = "CTY";	//시티뷰 제품
+	String ROOM_VIEWTYPE_MOUTAIN = "MOT";	//마운틴뷰 재표	
 }

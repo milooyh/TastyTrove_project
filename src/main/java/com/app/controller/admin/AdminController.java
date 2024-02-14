@@ -467,16 +467,32 @@ public class AdminController {
 	public String addProduct() {
 		return "/admin/adminProduct/saveProduct";
 	}
-
-//	@PostMapping("/product/add") // 이미지 업로드 하는 거 땜에 추후할 예정 ...
-//	public String addProductProcess(Product product ) {
-//		
-//		return "redirect:/admin/product";
-//	}
+	
+//	상품 수정
+	@GetMapping("/product/update")
+	public String updateProduct(@RequestParam String productId, Model model, Product product) {
+		int intProductId = Integer.parseInt(productId);
+		product = adminService.findProductByProductId(intProductId);
+		model.addAttribute("product", product);
+		return "/admin/adminProduct/saveProduct";
+	}
+	
+	@PostMapping("/product/update")
+	public String updateProductProc(Product product) {
+		int result = adminService.modifyProduct(product);
+		return "/admin/adminProduct/saveProduct";
+	}
 
 //	상품 검색
 	@GetMapping("/product/search")
-	public String searchProduct() {
+	public String searchProduct(@RequestParam(value = "minPrice", required = false) Integer minPrice,
+			@RequestParam(value = "maxPrice", required = false) Integer maxPrice, ProductSearchCondition productSearchCondition, Model model) {
+		productSearchCondition.setMaxPrice(maxPrice);
+		productSearchCondition.setMinPrice(minPrice);
+		
+		List<Product> productList = adminService.findProductListBySearchCondition(productSearchCondition);
+		model.addAttribute("productList", productList);
+		
 		return "/admin/adminProduct/findProduct";
 	}
 

@@ -183,6 +183,43 @@
 		#{productImage} ,
 		#{productType})
 	</insert>
+	
+	<select id="findProductListBySearchCondition"
+		parameterType="Product" resultType="ProductSearchCondition">
+		SELECT * FROM product
+		WHERE 1 = 1
+		<if test="productId != null and productId!= ''">
+			AND product_id LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="productName!= null and productName!= ''">
+			AND product_name LIKE '%' || #{searchKeyword} || '%'
+		</if>		
+		<if test="minPrice != null">
+			AND product_price >= #{productPrice}
+		</if>
+		<if test="maxPrice != null">
+			AND #{productPrice} >= product_price
+		</if>
+		<if test="productCount != null">
+			AND #{productCount} = product_count
+		</if>
+		
+		<if test="viewType != null and viewType!=''">
+			AND viewType = #{viewType}
+		</if>		
+	</select>
+	
+	<update id="modifyProduct" parameterType="Product">
+		UPDATE
+		product
+		SET
+		product_name= #{productName},
+		product_price = #{productPrice},
+		product_Count = #{productCount},
+		viewType = #{viewType}
+		WHERE product_id = #{productId}
+	</update>
+	
 
 	<!--맛집 정보 찾기 ================================================================ -->
 	<select id="findMustEatPlaceList" resultType="com.app.dto.mustEatPlace.MainMustEatPlace">

@@ -93,6 +93,10 @@
 				<div class=submenu-title>
 					<a href="/admin/musteatplace/search">맛집검색</a>
 				</div>
+				<div class=submenu-title>
+					<a href="/admin/musteatplace/add">맛집추가</a>
+				</div>
+				
 			</div>
 		</div>
 
@@ -100,13 +104,13 @@
 			상품 관리
 			<div class="nav-item-submenu product-nav-item-submenu">
 				<div class=submenu-title>
-					<a href="#">상품목록</a>
+					<a href="/admin/product">상품목록</a>
 				</div>
 				<div class=submenu-title>
-					<a href="#">상품검색</a>
+					<a href="/admin/product/search">상품검색</a>
 				</div>
 				<div class=submenu-title>
-					<a href="#">상품추가</a>
+					<a href="/product">상품수정및삭제</a>
 				</div>
 			</div>
 		</div>
@@ -152,7 +156,7 @@
 		<div class="content-nav">
 			<div class="content-nav-item">
 				<div class="visit-count">
-					😉 오늘의 방문자 수
+					😉 총 방문자 수
 					<div>${visitCount}</div>
 				</div>
 				<div class=visit-count>
@@ -172,7 +176,7 @@
 					<div>${productCount}</div>
 				</div>
 				<div class=visit-count>
-					💰 총매출
+					💰 총 매출
 					<div>${totalAmount}</div>
 				</div>
 			</div>

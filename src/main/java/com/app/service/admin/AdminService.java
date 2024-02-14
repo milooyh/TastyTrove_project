@@ -20,6 +20,7 @@ import com.app.dto.postRecipe.PostRecipe;
 import com.app.dto.postRecipe.PostRecipeSearchCondition;
 import com.app.dto.postRecipe.PostRecipeUpdateRecipeType;
 import com.app.dto.product.Product;
+import com.app.dto.product.ProductSearchCondition;
 import com.app.dto.schedule.Schedule;
 import com.app.dto.user.User;
 import com.app.dto.user.UserSearchCondition;
@@ -57,6 +58,10 @@ public interface AdminService {
 	public Product findProductByProductId(int productId);
 
 	public int saveProduct(Product product);
+	
+	public int modifyProduct(Product product);
+	
+	public List<Product> findProductListBySearchCondition(ProductSearchCondition productSearchCondition);
 
 //	맛집 ==============================
 

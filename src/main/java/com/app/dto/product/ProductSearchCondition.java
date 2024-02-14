@@ -11,7 +11,7 @@ import lombok.Data;
 public class ProductSearchCondition {
 
 	
-	private int productId;
+	private String productId;
     private String productName;
     private String productContent;
     private String productPrice;
@@ -21,4 +21,6 @@ public class ProductSearchCondition {
     private String viewType; //뷰타입
     
     private String searchKeyword;
+    Integer minPrice; // 추가된 필드
+	Integer maxPrice; // 추가된 필드
 }

@@ -32,6 +32,48 @@
 			font-size:0.8rem;
 			text-align:center;
 		}
+		
+		.input {
+			margin-top:15px;
+			width:300px;
+			height:50px;
+			font-size:1.05rem;
+			border-radius:10px;
+			box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+			border:none;
+			font-weight: 700;
+			transition: 0.25s;
+			text-decoration: none;	
+			display:block;
+			margin:0 auto;
+			background-color:#6aafe6;
+			cursor:pointer;
+			margin-top:5%;
+		}
+		
+		.restaurantName {
+			margin-top:5%;
+			text-align:center;
+		}
+		
+		.form {
+			display:flex;
+			justify-content:center;
+		}
+		
+		.image-upload {
+			margin-top:5%;
+		}
+		
+		#file {
+			margin-top:5%;
+			cursor:pointer;
+			border-radius:3px;
+			box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+			border:none;
+			background-color:#6aafe6;
+			text-decoration: none;	
+		}
 	</style>
 
 <meta charset="UTF-8">
@@ -45,12 +87,16 @@
 	</div>
 	<div class="ment2">자신만의 맛집을 등록하고, 오늘의 메뉴? 고민하지 마세요</div>
 	
-	<form action="/must/upload" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="id" value="${mustEatPlace.id}">
-		<input type="file" name="representativeMenuImage" id="file" />
-		<input type="submit" value="Upload" /><br><br>
-		<img src="data:image/jpg;base64,${mustEatPlace.representativeMenuImage}">
-	</form>
+	<div class="image-upload">
+		<h2 class="restaurantName">${mustEatPlace.restaurantName}</h2>
+		<div class="form">
+			<form action="/must/upload" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="id" value="${mustEatPlace.id}">
+				<input type="file" name="representativeMenuImage" id="file" />
+				<input type="submit" value="Upload"  class="input"/><br><br>
+			</form>
+		</div>
+	</div>
 </body>	
 <jsp:include page="../main/footer.jsp"></jsp:include>
 </html>
