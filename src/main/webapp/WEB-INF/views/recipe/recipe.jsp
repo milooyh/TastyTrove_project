@@ -61,7 +61,7 @@
 		height: 240px;
 		object-fit: cover;
 		border-radius: 5px;
-		border: 1px solid gray;
+		border: 2px solid #6aafe6;
 	}
 	
 	.title {
@@ -85,6 +85,10 @@
 		font-weight: bolder;
 		font-size: 15px;
 		cursor: pointer;
+	}
+	
+	.postBtn:hover{
+		background-color: #6888e0;
 	}
 	
 	.searchRecipe {
@@ -117,6 +121,10 @@
 		color: white;
 		cursor: pointer;
 		margin: 2px 0px;
+	}
+	
+	.recipeSearchBtn:hover{
+		background-color: #6888e0;
 	}
 	
 	.recipeSearchTh{
