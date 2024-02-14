@@ -62,6 +62,18 @@
 			</tbody>
 		</table>
 		<br>
+		
+		<div class="pagination">
+			<c:if test="${currentPage > 1}">
+				<a href="javascript:void(0)" onclick="goToPage(${currentPage - 1})">이전</a>
+			</c:if>
+
+			<span>${currentPage} / ${totalPages}</span>
+
+			<c:if test="${currentPage < totalPages}">
+				<a href="javascript:void(0)" onclick="goToPage(${currentPage + 1})">다음</a>
+			</c:if>
+		</div>
 
 		<!-- 모달창 -->
 		<div id="mustModal" class="modal">
@@ -72,6 +84,10 @@
 			</div>
 		</div>
 		<script>
+		function goToPage(pageNumber) {
+		    location.href = '/admin/musteatplace?page=' + pageNumber + '&pageSize=${pageSize}';
+		}
+		
 		function confirmDelete(id) {
 			var result = confirm("맛집 정보를 삭제하시겠습니까?");
 

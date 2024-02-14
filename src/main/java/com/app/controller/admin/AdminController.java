@@ -499,9 +499,28 @@ public class AdminController {
 //	맛집 ===========================
 //	맛집 모록
 	@GetMapping("/musteatplace")
-	public String findMustEatPlaceList(Model model) {
-		List<MainMustEatPlace> placeList = adminService.findMustEatPlaceList();
+	public String findMustEatPlaceList(Model model,  @RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "10") int pageSize) {
+		int startRow = (page - 1) * pageSize + 1;
+		int endRow = startRow + pageSize - 1;
+		
+		Map<String, Integer> params = new HashMap<>();
+		params.put("startRow", startRow);
+		params.put("endRow", endRow);
+		System.out.println(params);
+
+		List<MainMustEatPlace> placeList = adminService.findPlaceListByPage(params);
 		model.addAttribute("placeList", placeList);
+		
+		int placeCount = adminService.getPlaceCount();
+		int totalPages = (int) Math.ceil((double) placeCount / pageSize);
+
+		System.out.println("User count: " + placeCount);
+		System.out.println("Total pages: " + totalPages);
+
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("pageSize", pageSize);
 
 		return "/admin/adminMustEatPlace/adminMustEatPlace";
 	}

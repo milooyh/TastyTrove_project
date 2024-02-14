@@ -683,7 +683,7 @@
 
 	<select id="getPlaceCount" resultType="int">
 		SELECT COUNT(*) FROM
-		must_eat_place
+		main_must_eat_place
 	</select>
 
 	<select id="getProductCount" resultType="int">
@@ -709,6 +709,24 @@
 		FROM
 		deliveries
 		ORDER BY delivery_id
+		) t
+		)
+		WHERE rnum BETWEEN #{startRow} AND
+		#{endRow}
+	</select>
+	
+	<select id="findPlaceListByPage" parameterType="map"
+		resultType="com.app.dto.mustEatPlace.MainMustEatPlace">
+		SELECT *
+		FROM (
+		SELECT
+		t.*,
+		ROWNUM AS rnum
+		FROM (
+		SELECT *
+		FROM
+		main_must_eat_place
+		ORDER BY id
 		) t
 		)
 		WHERE rnum BETWEEN #{startRow} AND

@@ -85,6 +85,7 @@ public interface AdminDAO {
 	public int removeMenuByName(String menuName);
 	public List<MainMustEatPlaceMenuInfo> findMustEatPlaceMenuById(int id);
 	
+	
 //	주문
 	public List<Order> findOrderList();
 
@@ -156,4 +157,5 @@ public interface AdminDAO {
 	public int getPlaceCount();
 	public int getProductCount();
 	public int getTotalAmount();
+	public List<MainMustEatPlace> findPlaceListByPage(Map<String, Integer> params);
 }

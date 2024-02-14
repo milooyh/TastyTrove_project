@@ -124,7 +124,7 @@ a:hover
 			<li class="menu"><a href="/product">스토어</a></li>
 		</ul>
 		<div class="header-icons">
-			<span class="material-icons sizeM">검색 &nbsp;&nbsp;</span> <span class="material-icons sizeM">장바구니</span>
+			<span class="material-icons">검색</span> <a href="/cart"><span class="material-icons">장바구니</span></a>
 			<c:choose>
 				<c:when test="${not empty userId}">
 					<!-- 사용자가 로그인한 경우 -->
