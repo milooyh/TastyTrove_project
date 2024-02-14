@@ -62,6 +62,8 @@
 		
 		<typeAlias type="com.app.dto.user.Visitor" alias="Visitor"></typeAlias>
 		<typeAlias type="com.app.dto.schedule.Schedule" alias="Schedule"></typeAlias>
+		
+		
 	</typeAliases>
 
 

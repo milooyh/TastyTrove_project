@@ -14,46 +14,40 @@ import com.app.dto.postRecipe.PostRecipe;
 import com.app.dto.postRecipe.RecipeSearchCondition;
 import com.app.service.postRecipe.PostRecipeService;
 
-
 @Controller
 public class HomeController {
 
 	@Autowired
-	AdminService adminService;	
-	
-	@RequestMapping("/")
-	public String home(HttpServletRequest request, Visitor visitor) {
-		String userId = request.getSession().getId();
-		String pageUrl = "/";
-		
-		visitor.setUserId(userId);
-		visitor.setPageUrl(pageUrl);
-		
-		adminService.saveVisitor(visitor);
-		return "home";
-	
+	AdminService adminService;
+
 	@Autowired
 	PostRecipeService postRecipeService;
 
-	
-	
+
 	@RequestMapping("/")
-	public String home(Model model, RecipeSearchCondition recipeSearchCondition) {
+	public String home(Model model, RecipeSearchCondition recipeSearchCondition, HttpServletRequest request,
+			Visitor visitor) {
 
 //return "/WEB-INF/views/home.jsp";
 //return "/WEB-INF/views/mainpage.jsp";
 
 //--ViewResolver 설정 이후
-		
+
 //		테스트용(MJ)
 		List<PostRecipe> recipeList = postRecipeService.findRecipeListBySearchCondition2(recipeSearchCondition);
-		
 		model.addAttribute("recipeList", recipeList);
 		
+//		방문자수 카운트
+		String userId = request.getSession().getId();
+		String pageUrl = "/";
+
+		visitor.setUserId(userId);
+		visitor.setPageUrl(pageUrl);
+
+		adminService.saveVisitor(visitor);
+
 		return "main";
-		
+
 	}
-	
-	
 
 }
