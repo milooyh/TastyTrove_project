@@ -24,6 +24,7 @@ import com.app.dto.postRecipe.PostRecipe;
 import com.app.dto.postRecipe.PostRecipeSearchCondition;
 import com.app.dto.postRecipe.PostRecipeUpdateRecipeType;
 import com.app.dto.product.Product;
+import com.app.dto.product.ProductSearchCondition;
 import com.app.dto.schedule.Schedule;
 import com.app.dto.user.User;
 import com.app.dto.user.UserSearchCondition;
@@ -630,6 +631,20 @@ public class AdminDAOImpl implements AdminDAO {
 	public int getTotalAmount() {
 		// TODO Auto-generated method stub
 		int result = sqlSessionTemplate.selectOne("admin_mapper.getTotalAmount");
+		return result;
+	}
+
+	@Override
+	public List<Product> findProductListBySearchCondition(ProductSearchCondition productSearchCondition) {
+		// TODO Auto-generated method stub
+		List<Product> productList = sqlSessionTemplate.selectList("admin_mapper.findProductListBySearchCondition", productSearchCondition);
+		return productList;
+	}
+
+	@Override
+	public int modifyProduct(Product product) {
+		// TODO Auto-generated method stub
+		int result = sqlSessionTemplate.update("admin_mapper.modifyProduct", product);
 		return result;
 	}
 

@@ -24,6 +24,7 @@ import com.app.dto.postRecipe.PostRecipe;
 import com.app.dto.postRecipe.PostRecipeSearchCondition;
 import com.app.dto.postRecipe.PostRecipeUpdateRecipeType;
 import com.app.dto.product.Product;
+import com.app.dto.product.ProductSearchCondition;
 import com.app.dto.schedule.Schedule;
 import com.app.dto.user.User;
 import com.app.dto.user.UserSearchCondition;
@@ -623,6 +624,20 @@ public class AdminServiceImpl implements AdminService {
 	public int getTotalAmount() {
 		// TODO Auto-generated method stub
 		int result = adminDAO.getTotalAmount();
+		return result;
+	}
+
+	@Override
+	public List<Product> findProductListBySearchCondition(ProductSearchCondition productSearchCondition) {
+		// TODO Auto-generated method stub
+		List<Product> prodictList = adminDAO.findProductListBySearchCondition(productSearchCondition);
+		return prodictList;
+	}
+
+	@Override
+	public int modifyProduct(Product product) {
+		// TODO Auto-generated method stub
+		int result = adminDAO.modifyProduct(product);
 		return result;
 	}
 

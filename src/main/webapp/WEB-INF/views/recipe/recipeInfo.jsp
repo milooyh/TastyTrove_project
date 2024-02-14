@@ -15,7 +15,7 @@
 	
 	html, body {
 		height: 100%;
-		background-color: #F2F2F2;
+		background-color: #F0F0F0;
 	}
 	
 	.container {
@@ -30,7 +30,7 @@
 		height: 350px;
 		object-fit: cover;
 		border-radius: 5px;
-		border: 1px solid gray;
+		border: 2px solid #6aafe6;
 	}
 	
 	.imgBox {
@@ -41,11 +41,12 @@
 	
 	.recipeInfoBox{
 		width: 1200px;
-		padding: 30px;
 		background-color: white;
 		border-radius: 10px;
-		border: 1px solid gray;
-		margin: 30px;
+ 		margin: 30px;
+		padding: 30px;
+		background-color: white;
+		border: 1px solid #6aafe6;
 	
 	}
 	
@@ -60,14 +61,15 @@
 		font-size: 15px;
 		cursor: pointer;
 		margin-top: 15px;
+		box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 	}
 	
 	.Btn:hover{
-		background-color: #6888e0;
+		background-color: #0056b3;
 	}
 	
 	.Btn2:hover{
-		background-color: #6888e0;
+		background-color: #0056b3;
 	}
 	
 	.Btn2 {
@@ -81,6 +83,7 @@
 		font-size: 15px;
 		cursor: pointer;
 		margin-top: 15px;
+		box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 	}
 	
 	.btnBox{
@@ -133,11 +136,18 @@
 		width: 750px;
 	}
 	
+	hr{
+		background: #6aafe6;
+		height:1px;
+  	  	border:0;
+  	  	margin-bottom: 50px;
+	}
+	
 </style>
 
 </head>
 <body>
-
+	<%@include file="../main/header.jsp" %>
 	<div class="container">
 		<div class="recipeInfoBox">
 		
@@ -153,6 +163,9 @@
 					</c:if>
 				</div>
 			</div>
+			
+			<hr>
+			
 			<div class="recipeHeader">
 					<div class="imgBox"> <img src="${fullRecipeFilePath}" class="img"> </div>
 					<div class="recipeInfo">
@@ -189,6 +202,7 @@
 			<div class="recipeContent"> ${recipeContent} </div>
 		</div>
 	</div>
+	<%@include file="../main/footer.jsp" %>
 	
 	<script>
 		

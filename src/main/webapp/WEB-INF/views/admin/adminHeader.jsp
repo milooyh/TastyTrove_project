@@ -28,6 +28,7 @@
 					"${userId}"님</span>
 			</div>
 			<button id="logoutbtn" onclick="logout()">로그아웃</button>
+			<button id="logoutbtn" onclick="location.href='/main'">메인</button>
 		</div>
 	</div>
 
@@ -56,14 +57,15 @@
 			<div class="nav-item-submenu must-nav-item-submenu">
 				<div class=submenu-title><a href="/admin/musteatplace">맛집목록</a></div>
 				<div class=submenu-title><a href="/admin/musteatplace/search">맛집검색</a></div>
+				<div class=submenu-title><a href="/admin/musteatplace/add">맛집추가</a></div>
 			</div>
 		</div>
 		
 		<div class="nav-item product-nav-item">상품 관리
 			<div class="nav-item-submenu product-nav-item-submenu">
-				<div class=submenu-title><a href="#">상품목록</a></div>
-				<div class=submenu-title><a href="#">상품검색</a></div>
-				<div class=submenu-title><a href="#">상품추가</a></div>
+				<div class=submenu-title><a href="/admin/product">상품목록</a></div>
+				<div class=submenu-title><a href="/admin/product/search">상품검색</a></div>
+				<div class=submenu-title><a href="/product">상품수정및삭제</a></div>
 			</div>
 		</div>
 		
