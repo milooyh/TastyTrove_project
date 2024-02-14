@@ -26,30 +26,17 @@
 
 <!--  페이징 -->
 	<select id = "findRecipeListBySearchCondition" resultType="PostRecipe" parameterType="RecipeSearchCondition">
-<!-- 		SELECT * -->
-<!-- 		FROM recipe_board r, recipe_file_info i, members m -->
-<!-- 		WHERE 1=1 -->
-<!-- 		AND r.recipe_file_id = i.recipe_file_id -->
-<!-- 		AND r.member_id = m.user_id -->
-<!-- 		<if test="recipeType != null and recipeType != ''"> -->
-<!-- 			AND r.recipe_type = #{recipeType} -->
-<!-- 		</if> -->
-<!-- 		<if test="searchKeyword != null and searchKeyword != ''"> -->
-<!-- 			AND r.recipe_title LIKE '%'||#{searchKeyword}||'%' -->
-<!-- 		</if> -->
-<!-- 		AND recipe_id BETWEEN #{firstRow} AND #{lastRow} -->
-<!-- 		ORDER BY recipe_id desc -->
 			SELECT * FROM 
 			(SELECT a.*,rownum AS rnum FROM (
 			SELECT r.recipe_id recipeid, r.recipe_title
-               recipetitle, m.member_id memberid, m.user_nickname usernickname,
-               r.board_date boarddate, r.recipe_type recipetype, r.recipe_file_id
-               recipefileid, i.recipe_file_name recipefilename,
-               i.original_recipe_file_name originalrecipefilename, i.recipe_file_path recipefilepath
-			FROM recipe_board r, recipe_file_info i, members m
-			WHERE 1=1
-			AND r.recipe_file_id = i.recipe_file_id
-			AND r.member_id = m.user_id
+                recipetitle, m.member_id memberid, m.user_nickname usernickname,
+                r.board_date boarddate, r.recipe_type recipetype, r.recipe_file_id
+                recipefileid, i.recipe_file_name recipefilename,
+                i.original_recipe_file_name originalrecipefilename, i.recipe_file_path recipefilepath
+				FROM recipe_board r, recipe_file_info i, members m
+				WHERE 1=1
+				AND r.recipe_file_id = i.recipe_file_id
+				AND r.member_id = m.user_id
 			<if test="recipeType != null and recipeType != ''">
 				AND r.recipe_type = #{recipeType}
 			</if>
@@ -59,8 +46,6 @@
 			ORDER BY recipeid desc
 			) a  )b
 			WHERE rnum between #{firstRow} and #{lastRow}
-
-
 	</select>
 	
 	
