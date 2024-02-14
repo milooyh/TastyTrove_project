@@ -3,21 +3,30 @@ const patternNum = /[0-9]/;
 const patternKor = /^[ㄱ-ㅎ|가-힣]+$/;
 const patternEng = /[a-zA-Z]/;
 const patternSym = /[~!@#$%^&*()_+|<>?:{}]/;
+const patternEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 // 아아디 확인
 $(document).ready(function() {
 	$('#idChk_btn').click(function() {
 		console.log("아이디 확인 버튼누림");
-		
+
 		var userId = $('#userId').val();
-		
-		if(userId.trim() === ''){ // input에 아무것도 입력하지 않으면
-			var messageDiv = $('#idAvailabilityMessage');
-            messageDiv.text('아이디를 입력해주세요.');
-            messageDiv.css('color', 'red');
-            return;
+		var messageDiv = $('#idAvailabilityMessage');
+
+		// input에 아무것도 입력하지 않으면
+		if (userId.trim() === '') {
+			messageDiv.text('아이디를 입력해주세요.');
+			messageDiv.css('color', 'red');
+			return;
 		}
-		
+
+		// 아이디에 한글 입력하면
+		if (patternKor.test(userId) == true) {
+			messageDiv.text('아이디에는 영어, 숫자, 특수기호만 입력 가능합니다.');
+			messageDiv.css('color', 'red');
+			return;
+		}
+
 		console.log(userId);
 		$.ajax({
 			url: '/signup/checkId',
@@ -25,7 +34,6 @@ $(document).ready(function() {
 			data: { userId: userId },
 			success: function(data) {
 				console.log(data);
-				var messageDiv = $('#idAvailabilityMessage');
 				if (data == 0) {
 					messageDiv.text('사용 가능한 아이디입니다!');
 					messageDiv.css('color', 'green');
@@ -38,20 +46,6 @@ $(document).ready(function() {
 	});
 });
 
-/*// 아이디 입력 안 하고 확인 버튼 눌렀을 때
-function checkIdPattern(userId) {
-	const idInput = document.getElementById('userId').value;
-	const idChkBtn = document.getElementById('IdChk_btn');
-	const idMessage = document.getElementById('idAvailabilityMessage');
-
-	console.log("아이디 확인 버튼 눌림");
-	if (patternKor.test(idInput) == true) {
-		console.log("아이디에 한글 입력됨");
-		idMassage.text('아이디는 영어, 숫자, 특수기호만 입력이 가능합니다.');
-	
-	}
-	*/
-
 
 // 비밀번호 확인
 $(document).ready(function() {
@@ -59,9 +53,40 @@ $(document).ready(function() {
 		console.log("비밀번호 확인 버튼누림");
 		var userPassword = $('#userPassword').val();
 		var userPasswordChk = $('#userPasswordChk').val();
+		var messageDiv = $('#pwAvailabilityMessage');
 
-		console.log("userPassword : " + userPassword);
-		console.log("userPasswordChk : " + userPasswordChk);
+		// input에 아무것도 입력하지 않으면
+		if (userPassword.trim() === '' || userPasswordChk.trim() === '') {
+			messageDiv.text('비밀번호를 입력해주세요.');
+			messageDiv.css('color', 'red');
+			return;
+		}
+
+		// 비밀번호에 한글 입력하면
+		if (patternKor.test(userPassword) == true) {
+			messageDiv.text('비밀번호에는 영어, 숫자, 특수기호만 입력 가능합니다.');
+			messageDiv.css('color', 'red');
+			return;
+		}
+
+		// 영어, 숫자, 특수기호 조합으로 10글자 이내로 비밀번호를 입력해주세요
+		if (patternEng.test(userPassword) == false) {
+			messageDiv.text('영어, 숫자, 특수기호 조합으로 10글자 이내로 비밀번호를 입력해주세요.');
+			messageDiv.css('color', 'red');
+			return;
+		}
+
+		if (patternNum.test(userPassword) == false) {
+			messageDiv.text('영어, 숫자, 특수기호 조합으로 10글자 이내로 비밀번호를 입력해주세요.');
+			messageDiv.css('color', 'red');
+			return;
+		}
+
+		if (patternSym.test(userPassword) == false) {
+			messageDiv.text('영어, 숫자, 특수기호 조합으로 10글자 이내로 비밀번호를 입력해주세요.');
+			messageDiv.css('color', 'red');
+			return;
+		}
 
 		$.ajax({
 			url: '/signup/checkPw',
@@ -69,7 +94,7 @@ $(document).ready(function() {
 			data: { userPassword: userPassword, userPasswordChk: userPasswordChk },
 			success: function(data) {
 				console.log("data : " + data);
-				var messageDiv = $('#pwAvailabilityMessage');
+
 				if (data == "0") {
 					messageDiv.text('비밀번호가 일치합니다');
 					messageDiv.css('color', 'green');
@@ -82,47 +107,164 @@ $(document).ready(function() {
 	});
 });
 
+// 별명 확인
+$(document).ready(function() {
+	$('#nicknameChk_btn').click(function() {
+		console.log("별명 확인 버튼누림");
 
-// 비밀번호 유호성 검사
-function checkPasswordPattern(pw) {
-	const pwInput = document.getElementById('pw').value; // 비번 입력값
-	const pwBtn = document.getElementById('pwChkBtn'); // 확인 버튼
-	let message = ""; // 출력 메세지
+		var userNickname = $('#userNickname').val();
+		var messageDiv = $('#nickNameAvailabilityMessage');
 
-	const pattern1 = /[0-9]/;  // 숫자
-	const pattern2 = /[a-zA-Z]/; // 영어
-	const pattern4 = /[~!@#$%^&*()_+|<>?:{}]/;  // 특문
+		// input에 아무것도 입력하지 않으면
+		if (userNickname.trim() === '') {
+			messageDiv.text('별명을 입력해주세요.');
+			messageDiv.css('color', 'red');
+			return;
+		}
+		console.log(userNickname);
 
-	console.log("버튼");
-	// 숫자 존재하냐
-	if (pattern1.test(pwInput) == false) {
-		console.log("숫자없삼");
-		message = "비밀번호에 숫자가 입력되지 않았습니다.\n숫자를 입력하여 주시기 바랍니다.";
-	}
+		$.ajax({
+			url: '/signup/checknickname',
+			type: 'POST',
+			data: { userNickname: userNickname },
+			success: function(data) {
+				console.log(data);
+				if (data == 0) {
+					messageDiv.text('사용 가능한 별명입니다!');
+					messageDiv.css('color', 'green');
+				} else {
+					console.log("실패");
+					messageDiv.text('이미 사용 중인 별명입니다. 다른 별명을 입력해주세요.');
+					messageDiv.css('color', 'red');
+				}
+			}
+		});
+	});
+});
 
-	// 영문 존재하냐
-	if (pattern2.test(pwInput) == false) {
-		console.log("영어없삼");
-		message = "비밀번호에 영문 소문자가 입력되지 않았습니다.\n영문을 입력하여 주시기 바랍니다.";
-	}
 
-	// 특문 존재 하냐
-	if (pattern4.test(pwInput) == false) {
-		console.log("특문없삼");
-		message = "비밀번호에 특수문자가 입력되지 않았습니다.\n특수문자를 입력하여 주시기 바랍니다.";
-	}
+// 전번 확인
+$(document).ready(function() {
+	$('#telChk_btn').click(function() {
+		console.log("전번 확인 버튼누림");
 
-	// 길이 검사
-	if (pwInput.length < 3 || pwInput.length > 10) {
-		console.log("길이오류");
-		message = "비밀번호는 3자리 이상 10자리 이하만 가능합니다.\n비밀번호를 다시 입력하여 주시기 바랍니다.";
-	}
+		var tel1 = $('#tel1').val();
+		var tel2 = $('#tel2').val();
+		var tel3 = $('#tel3').val();
+		var messageDiv = $('#telAvailabilityMessage');
 
-	// 결과 출력
-	if (message) {
-		alert(message);
-	} else {
-		alert("사용 가능한 비밀번호입니다!");
-	}
-}
+		// input에 아무것도 입력하지 않으면
+		if (tel1.trim() === '' || tel2.trim() === '' || tel3.trim() === '') {
+			messageDiv.text('전화번호를 입력해주세요.');
+			messageDiv.css('color', 'red');
+			return;
+		}
+
+		// 숫자 말고 입력을 하면
+		if (patternKor.test(tel1) == true || patternKor.test(tel2) == true || patternKor.test(tel3) == true
+			|| patternEng.test(tel1) == true || patternEng.test(tel2) == true || patternEng.test(tel3) == true
+			|| patternSym.test(tel1) == true || patternSym.test(tel2) == true || patternSym.test(tel3) == true) {
+			messageDiv.text('숫자만 입력 가능합니다.');
+			messageDiv.css('color', 'red');
+			return;
+		}
+
+		if (tel1.length > 4 || tel2.length > 5 || tel3.length > 5) {
+			messageDiv.text('전화번호를 올바르게 입력하세요.');
+			messageDiv.css('color', 'red');
+			return;
+		}
+
+		$.ajax({
+			url: '/signup/checktel',
+			type: 'POST',
+			data: { tel1: tel1, tel2: tel2, tel3: tel3 },
+			success: function(data) {
+				console.log(data);
+				if (data == 0) {
+					messageDiv.text('사용 가능한 전화번호입니다!');
+					messageDiv.css('color', 'green');
+				} else {
+					console.log("실패");
+					messageDiv.text('이미 가입된 전화번호입니다.');
+					messageDiv.css('color', 'red');
+				}
+			}
+		});
+	});
+});
+
+// 이메일 확인
+$(document).ready(function() {
+	$('#emailChk_btn').click(function() {
+		console.log("이메일 확인 버튼누림");
+
+		var userEmail = $('#userEmail').val();
+		var messageDiv = $('#emailAvailabilityMessage');
+		console.log("#userEmail : " + userEmail);
+
+		// input에 아무것도 입력하지 않으면
+		if (userEmail.trim() === '') {
+			messageDiv.text('이메일을 입력해주세요.');
+			messageDiv.css('color', 'red');
+			return;
+		}
+
+		//	이메일 형식에 맞지 않으면
+		if (!patternEmail.test(userEmail)) {
+			messageDiv.text('올바른 이메일을 입력하세요.');
+			messageDiv.css('color', 'red');
+			return;
+		}
+
+		console.log(userEmail);
+
+		$.ajax({
+			url: '/signup/checkemail',
+			type: 'POST',
+			data: { userEmail: userEmail },
+			success: function(data) {
+				console.log(data);
+
+				if (data == 0) {
+					messageDiv.text('사용 가능한 이메일입니다!');
+					messageDiv.css('color', 'green');
+				} else {
+
+					messageDiv.text('이미 가입된 이메일입니다.');
+					messageDiv.css('color', 'red');
+				}
+			}
+		});
+	});
+});
+
+
+$(document).ready(function() {
+	$('form').submit(function(event) {
+		var userId = $('#userId').val();
+		var userPassword = $('#userPassword').val();
+		var userPasswordChk = $('#userPasswordChk').val();
+		var userName = $('#userName').val();
+		var userNickname = $('#userNickname').val();
+		var birthYear = $('#birthYear').val();
+		var birthMonth = $('#birthMonth').val();
+		var birthDate = $('#birthDate').val();
+		var tel1 = $('#tel1').val();
+		var tel2 = $('#tel2').val();
+		var tel3 = $('#tel3').val();
+		var userAddress = $('#userAddress').val();
+		var userEmail = $('#userEmail').val();
+
+		if (userId.trim() === '' || userPassword.trim() === '' || userPasswordChk.trim() === '' ||
+			userName.trim() === '' || userNickname.trim() === '' || birthYear.trim() === '' || birthMonth.trim() === '' || birthDate.trim() === '' ||
+			tel1.trim() === '' || tel2.trim() === '' || tel3.trim() === '' || userAddress.trim() === '' ||
+			userEmail.trim() === '') {
+
+			alert('모든 정보를 입력해주세요.');
+			event.preventDefault();
+		}
+	});
+});
+
 

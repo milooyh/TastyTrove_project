@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/adminMember.css?after"
+	href="${pageContext.request.contextPath}/css/saveMember.css?after"
 	type="text/css" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -26,18 +26,22 @@
 		</div>
 
 		<form method="post" action="/admin/order/orderitem/update">
-			<input type="hidden" name="orderItemId"
-				value="${orderItem.orderItemId}" /> <input type="hidden"
-				name="orderId" value="${orderItem.orderId}" /> <label
-				for="orderItemCount">주문개수:</label> <input type="text"
-				id="orderItemCount" name="orderItemCount"
-				value="${orderItem.orderItemCount}" /><br> <input
-				type="submit" value="수정" />
+			<div class="form-item">
+				<input type="hidden" name="orderItemId"
+					value="${orderItem.orderItemId}" /> <input type="hidden"
+					name="orderId" value="${orderItem.orderId}" /> <label
+					for="orderItemCount">주문개수:</label> <input type="text"
+					id="orderItemCount" name="orderItemCount"
+					value="${orderItem.orderItemCount}" />
+			</div>
+			<div class="form-item">
+				<button
+					onclick="location.href='/admin/order/orderitem?memberId=${orderItem.memberId}'">뒤로
+					가기</button>
+				<button type="submit">수정하기</button>
+			</div>
 		</form>
 
 		<br>
-		<button
-			onclick="location.href='/admin/order/orderitem?memberId=${orderItem.memberId}'">뒤로
-			가기</button>
 </body>
 </html>

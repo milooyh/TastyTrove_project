@@ -14,6 +14,4 @@ public class User {
 	String userAddress;
 	String userEmail;
 	String userType;
-	
-	String userPasswordChk;
 }
