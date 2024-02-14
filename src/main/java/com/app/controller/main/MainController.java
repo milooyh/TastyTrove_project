@@ -3,6 +3,7 @@ package com.app.controller.main;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -21,7 +22,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.app.dto.mustEatPlace.MainMustEatPlace;
 import com.app.dto.mustEatPlace.MainMustEatPlaceMenuInfo;
 import com.app.dto.mustEatPlace.MainMustEatPlaceReview;
+import com.app.dto.postRecipe.PostRecipe;
+import com.app.dto.postRecipe.RecipeSearchCondition;
+import com.app.dto.user.Visitor;
+import com.app.service.admin.AdminService;
 import com.app.service.mustEatPlace.MustEatPlaceService;
+import com.app.service.postRecipe.PostRecipeService;
 
 @Controller
 public class MainController {
@@ -29,12 +35,32 @@ public class MainController {
 	@Autowired
 	MustEatPlaceService mustEatPlaceService;
 	
+	@Autowired
+	AdminService adminService;
+
+	@Autowired
+	PostRecipeService postRecipeService;
+	
 	@GetMapping("/main")
-	public String main(Model model) {
+	public String main(Model model, RecipeSearchCondition recipeSearchCondition, HttpServletRequest request,
+			Visitor visitor) {
 		
 		List<MainMustEatPlace> mainMustEatPlace = mustEatPlaceService.findMainMustEatPlaceList();
 		
 		model.addAttribute("mainMustEatPlace", mainMustEatPlace);
+		
+//		테스트용(MJ)
+		List<PostRecipe> recipeList = postRecipeService.findRecipeListBySearchCondition2(recipeSearchCondition);
+		model.addAttribute("recipeList", recipeList);
+		
+//		방문자수 카운트
+		String userId = request.getSession().getId();
+		String pageUrl = "/";
+
+		visitor.setUserId(userId);
+		visitor.setPageUrl(pageUrl);
+
+		adminService.saveVisitor(visitor);
 		
 		return "/main/main";
 	}

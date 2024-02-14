@@ -241,6 +241,14 @@ a:hover, a:visited, a:link, a:active
 	text-align: center;
 }
 
+.recipeTitletext{
+		width:180px;
+		height: 30px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+}
+
 </style>
 </head>
 <body>
@@ -274,7 +282,7 @@ a:hover, a:visited, a:link, a:active
 					<div class="listInfo">
 						<a href="/recipe/recipeInfo?id=${recipeItem.recipeId}" class="recipeLink"> <img
 							src="${recipeItem.recipeFilePath}${recipeItem.recipeFileName}"
-							class="listImg"> <br>${recipeItem.recipeTitle}
+							class="listImg"> <br> <div class="recipeTitletext"> ${recipeItem.recipeTitle} </div>
 						</a>
 					</div>
 				</c:forEach>
