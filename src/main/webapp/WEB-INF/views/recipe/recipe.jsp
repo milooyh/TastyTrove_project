@@ -16,11 +16,10 @@
 	
 	html, body {
 		height: 100%;
-		background-color: #F2F2F2;
+	 	background-color: #F0F0F0;
 	}
 	
 	.container {
-
 		display: flex;
 		justify-content: center;
 	}
@@ -28,22 +27,27 @@
 	.recipeList {
 		display: flex;
 		margin-top: 30px;
-		margin-bottom: 30px;
+		margin-bottom: 100px;
 		justify-content: center;
 	}
 	
 	.recipe {
 		display: flex;
 		width: 264px;
-		height: 320px;
+		height: 340px;
 		margin: 10px;
 		align-items: center;
 		justify-content: center;
+		border-radius: 5px;
+		border: 1px solid #6aafe6;
+	    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease-in-out;
+        background-color: white;
 	}
 	
 	.recipe:hover{
-		background-color: #BDD2E6;
-		border-radius: 5px;
+	    transform: translateY(-5px);
+    	box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 	}
 	
 	.recipe2 {
@@ -61,13 +65,8 @@
 		height: 240px;
 		object-fit: cover;
 		border-radius: 5px;
-		border: 2px solid #6aafe6;
 	}
-	
-	.title {
-		margin-bottom: 30px;
-		color: #6aafe6;
-	}
+
 	
 	.post {
 		margin-bottom: 20px; display : flex;
@@ -85,10 +84,11 @@
 		font-weight: bolder;
 		font-size: 15px;
 		cursor: pointer;
+	    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 	}
 	
 	.postBtn:hover{
-		background-color: #6888e0;
+		background-color: #0056b3;
 	}
 	
 	.searchRecipe {
@@ -98,10 +98,11 @@
 	.recipeListBox{
 		width: 1200px;
 		margin: 30px;
+		border-radius: 10px;
 		padding: 30px;
 		background-color: white;
-		border-radius: 10px;
-		border: 1px solid #6aafe6;
+			border: 1px solid #6aafe6;
+		box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 	
 	}
 	
@@ -109,6 +110,7 @@
 		width: 100%;
 		display: flex;
 		flex-wrap: wrap;
+
 	}
 	
 	
@@ -119,13 +121,15 @@
 		border: 0px;
 		border-radius: 30px;
 		color: white;
+		font-size: 15px;
 		cursor: pointer;
 		margin: 2px 0px;
 		font-weight: bolder;
+		box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 	}
 	
 	.recipeSearchBtn:hover{
-		background-color: #6888e0;
+		background-color: #0056b3;
 	}
 	
 	.recipeSearchTh{
@@ -163,7 +167,7 @@
 		justify-content: center;
 		align-items: center;
 		margin: 5px;
-		color: black;
+		color: #555555;
 	}
 	
 	.pageBtnBox{
@@ -187,6 +191,8 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+		font-size: 16px;
+		color: #0056b3;
 	}
 	
 	.userNick{
@@ -195,6 +201,8 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+		color: #555555;	
+		font-size: 16px;
 	}
 	
 	hr{
@@ -211,9 +219,9 @@
 	<%
 	session.getAttribute("userId");
 	%>
+	<%@include file="../main/header.jsp" %>
 	<div class="container">
 		<div class="recipeListBox">
-			<h1 class="title">TasttyTrove Recipe</h1>
 
 			<div class="post">
 				<form action="/recipe" method="post" id="postRecipeFrom">
@@ -274,6 +282,7 @@
 			
 		</div>
 	</div>
+	<%@include file="../main/footer.jsp" %>
 	
 	<script>
 		function isLogin(){
