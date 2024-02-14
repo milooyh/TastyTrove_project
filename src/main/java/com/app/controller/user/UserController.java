@@ -65,7 +65,8 @@ public class UserController {
 				return "redirect:/main";
 			}
 		}
-
+		return "user/login";
+	}
 	
 //	로그아웃
 	@RequestMapping("/logout")
