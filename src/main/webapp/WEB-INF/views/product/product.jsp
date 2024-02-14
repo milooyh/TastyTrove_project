@@ -10,11 +10,16 @@
 <title>Insert title here</title>
 
 <style>
+* {
+		margin: 0px;
+		padding: 0px;
+		box-sizing: border-box;
+	}
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f0f0f0;
+    
     margin: 0;
-    padding: 20px;
+   <!-- padding: 20px;-->
 }
 
 h1 {
@@ -25,17 +30,18 @@ h1 {
 .product-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+  <!--  justify-content: center;-->
     margin-top: 20px;
+    justify-content: flex-start;
 }
 
 .product-card {
     background-color: #fff;
-    border: 1px solid #ddd;
+    border: 1px solid #6aafe6;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     margin: 10px;
     padding: 20px;
-    width: calc(33.333% - 20px);
+    width: calc(25% - 20px);
     box-sizing: border-box;
     border-radius: 10px;
     transition: transform 0.3s ease-in-out;
@@ -62,12 +68,12 @@ h1 {
 }
 
 button {
-    background-color: #007bff;
+    background-color: #6aafe6;
     color: white;
     border: none;
     padding: 10px 15px;
     margin: 5px 0;
-    border-radius: 5px;
+    border-radius: 30px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
@@ -83,9 +89,12 @@ button:hover {
 }
 </style>
 </head>
+<%@include file="../main/header.jsp"%>
+
 <body>
+
 <%
-session.getAttribute("userId");
+	session.getAttribute("userId");
     String userId = (String) session.getAttribute("userId");
     String userType = (String) session.getAttribute("userType"); // 세션에서 userType 가져오기
 
@@ -93,7 +102,7 @@ session.getAttribute("userId");
         // 로그인하지 않았으면 로그인 페이지로 리다이렉트
         response.sendRedirect("login");
     } else {
-        out.println("<h1>Welcome, " + userId + "</h1>");
+      //  out.println("<h1>Welcome, " + userId + "</h1>");
         
         // 사용자 유형에 따라 다른 메시지 또는 콘텐츠를 표시
         if ("ADMIN".equals(userType)) {
@@ -107,7 +116,13 @@ session.getAttribute("userId");
         }
     }
 %>
-    <h1>상품 목록 페이지</h1>
+<% if("admin_1".equals(userId)) { %>
+    <button class="add-product-btn" onclick="location.href='/productwrite'">상품 추가하기</button>
+	<% } %>
+	
+	<!--  <% if(!"admin_1".equals(userId)) { %>
+		    <button onclick="location.href='/cart'">장바구니</button>
+		<% } %> -->
     <div class="product-container">
         <c:forEach items="${productList}" var="product">
             <div class="product-card">
@@ -152,14 +167,15 @@ session.getAttribute("userId");
             </div>
         </c:forEach>
         <!-- <button  onclick="location.href='/addToCart'">장바구니</button> -->
-         <button  onclick="location.href='/cart'">장바구니</button>
+       <!--  <button  onclick="location.href='/cart'">장바구니</button> --> 
+        
     </div>
     
     
     
-    <% if("admin_1".equals(userId)) { %>
-    <button class="add-product-btn" onclick="location.href='/productwrite'">상품 추가하기</button>
-	<% } %>
+    
+	
+	<%@include file="../main/footer.jsp"%>
     <script>
     //담기 함수
     function confirmAddToCart(form) {

@@ -10,9 +10,37 @@
 <title>Insert title here</title>
 </head>
 <style>
+* {
+		margin: 0px;
+		padding: 0px;
+		box-sizing: border-box;
+		
+	}
+	html, body {
+  
+   
+}
+.footer-container2 {
+  position: fixed; /* 또는 position:fixed ; */
+  left: 0;
+  bottom: 0;
+  width: 100%;
+ 
+  
+  
+  
+  
+}
+<!--flex-direction: column;-->
 .product-container {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap; /* 카드가 다음 줄로 감싸지도록 설정 */
+  justify-content: flex-start; /* 카드를 왼쪽 정렬 */
+  gap: 10px; /* 카드 사이의 간격 설정 */
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 150px; /* 푸터 높이에 따라 조정 */
+ 
 }
 
 .product-card {
@@ -20,8 +48,10 @@
   align-items: center;
   background-color: #fff;
   border: 1px solid #ddd;
-  margin-bottom: 10px;
+   flex: 1 0 30%; /* flex-grow: 1, flex-shrink: 0, flex-basis: 22% */
+  margin-bottom: 10px; /* 카드 하단의 마진 */
   padding: 10px;
+  width:30%;
 }
 
 .product-image img {
@@ -54,12 +84,20 @@
   align-items: center;
 }
 
-.quantity-decrease, .quantity-increase {
-  width: 30px;
-  height: 30px;
-  border: 1px solid #ddd;
-  background-color: #f7f7f7;
-  color: #333;
+.quantity-decrease, .quantity-increase ,.product-delete{
+
+
+  background-color: #6aafe6; /* 파랑색 배경 */
+  color: white; /* 글자색을 흰색으로 */
+  border: 1px solid #007bff; /* 파랑색 테두리 */
+  border-radius: 5px; /* 모서리를 약간 둥글게 */
+  padding: 5px 10px; /* 안쪽 여백 */
+  margin-right: 5px; /* 오른쪽 마진 */
+  cursor: pointer; /* 마우스 오버시 커서 변경 */
+  font-size: 0.8rem; /* 글꼴 크기 */
+  transition: background-color 0.3s, transform 0.1s; /* 색상과 변형에 대한 전환 효과 */
+
+ 
 }
 
 .quantity-input {
@@ -98,20 +136,26 @@
   border: none;
   cursor: pointer;
 }
+.quantity-minus, .quantity-plus{
+	background-color:#6aafe6;
+	width: 30px; /* 버튼의 너비를 30px로 설정 */
+	 border: none; /* 필요에 따라 테두리 제거 */
+}
 </style>
  <script>
         var userId = "<%= session.getAttribute("userId") %>"; // userId 값을 JavaScript 변수에 할당
         var memberId = "<%= session.getAttribute("memberId") %>"; // memberId 값을 JavaScript 변수에 할당
     </script>
 <body>
-<h1>장바구니</h1>
+
 
 <%
 session.getAttribute("userId");
 session.getAttribute("memberId");
 %>
-<p>사용자 ID: ${userId}</p>
-<p>사용자 멤버:${memberId }</p>
+<%@include file="../main/header.jsp"%>
+
+
  
   <div class="product-container">
     <c:forEach items="${cartItems}" var="item">
@@ -147,6 +191,8 @@ session.getAttribute("memberId");
   </div>
   <button type="button" class="checkout-button" id="checkoutButton">주문하기</button>
 </div>
+
+
 <script>
 //숫자를 3자리 콤마 형식으로 포맷팅하는 함수
 function numberWithCommas(x) {
@@ -245,5 +291,6 @@ document.getElementById('checkoutButton').addEventListener('click', function() {
     xhr.send(JSON.stringify({ userId: userId, items: cartItems })); // userId는 세션에서 가져온 사용자 ID입니다.
 });
 </script>
+
 </body>
 </html>

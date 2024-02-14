@@ -38,7 +38,7 @@
         border-radius: 4px;
     }
     button {
-        background-color: #4CAF50; /* Green */
+        background-color: #6aafe6; 
         color: white;
         padding: 10px 20px;
         margin: 20px 0;
@@ -47,7 +47,7 @@
         cursor: pointer;
     }
     button:hover {
-        background-color: #45a049;
+        background-color: #0056b3;
     }
     .form-group {
         margin-bottom: 15px;
@@ -56,7 +56,7 @@
 </head>
 <body>
 
-	<h1>객실 정보 수정 페이지</h1>
+<%@include file="../main/header.jsp"%>
 	
 	<form action="/modifyProduct" method="post" enctype="multipart/form-data">
     <input type="hidden" name="productId" value="${product.productId}"> 
@@ -94,6 +94,8 @@
     </div>
     <button type="submit">수정하기</button>
 </form>
+<%@include file="../main/footer.jsp"%>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // 상품 가격 입력 필드에 이벤트 리스너 추가
