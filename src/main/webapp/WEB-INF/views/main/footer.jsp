@@ -26,6 +26,7 @@
             font-family: 'Arial', sans-serif;
             padding: 20px 0;
             font-size: 14px;
+            border-top: 1px solid rgb(189, 189, 189);
         }
         .footer-container {
             max-width: 1200px;
