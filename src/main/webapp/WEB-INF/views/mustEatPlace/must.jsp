@@ -95,6 +95,10 @@
         	background-color:#f0f0f0;
         }
         
+        body {
+        	background-color:#f0f0f0;
+        }
+        
         p {
         	font-weight:bold;
         }
@@ -114,6 +118,7 @@
 		    text-decoration: none;
 		    font-weight: 600;
 		    transition: 0.25s;
+		    cursor:pointer;
 		}
 		
 		.btn-blue {
@@ -161,6 +166,13 @@
 	    .info:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
 	    .info .link {color: #5085BB;}
         
+        #loadMoreButton {
+        	display:block;
+        	margin-top:100px;
+        	margin:0 auto;
+        	justify-content: center;
+        	cursor:pointer;
+        }
 	</style>
 	<jsp:include page="../main/header.jsp"></jsp:include>
 <meta charset="UTF-8">
@@ -191,8 +203,8 @@
 	    </div>
 	</div>
 	
-		<c:forEach var="mustEatPlaceItem" items="${mustEatPlaces}">
-			<div class="mustEatPlace-info" style="display: ${loop.index < 5 ? 'inline-block' : 'none'};">
+		<c:forEach var="mustEatPlaceItem" items="${mustEatPlaces}" varStatus="loop">
+			<div class="mustEatPlace-info" style="display: ${loop.index < 6 ? 'inline-block' : 'none'};">
 				<p class="restaurant-name" onclick="moveToLocation('${mustEatPlaceItem.place}')" style="font-weight:bold; font-size:1.2rem; cursor:pointer; margin-top:10px; margin-bottom:10px;">${mustEatPlaceItem.restaurantName} <img src="<c:url value="/image/click.png"/>" style="width:25px; height:30px; padding-top:5px;"/></p>
 	            <c:if test="${mustEatPlaceItem.representativeMenuImage == null}">
 	            	<img src="<c:url value="/image/noPhoto.PNG"/>" onclick="location.href='/must/upload?id=${mustEatPlaceItem.id}'" style="width:200px; height:200px; cursor:pointer; object-fit:cover;"><br>
@@ -211,18 +223,28 @@
 			</div>
 		</c:forEach>
 		
+		<button id="foldButton" class="btn btn-blue" style="display: none;">접기</button>
 		<button id="loadMoreButton" onclick="loadMoreData()" class="btn btn-blue">더 보기</button>
 
 	<script>
 		document.getElementById('loadMoreButton').addEventListener('click', function() {
 		    var hiddenDivs = document.querySelectorAll('.mustEatPlace-info[style="display: none;"]');
-		    for (var i = 0; i < 5 && i < hiddenDivs.length; i++) {
+		    for (var i = 0; i < 6 && i < hiddenDivs.length; i++) {
 		        hiddenDivs[i].style.display = 'inline-block';
 		    }
 		    // 더 이상 숨겨진 데이터가 없다면 '더 보기' 버튼을 숨김
 		    if (document.querySelectorAll('.mustEatPlace-info[style="display: none;"]').length === 0) {
 		        document.getElementById('loadMoreButton').style.display = 'none';
 		    }
+		});
+		
+		document.getElementById('foldButton').addEventListener('click', function() {
+		    var mustEatPlaceInfos = document.querySelectorAll('.mustEatPlace-info');
+		    mustEatPlaceInfos.forEach(function(info) {
+		        info.style.display = 'none';
+		    });
+		    document.getElementById('loadMoreButton').style.display = 'inline-block';
+		    document.getElementById('foldButton').style.display = 'none';
 		});
 	</script>
 
