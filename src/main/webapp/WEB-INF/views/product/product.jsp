@@ -17,7 +17,7 @@
 	}
 body {
     font-family: 'Arial', sans-serif;
-    
+    background-color:#F0F0F0; 
     margin: 0;
    <!-- padding: 20px;-->
 }
