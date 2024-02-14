@@ -64,4 +64,19 @@ public class PostRecipeServiceImpl implements PostRecipeService {
 		return result;
 	}
 
+	//구현중
+	@Override
+	public int getTotal(RecipeSearchCondition recipeSearchCondition) {
+		// TODO Auto-generated method stub
+		
+		return postRecipeDAO.getTotal(recipeSearchCondition);
+	}
+
+	@Override
+	public List<PostRecipe> findRecipeListBySearchCondition2(RecipeSearchCondition recipeSearchCondition) {
+		// TODO Auto-generated method stub
+		List<PostRecipe> recipeList = postRecipeDAO.findRecipeListBySearchCondition2(recipeSearchCondition);
+		return recipeList;
+	}
+
 }

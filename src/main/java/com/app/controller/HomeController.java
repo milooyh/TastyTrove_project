@@ -30,7 +30,7 @@ public class HomeController {
 //--ViewResolver 설정 이후
 		
 //		테스트용(MJ)
-		List<PostRecipe> recipeList = postRecipeService.findRecipeListBySearchCondition(recipeSearchCondition);
+		List<PostRecipe> recipeList = postRecipeService.findRecipeListBySearchCondition2(recipeSearchCondition);
 		
 		model.addAttribute("recipeList", recipeList);
 		

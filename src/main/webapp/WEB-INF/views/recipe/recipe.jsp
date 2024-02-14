@@ -35,10 +35,15 @@
 	.recipe {
 		display: flex;
 		width: 264px;
-		height: 270px;
+		height: 320px;
 		margin: 10px;
 		align-items: center;
 		justify-content: center;
+	}
+	
+	.recipe:hover{
+		background-color: #BDD2E6;
+		border-radius: 5px;
 	}
 	
 	.recipe2 {
@@ -52,15 +57,16 @@
 	}
 	
 	.img {
-		width: 200px;
-		height: 200px;
+		width: 240px;
+		height: 240px;
 		object-fit: cover;
 		border-radius: 5px;
-		border: 1px solid gray;
+		border: 2px solid #6aafe6;
 	}
 	
 	.title {
 		margin-bottom: 30px;
+		color: #6aafe6;
 	}
 	
 	.post {
@@ -72,13 +78,17 @@
 	.postBtn {
 		width: 200px;
 		height: 40px;
-		background: #151B1B;
+		background: #6aafe6;
 		border: none;
 		border-radius: 30px;
 		color: white;
 		font-weight: bolder;
 		font-size: 15px;
 		cursor: pointer;
+	}
+	
+	.postBtn:hover{
+		background-color: #6888e0;
 	}
 	
 	.searchRecipe {
@@ -91,7 +101,7 @@
 		padding: 30px;
 		background-color: white;
 		border-radius: 10px;
-		border: 1px solid gray;
+		border: 1px solid #6aafe6;
 	
 	}
 	
@@ -104,13 +114,17 @@
 	
 	.recipeSearchBtn{
 		width: 100px;
-		height: 30px;
-		background-color: #151B1B;
+		height: 40px;
+		background-color: #6aafe6;
 		border: 0px;
 		border-radius: 30px;
 		color: white;
 		cursor: pointer;
 		margin: 2px 0px;
+	}
+	
+	.recipeSearchBtn:hover{
+		background-color: #6888e0;
 	}
 	
 	.recipeSearchTh{
@@ -120,15 +134,50 @@
 	
 	.searchKeyword{
 		width: 522px;
-		height: 30px;
+		height: 40px;
 		border-radius: 30px;
 		border: 1px solid gray;
-		padding-left: 10px;
+		padding-left: 20px;
 	}
 	
 	a:hover, a:visited, a:link, a:active
 	{
 	    text-decoration: none;
+	}
+	
+	.page{
+		display: flex;
+		justify-content: center;
+	}
+	
+	.pageBtn{
+		width: 35px;
+		height: 35px;
+		background: white;
+		border: 2px solid #6aafe6;
+		border-radius: 3px;
+		font-size: 25px;
+		font-weight: bolder;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin: 5px;
+		color: black;
+	}
+	
+	.pageBtnBox{
+		width: 100%;
+		display: flex;
+		justify-content: center;
+	}
+	
+	.fontSizeL{
+		font-size: 30px;
+		padding-bottom: 10px;
+	}
+	
+	.black{
+		color: black;
 	}
 
 
@@ -144,8 +193,8 @@
 			<h1 class="title">TasttyTrove Recipe</h1>
 
 			<div class="post">
-				<form action="/recipe" method="post">
-					<button type="submit" class="postBtn">레시피 등록하기</button>
+				<form action="/recipe" method="post" id="postRecipeFrom">
+					<button type="button" class="postBtn" onclick="isLogin()">레시피 등록하기</button>
 				</form>
 			</div>
 
@@ -184,7 +233,36 @@
 					</c:forEach>
 				</div>
 			</div>
+			
+			<!-- 페이지-->
+			<div class="page">
+				<div class="pageBtnBox">
+					<div class="pageBtn fontSizeL"><a href="recipe?curPage=1" class="black"> &laquo; </a></div>
+					<c:forEach begin="${recipeSearchCondition.firstPage }"  end="${recipeSearchCondition.lastPage }" var="i">
+					  	<a href="recipe?curPage=${i }"  >  
+					  		<c:if test="${i eq recipeSearchCondition.curPage }">  <div class="pageBtn"><span style="color: #6aafe6">  ${i } </span></div> </c:if>
+					  		<c:if test="${i ne recipeSearchCondition.curPage }">  <div class="pageBtn">${i }</div> </c:if>
+					  	</a>
+					</c:forEach>
+					<div class="pageBtn fontSizeL"><a href="recipe?curPage=${recipeSearchCondition.totalPageCount }" class="black">&raquo;</a></div>
+				</div>
+			</div>
+			
 		</div>
 	</div>
+	
+	<script>
+		function isLogin(){
+			
+			var sessionId = '<%=(String)session.getAttribute("userId")%>';
+			if(sessionId == "null"){
+				alert('로그인 후 이용 가능한 서비스입니다.');
+				location.href = "/login";
+			}else{
+				postRecipeFrom.submit();
+			}
+			
+		}
+	</script>
 </body>
 </html>
