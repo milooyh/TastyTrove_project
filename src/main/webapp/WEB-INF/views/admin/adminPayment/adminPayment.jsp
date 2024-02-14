@@ -26,7 +26,7 @@
 				href="/admin/payment/search">결제내역검색</a></span><span>
 		</div>
 
-		<table>
+		<table id="memberTable">
 			<thead>
 				<tr>
 					<th>결제번호</th>
@@ -34,6 +34,7 @@
 					<th>결제일시</th>
 					<th>결제방법</th>
 					<th>총계</th>
+					<th>결제방법수정</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -56,16 +57,33 @@
 							</select></td>
 							<td>${payment.paymentAmount}</td> <input type="hidden"
 								name="paymentId" value="${payment.paymentId}">
-							<td><button onclick="confirmModify(${payment.paymentId})'">결제방법수정</button></td>
+							<td><button onclick="confirmModify(${payment.paymentId})'">수정하기</button></td>
 					</tr>
 					</form>
 				</c:forEach>
 			</tbody>
 		</table>
 		<br>
-		<button onclick="location.href='/admin/payment/search'">결제내역검색</button>
-		<script>
+		<div class="pagination">
+			<c:if test="${currentPage > 1}">
+				<a href="javascript:void(0)" onclick="goToPage(${currentPage - 1})">이전</a>
+			</c:if>
+
+			<span>${currentPage} / ${totalPages}</span>
+
+			<c:if test="${currentPage < totalPages}">
+				<a href="javascript:void(0)" onclick="goToPage(${currentPage + 1})">다음</a>
+			</c:if>
+		</div>
+	</div>
+	</div>
+	<script>
+	function goToPage(pageNumber) {
+	    location.href = '/admin/payment?page=' + pageNumber + '&pageSize=${pageSize}';
+	}
+	
     function confirmModify(paymentId) {
+    	console.log("confirm눌림'");
         var result = confirm("결제방법을 수정할까요?");
         if (result) {
             location.href = '/admin/payment/update?paymentId=' + paymentId;

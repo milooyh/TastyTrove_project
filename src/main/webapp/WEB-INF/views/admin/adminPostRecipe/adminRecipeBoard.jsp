@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/adminRecipe.css?after"
+	href="${pageContext.request.contextPath}/css/adminMember.css?after"
 	type="text/css" />
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -25,7 +25,7 @@
 		</div>
 		<hr>
 
-		<table>
+		<table id="memberTable">
 			<thead>
 				<tr>
 					<th>레시피번호</th>
@@ -33,13 +33,15 @@
 					<th>작성자</th>
 					<th>작성일시</th>
 					<th>카테고리</th>
+					<th>카테고리수정</th>
+					<th>레시피정보삭제</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach var="recipe" items="${postRecipeList}">
 					<tr>
 						<td>${recipe.recipeId}</td>
-						<td style="cursor:pointer">${recipe.recipeTitle}</td>
+						<td style="cursor: pointer">${recipe.recipeTitle}</td>
 						<td>${recipe.memberId}</td>
 						<td>${recipe.boardDate}</td>
 						<form method="post" action="/admin/recipeboard/update">
@@ -63,32 +65,48 @@
 										<c:if test="${recipe.recipeType == 'ETC'}">selected</c:if>>
 										기타</option>
 							</select></td> <input type="hidden" name="recipeId" value="${recipe.recipeId}" />
-							<td><button type="submit"
-									onclick="confirmModify(${recipe.recipeId})">카테고리수정</button></td>
+							<td>
+
+								<button type="submit"
+									onclick="confirmModify(${recipe.recipeId})">수정하기</button>
+							</td>
 						</form>
 
-						<form method="get" action="/admin/recipe/remove">
-							<input type="hidden" name="recipeId" value="${recipe.recipeId}" />
-							<td><button type="submit">레시피정보삭제</button></td>
-						</form>
+
+						<td><button type="submit" onclick="confirmDelete(${recipe.recipeId})">삭제하기</button></td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
 		<br>
-		<button onclick="location.href='/admin/recipeboard/search'">레시피
-			게시물 검색</button>
 
-		<!-- 모달창 -->
-		<div id="recipeModal" class="modal">
-			<div class="modal-content">
-				<div class="modal-title">레시피 상세 내용</div>
-				<span class="close">&times;</span>
-				<div id="recipeContent">${recipe.recipeContent}</div>
-			</div>
+		<div class="pagination">
+			<c:if test="${currentPage > 1}">
+				<a href="javascript:void(0)" onclick="goToPage(${currentPage - 1})">이전</a>
+			</c:if>
+
+			<span>${currentPage} / ${totalPages}</span>
+
+			<c:if test="${currentPage < totalPages}">
+				<a href="javascript:void(0)" onclick="goToPage(${currentPage + 1})">다음</a>
+			</c:if>
 		</div>
+	</div>
 
-		<script>
+	<!-- 모달창 -->
+	<div id="recipeModal" class="modal">
+		<div class="modal-content">
+			<div class="modal-title">레시피 상세 내용</div>
+			<span class="close">&times;</span>
+			<div id="recipeContent">${recipe.recipeContent}</div>
+		</div>
+	</div>
+
+	<script>
+		function goToPage(pageNumber) {
+		    location.href = '/admin/recipeboard?page=' + pageNumber + '&pageSize=${pageSize}';
+		}
+		
     function confirmModify(recipeId) {
         var result = confirm("카테고리를 수정할까요?");
         if (result) {

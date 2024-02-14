@@ -24,8 +24,8 @@
 			<span>주문관리</span><span> - </span><span><a href="/admin/order">전체주문목록</a></span><span>
 				- </span><span><a href="/admin/order/search">주문내역검색</a></span><span>
 		</div>
-		
-		<table>
+
+		<table id="memberTable">
 			<thead>
 				<tr>
 					<th>전체주문번호</th>
@@ -33,6 +33,7 @@
 					<th>주문일시</th>
 					<th>주문상태</th>
 					<th>총계</th>
+					<th>주문상태수정</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -59,7 +60,8 @@
 							</select></td>
 							<td>${order.totalPrice}</td> <input type="hidden" name="orderId"
 								value="${order.orderId}" />
-							<td><button onclick="confirmModify(${order.orderId})">주문상태수정</button></td>
+							<td><button onclick="confirmModify(${order.orderId})"
+									id="memberbtn">수정하기</button></td>
 						</form>
 					</tr>
 				</c:forEach>
@@ -67,10 +69,26 @@
 			</tbody>
 		</table>
 		<br>
-		<button onclick="location.href='/admin/order/search'">주문검색</button>
+		<div class="pagination">
+		<c:if test="${currentPage > 1}">
+			<a href="javascript:void(0)" onclick="goToPage(${currentPage - 1})">이전</a>
+		</c:if>
+
+		<span>${currentPage} / ${totalPages}</span>
+
+		<c:if test="${currentPage < totalPages}">
+			<a href="javascript:void(0)" onclick="goToPage(${currentPage + 1})">다음</a>
+		</c:if>
+	</div>
 	</div>
 
+	
+
 	<script>
+	function goToPage(pageNumber) {
+	    location.href = '/admin/order?page=' + pageNumber + '&pageSize=${pageSize}';
+	}
+	
 		function confirmModify(orderId) {
 			var result = confirm("주문상태를 수정할까요?");
 			if (result) {

@@ -60,6 +60,8 @@
 		<typeAlias type="com.app.dto.postRecipe.RecipeImage" alias="RecipeImage"/>
 		<typeAlias type="com.app.dto.postRecipe.RecipeSearchCondition" alias="RecipeSearchCondition"/>
 		
+		<typeAlias type="com.app.dto.user.Visitor" alias="Visitor"></typeAlias>
+		<typeAlias type="com.app.dto.schedule.Schedule" alias="Schedule"></typeAlias>
 	</typeAliases>
 
 
