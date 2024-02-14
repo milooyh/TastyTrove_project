@@ -13,12 +13,10 @@
             padding: 0px;
             box-sizing: border-box;
             margin: 0px;
-            color: gray;
         }
         
         body {
-        	overflow-x:hiedden;
-        	overflow-y:auto;
+        	background-color:#e2e6e9;
         }
 
         
@@ -160,6 +158,86 @@
 		.mustEatPlace-info-korean {
 			display:inline-block;
 		}
+		
+		.body {
+	padding: 30px;
+	background-color: #f2f2f2;
+	border-bottom: 1px solid rgb(189, 189, 189);
+	border-top: 1px solid rgb(189, 189, 189);
+}
+
+.listBox {
+	width: 1200px;
+	height: 330px;
+	background-color: white;
+	margin-bottom: 50px;
+	display: flex;
+	flex-direction: column;
+	border-radius:10px;
+	box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+	border:none;
+	font-weight: 500;
+	transition: 0.25s;
+	text-decoration: none;	
+}
+
+.listBoxHeader {
+	height: 60px;
+	display: flex;
+	justify-content: space-between;
+	padding: 10px 15px;
+	background-color: #6aafe6;
+	font-weight: bolder;
+	color: white;
+	border-radius:10px;
+}
+
+.fontWhite {
+	color: white;
+	font-size:1.2rem;
+}
+
+.listImg {
+	width: 180px;
+	height: 180px;
+	border: 1px solid black;
+	background-color: white;
+	border-radius: 3px;
+	margin-bottom: 5px;
+}
+
+.listInfo {
+	width: 199px;
+	height: 250px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 10px;
+}
+
+.listText {
+	height: 30px;
+	display: flex;
+	align-items: center;
+	padding-top: 10px;
+}
+
+.listInfoBox {
+	display: flex;
+	justify-content: space-between;
+}
+
+a:hover, a:visited, a:link, a:active
+{
+    text-decoration: none;
+}
+
+.recipeLink{
+	color: black;
+	font-weight: bolder;
+	text-align: center;
+}
       </style>
 </head>
 <body>
@@ -181,6 +259,127 @@
             <a href="/login"><span class="material-icons">계정</span></a>
         </div>
     </header>
+    
+    <div class="body">
+		<div class="recipe listBox">
+			<div class="listBoxHeader">
+				<div class="fontWhite">TasttyTrove Recipe</div>
+				<a>더보기</a>
+			</div>
+
+			<div class="listInfoBox">
+				<c:forEach var="recipeItem" items="${recipeList}" begin="0" end="5">
+					<div class="listInfo">
+						<a href="/recipe/recipeInfo?id=${recipeItem.recipeId}" class="recipeLink"> <img
+							src="${recipeItem.recipeFilePath}${recipeItem.recipeFileName}"
+							class="listImg"> <br>${recipeItem.recipeTitle}
+						</a>
+					</div>
+				</c:forEach>
+			</div>
+		</div>
+
+		<div class="product listBox">
+			<div class="listBoxHeader">
+				<div class="fontWhite">TasttyTrove Product</div>
+				<a>더보기</a>
+			</div>
+			
+			<div class="listInfoBox">
+<%-- 				<c:forEach var="" items="" begin="0" end="5"> --%>
+					<div class="listInfo">
+						<a href="" class="recipeLink"> 
+						<img
+							src=""
+							class="listImg"> 
+							<br>텍스트 넣을 곳
+						</a>
+					</div>
+<%-- 				</c:forEach> --%>
+			</div>
+		</div>
+
+		<div class="mustEatPlace listBox">
+			<div class="listBoxHeader">
+				<div class="fontWhite">한식</div>
+				<a>더보기</a>
+			</div>
+
+			<div class="listInfoBox" style="height:100%;">
+				<div class="mustEatPlace-gallery" style="overflow-x: auto; white-space: nowrap; width:100%; height:100%;">
+				    <c:forEach var="mustEatPlaceItem" items="${mainMustEatPlace}">
+				    <c:if test="${mustEatPlaceItem.type.equals('한식')}">
+						<div class="mustEatPlace-info-korean" style="margin-left:5%;">
+							
+							<p class="restaurant-name" onclick="moveToLocation('${mustEatPlaceItem.place}')" style="font-weight:bold; font-size:1.2rem; cursor:pointer; margin-top:10px; margin-bottom:10px;">${mustEatPlaceItem.restaurantName}</p>
+				            <c:if test="${mustEatPlaceItem.representativeMenuImage == null}">
+				            	<img src="<c:url value="/image/noPhoto.PNG"/>" onclick="location.href='/main/mustEatPlaceInfo?id=${mustEatPlaceItem.id}'" style="width:200px; height:200px; cursor:pointer; object-fit:cover;"><br>
+				            </c:if>
+				            <c:if test="${mustEatPlaceItem.representativeMenuImage != null}">
+				            	<img src="data:image/jpg;base64,${mustEatPlaceItem.representativeMenuImage}" onclick="location.href='/main/mustEatPlaceInfo?id=${mustEatPlaceItem.id}'" style="width:200px; height:200px; cursor:pointer; border-radius:13px; object-fit:cover;">
+				            </c:if>
+				            
+						</div>
+						</c:if>
+					</c:forEach>
+				</div>
+			</div>
+		</div>
+		
+		<div class="mustEatPlace listBox">
+			<div class="listBoxHeader">
+				<div class="fontWhite">TasttyTrove MustEatPlace</div>
+				<a>더보기</a>
+			</div>
+
+			<div class="listInfoBox">
+				<div class="mustEatPlace-gallery" style="overflow-x: auto; white-space: nowrap; width:100%; height:100%;">
+				<c:forEach var="mustEatPlaceItem" items="${mainMustEatPlace}">
+				<c:if test="${mustEatPlaceItem.type.equals('일식')}">
+					<div class="mustEatPlace-info-Japanese" style="margin-left:5%;">
+						<p class="restaurant-name" onclick="moveToLocation('${mustEatPlaceItem.place}')" style="font-weight:bold; font-size:1.2rem; cursor:pointer; margin-top:10px; margin-bottom:10px;">${mustEatPlaceItem.restaurantName}</p>
+			            <c:if test="${mustEatPlaceItem.representativeMenuImage == null}">
+			            	<img src="<c:url value="/image/noPhoto.PNG"/>" onclick="location.href='/main/mustEatPlaceInfo?id=${mustEatPlaceItem.id}'" style="width:200px; height:200px; cursor:pointer; object-fit:cover;"><br>
+			            </c:if>
+			            <c:if test="${mustEatPlaceItem.representativeMenuImage != null}">
+			            	<img src="data:image/jpg;base64,${mustEatPlaceItem.representativeMenuImage}" onclick="location.href='/main/mustEatPlaceInfo?id=${mustEatPlaceItem.id}'" style="width:200px; height:200px; cursor:pointer; border-radius:13px; object-fit:cover;"><br>
+			            </c:if>
+			      
+					</div>
+					</c:if>
+				</c:forEach>
+				</div>
+			</div>
+		</div>
+	</div>
+		
+		<%-- <div class="mustEatPlace listBox">
+			<div class="listBoxHeader">
+				<div class="fontWhite">TasttyTrove MustEatPlace</div>
+				<a>더보기</a>
+			</div>
+
+			<div class="listInfoBox">
+				<div class="mustEatPlace-gallery" style="overflow-x: auto; white-space: nowrap; ">
+			    	<h2># 한식</h2>
+				    <c:forEach var="mustEatPlaceItem" items="${mainMustEatPlace}">
+						<div class="mustEatPlace-info-korean" style="margin-left:10%;">
+							<c:if test="${mustEatPlaceItem.type.equals('한식')}">
+							<p class="restaurant-name" onclick="moveToLocation('${mustEatPlaceItem.place}')" style="font-weight:bold; font-size:1.2rem; cursor:pointer; margin-top:10px; margin-bottom:10px;">${mustEatPlaceItem.restaurantName}</p>
+				            <c:if test="${mustEatPlaceItem.representativeMenuImage == null}">
+				            	<img src="<c:url value="/image/noPhoto.PNG"/>" onclick="location.href='/main/mustEatPlaceInfo?id=${mustEatPlaceItem.id}'" style="width:200px; height:200px; cursor:pointer; object-fit:cover;"><br>
+				            </c:if>
+				            <c:if test="${mustEatPlaceItem.representativeMenuImage != null}">
+				            	<img src="data:image/jpg;base64,${mustEatPlaceItem.representativeMenuImage}" onclick="location.href='/main/mustEatPlaceInfo?id=${mustEatPlaceItem.id}'" style="width:200px; height:200px; cursor:pointer; border-radius:13px; object-fit:cover;">
+				            </c:if>
+				            </c:if>
+						</div>
+					</c:forEach>
+				</div>
+			</div>
+		</div>
+		
+	</div>
     
     <div class="mustEatPlace-gallery" style="overflow-x: auto; white-space: nowrap; ">
     	<h2># 한식</h2>
@@ -212,7 +411,7 @@
             </c:if>
             </c:if>
 		</div>
-	</c:forEach>
+	</c:forEach> --%>
 
     <footer class="footer">
         <div class="footer-container">
