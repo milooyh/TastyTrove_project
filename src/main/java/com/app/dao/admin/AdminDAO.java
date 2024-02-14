@@ -60,16 +60,16 @@ public interface AdminDAO {
 	public int saveProduct(Product product);
 
 //	맛집
-	public List<MustEatPlace> findMustEatPlaceList();
+	public List<MainMustEatPlace> findMustEatPlaceList();
 
-	public MustEatPlace findMustEatPlaceByPlaceId(int placeId);
+	public MainMustEatPlace findMustEatPlaceByPlaceId(int placeId);
 
-	public List<MustEatPlace> findMustEatPlaceListBySearchCondition(
+	public List<MainMustEatPlace> findMustEatPlaceListBySearchCondition(
 			MustEatPlaceSearchCondition mustEatPlaceSearchCondition);
 
-	public int saveMustEatPlace(MustEatPlace mustEatPlace);
+	public int saveMustEatPlace(MainMustEatPlace mustEatPlace);
 
-	public int modifyMustEatPlace(MustEatPlace mustEatPlace);
+	public int modifyMustEatPlace(MainMustEatPlace mustEatPlace);
 
 	public int removeMustEatPlace(int placeId);
 
