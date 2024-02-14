@@ -20,7 +20,7 @@ body {
 }
 
 
-.mustEatPlace-info-korean {
+.mustEatPlace-info-korean, .mustEatPlace-info-Japanese, .mustEatPlace-info-dishes {
 	display: inline-block;
 }
 
@@ -114,6 +114,27 @@ body {
 	color: white;
 }
 
+.nav-nar2 {
+			width:100%;
+			height:150px;
+			background-color:#074565;
+			color:white;
+			text-align:center;
+			font-size:1.5rem;
+			display:flex;
+			align-items:center;
+			justify-content:center;
+		}
+		
+		.nav-nar2 p {
+		    margin: 0; /* 기본 마진 제거 */
+		}
+		
+		.ment2 {
+			font-size:0.8rem;
+			text-align:center;
+		}
+
 </style>
 
 </head>
@@ -122,9 +143,7 @@ body {
 	
     <%@include file="../main/header.jsp" %>
 
-			<a href="/logout"><span class="material-icons">로그아웃</span></a>
-        </div>
-    </header>
+			
     
     <div class="nav-nar2">
 		<p class="ment">먹기위해 사는 사람들</p>
@@ -233,7 +252,7 @@ body {
 				<div class="mustEatPlace-gallery" style="overflow-x: auto; white-space: nowrap; width:100%; height:100%;">
 				<c:forEach var="mustEatPlaceItem" items="${mainMustEatPlace}">
 				<c:if test="${mustEatPlaceItem.type.equals('양식')}">
-					<div class="mustEatPlace-info-Japanese" style="margin-left:5%;">
+					<div class="mustEatPlace-info-dishes" style="margin-left:5%;">
 						<p class="restaurant-name" onclick="moveToLocation('${mustEatPlaceItem.place}')" style="font-weight:bold; font-size:1.2rem; cursor:pointer; margin-top:10px; margin-bottom:10px;">${mustEatPlaceItem.restaurantName}</p>
 			            <c:if test="${mustEatPlaceItem.representativeMenuImage == null}">
 			            	<img src="<c:url value="/image/noPhoto.PNG"/>" onclick="location.href='/main/mustEatPlaceInfo?id=${mustEatPlaceItem.id}'" style="width:200px; height:200px; cursor:pointer; object-fit:cover;"><br>
