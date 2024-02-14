@@ -185,24 +185,24 @@
 	</insert>
 
 	<!--맛집 정보 찾기 ================================================================ -->
-	<select id="findMustEatPlaceList" resultType="MustEatPlace">
+	<select id="findMustEatPlaceList" resultType="com.app.dto.mustEatPlace.MainMustEatPlace">
 		SELECT * FROM
-		MUST_EAT_PLACE
-		ORDER BY place_id
+		main_must_eat_place
+		ORDER BY id
 	</select>
 
-	<select id="findMustEatPlaceByPlaceId" resultType="MustEatPlace">
+	<select id="findMustEatPlaceByPlaceId" resultType="com.app.dto.mustEatPlace.MainMustEatPlace">
 		SELECT * FROM
-		MUST_EAT_PLACE
-		WHERE place_id = #{placeId}
+		main_must_eat_place
+		WHERE id = #{id}
 	</select>
 
 	<select id="findMustEatPlaceListBySearchCondition"
-		parameterType="MustEatPlace" resultType="MustEatPlaceSearchCondition">
-		SELECT * FROM MUST_EAT_PLACE
+		parameterType="com.app.dto.mustEatPlace.MainMustEatPlace" resultType="MustEatPlaceSearchCondition">
+		SELECT * FROM main_must_eat_place
 		WHERE 1 = 1
-		<if test="placeId != null and placeId!= ''">
-			AND place_id LIKE '%' || #{searchKeyword} || '%'
+		<if test="id != null and id!= ''">
+			AND id LIKE '%' || #{searchKeyword} || '%'
 		</if>
 		<if test="restaurantName != null and restaurantName!= ''">
 			AND restaurant_name LIKE '%' || #{searchKeyword} || '%'
@@ -213,31 +213,60 @@
 	</select>
 
 
-	<insert id="saveMustEatPlace" parameterType="MustEatPlace">
+	<insert id="saveMustEatPlace" parameterType="com.app.dto.mustEatPlace.MainMustEatPlace">
 		INSERT INTO
-		MUST_EAT_PLACE
-		(place_id, restaurant_name, place)
+		main_must_eat_place
+		(id, restaurant_name, place, telephone_number, opening_hours, closing_hours, type)
 		VALUES
 		((select
-		NVL(max(place_id), 0)+1 as place_id
-		from MUST_EAT_PLACE),
-		#{restaurantName}, #{place})
+		NVL(max(id), 0)+1 as id
+		from main_must_eat_place),
+		#{restaurantName}, #{place}, #{telephoneNumber}, #{openingHours}, #{closingHours}, #{type})
 	</insert>
 
-	<update id="modifyMustEatPlace" parameterType="MustEatPlace">
+	<update id="modifyMustEatPlace" parameterType="com.app.dto.mustEatPlace.MainMustEatPlace">
 		UPDATE
-		MUST_EAT_PLACE
+		main_must_eat_place
 		SET
 		restaurant_name = #{restaurantName},
-		place = #{place}
-		WHERE place_id = #{placeId}
+		place = #{place},
+		telephone_number = #{telephoneNumber},
+		opening_hours = #{openingHours},
+		closing_hours = #{closingHours},
+		type = #{type}
+		WHERE id = #{id}
 	</update>
 
 	<delete id="removeMustEatPlace" parameterType="int">
 		DELETE FROM
-		MUST_EAT_PLACE
-		WHERE place_id = #{placeId}
+		main_must_eat_place
+		WHERE id = #{id}
 	</delete>
+	
+	<update id="updateImagePath" parameterType="com.app.dto.mustEatPlace.MainMustEatPlace">
+        UPDATE main_must_eat_place 
+        SET representative_menu_image = #{representativeMenuImage}
+        WHERE id = #{id}
+    </update>
+    
+    <insert id="saveMenuById" parameterType="com.app.dto.mustEatPlace.MainMustEatPlaceMenuInfo">
+		INSERT INTO main_menu_info (id, menu_name, price)
+		VALUES (
+		    #{id},
+		    #{menuName},
+		    #{price}
+		)
+	</insert>
+	
+	<delete id="removeMenuByName" parameterType="string">
+        DELETE FROM main_menu_info
+        WHERE menu_name = #{menuName}
+    </delete>
+    
+    <select id="findMustEatPlaceMenuById" resultType="com.app.dto.mustEatPlace.MainMustEatPlaceMenuInfo" parameterType="int">
+		SELECT * FROM main_menu_info
+		WHERE id = #{id}
+	</select>
 
 	<!--주문 정보 찾기 ================================================================ -->
 	<select id="findOrderList" resultType="Order">

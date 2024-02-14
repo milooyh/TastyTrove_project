@@ -3,6 +3,8 @@ package com.app.controller.mustEatPlace;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +33,19 @@ public class MustEatPlaceController {
 	MustEatPlaceService mustEatPlaceService;
 
 	@GetMapping("/register")
-	public String must(Model model) {
+	public String must(Model model, HttpSession session) {
 		
-		List<MustEatPlace> mustEatPlaces = mustEatPlaceService.findMustEatPlaceList();
+		String userId = (String) session.getAttribute("userId");
+		
+		if(userId == null) {
+			model.addAttribute("alertMessage", "로그인 이후에 사용 가능합니다.");
+			model.addAttribute("url", "/login");
+			return "alert";
+		}
+		
+		System.out.println(userId);
+		
+		List<MustEatPlace> mustEatPlaces = mustEatPlaceService.findMustEatPlaceList(userId);
 		List<MustEatPlaceWithMenu> mustEatPlaceWithMenu = mustEatPlaceService.findMustEatPlaceWithMenu();
 		
         model.addAttribute("mustEatPlaces", mustEatPlaces);
@@ -44,15 +56,17 @@ public class MustEatPlaceController {
 	
 	@ResponseBody
 	@PostMapping("/register")
-	public String addMustEatPlaceProcess(@ModelAttribute MustEatPlace mustEatPlace, @RequestBody String place) {
+	public String addMustEatPlaceProcess(@ModelAttribute MustEatPlace mustEatPlace, @RequestBody String place, Model model) {
 			
-			int result = mustEatPlaceService.saveMustEatPlace(mustEatPlace);
+		int result = mustEatPlaceService.saveMustEatPlace(mustEatPlace);
 			
-			if(result > 0) { //저장이 성공
-				return "redirect:/mustEatPlace/must";  //main 요청 경로
-			} else { //저장 실패
-				return "/home"; //view 파일경로
-			}
+		model.addAttribute("userId", mustEatPlace.getUserId());
+			
+		if(result > 0) { //저장이 성공
+			return "redirect:/must/register";  //main 요청 경로
+		} else { //저장 실패
+			return "/home"; //view 파일경로
+		}
 	}
 	
 	/*
@@ -193,11 +207,11 @@ public class MustEatPlaceController {
 	}
 	
 	@GetMapping("/upload")
-	public String fileUpload(@RequestParam String id, Model model) {
+	public String fileUpload(@RequestParam int id, Model model) {
 		
-		int intId = Integer.parseInt(id);
+		//int intId = Integer.parseInt(id);
 		
-		MustEatPlace mustEatPlace = mustEatPlaceService.findMustEatPlaceById(intId);
+		MustEatPlace mustEatPlace = mustEatPlaceService.findMustEatPlaceById(id);
 		
 		System.out.println(id);
 		
@@ -210,10 +224,12 @@ public class MustEatPlaceController {
 	    public String fileUploadProcess(@RequestParam("representativeMenuImage") MultipartFile file,
 	                                    @RequestParam("id") int id,
 	                                    RedirectAttributes redirectAttributes) {
+			/*
 	        if (file.isEmpty()) {
 	            redirectAttributes.addFlashAttribute("message", "Please select a file to upload.");
 	            return "redirect:/uploadResult";
 	        }
+	        */
 
 	        try {
 	            byte[] imageData = file.getBytes();

@@ -7,7 +7,10 @@ import org.apache.ibatis.annotations.Param;
 
 import com.app.dto.delivery.Delivery;
 import com.app.dto.delivery.DeliverySearchCondition;
+import com.app.dto.mustEatPlace.MainMustEatPlace;
+import com.app.dto.mustEatPlace.MainMustEatPlaceMenuInfo;
 import com.app.dto.mustEatPlace.MustEatPlace;
+import com.app.dto.mustEatPlace.MustEatPlaceMenu;
 import com.app.dto.mustEatPlace.MustEatPlaceSearchCondition;
 import com.app.dto.order.Order;
 import com.app.dto.order.OrderItem;
@@ -70,6 +73,14 @@ public interface AdminDAO {
 
 	public int removeMustEatPlace(int placeId);
 
+	
+	public int updateImageData(MainMustEatPlace mustEatPlace);
+	
+	public int saveMenuInfo(MainMustEatPlaceMenuInfo mustEatPlaceMenu);
+	
+	public int removeMenuByName(String menuName);
+	public List<MainMustEatPlaceMenuInfo> findMustEatPlaceMenuById(int id);
+	
 //	주문
 	public List<Order> findOrderList();
 

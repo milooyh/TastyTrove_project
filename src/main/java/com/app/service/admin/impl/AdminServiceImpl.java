@@ -10,7 +10,10 @@ import org.springframework.stereotype.Service;
 import com.app.dao.admin.AdminDAO;
 import com.app.dto.delivery.Delivery;
 import com.app.dto.delivery.DeliverySearchCondition;
+import com.app.dto.mustEatPlace.MainMustEatPlace;
+import com.app.dto.mustEatPlace.MainMustEatPlaceMenuInfo;
 import com.app.dto.mustEatPlace.MustEatPlace;
+import com.app.dto.mustEatPlace.MustEatPlaceMenu;
 import com.app.dto.mustEatPlace.MustEatPlaceSearchCondition;
 import com.app.dto.order.Order;
 import com.app.dto.order.OrderItem;
@@ -188,27 +191,27 @@ public class AdminServiceImpl implements AdminService {
 //	맛집 =============
 //	맛집목록조회
 	@Override
-	public List<MustEatPlace> findMustEatPlaceList() {
+	public List<MainMustEatPlace> findMustEatPlaceList() {
 		// TODO Auto-generated method stub
 		System.out.println("adminService findMustEatPlaceList 불림");
 
-		List<MustEatPlace> placeList = adminDAO.findMustEatPlaceList();
+		List<MainMustEatPlace> placeList = adminDAO.findMustEatPlaceList();
 		return placeList;
 	}
 
 //	맛집번호로 맛집조회
 	@Override
-	public MustEatPlace findMustEatPlaceByPlaceId(int placeId) {
+	public MainMustEatPlace findMustEatPlaceByPlaceId(int placeId) {
 		// TODO Auto-generated method stub
 		System.out.println("adminService findMustEatPlaceByPlaceId 불림");
 
-		MustEatPlace mustEatPlace = adminDAO.findMustEatPlaceByPlaceId(placeId);
+		MainMustEatPlace mustEatPlace = adminDAO.findMustEatPlaceByPlaceId(placeId);
 		return mustEatPlace;
 	}
 
 //	맛집 저장
 	@Override
-	public int saveMustEatPlace(MustEatPlace mustEatPlace) {
+	public int saveMustEatPlace(MainMustEatPlace mustEatPlace) {
 		// TODO Auto-generated method stub
 		System.out.println("adminService saveMustEatPlace 불림");
 
@@ -219,18 +222,18 @@ public class AdminServiceImpl implements AdminService {
 
 //	맛집 검색
 	@Override
-	public List<MustEatPlace> findMustEatPlaceListBySearchCondition(
+	public List<MainMustEatPlace> findMustEatPlaceListBySearchCondition(
 			MustEatPlaceSearchCondition mustEatPlaceSeartchCondition) {
 		// TODO Auto-generated method stub
 		System.out.println("adminService findMustEatPlaceListBySearchCondition 불림");
-
-		List<MustEatPlace> placeList = adminDAO.findMustEatPlaceListBySearchCondition(mustEatPlaceSeartchCondition);
+		
+		List<MainMustEatPlace> placeList = adminDAO.findMustEatPlaceListBySearchCondition(mustEatPlaceSeartchCondition);
 		return placeList;
 	}
 
 //	맛집 수정
 	@Override
-	public int modifyMustEatPlace(MustEatPlace mustEatPlace) {
+	public int modifyMustEatPlace(MainMustEatPlace mustEatPlace) {
 		// TODO Auto-generated method stub
 		System.out.println("adminService modifyMustEatPlace 불림");
 
@@ -245,6 +248,41 @@ public class AdminServiceImpl implements AdminService {
 		System.out.println("adminService removeMustEatPlace 불림");
 		int result = adminDAO.removeMustEatPlace(placeId);
 		return result;
+	}
+	
+//  맛집 이미지 업로드
+	@Override
+	public int updateImageData(MainMustEatPlace mustEatPlace) {
+		// TODO Auto-generated method stub
+		int result = adminDAO.updateImageData(mustEatPlace);
+		return result;
+	}
+	
+	@Override
+	public int saveMenuInfo(int mustEatPlaceId, String menuName, int price) {
+		MainMustEatPlaceMenuInfo mustEatPlaceMenu = new MainMustEatPlaceMenuInfo();
+		
+		mustEatPlaceMenu.setId(mustEatPlaceId);
+		mustEatPlaceMenu.setMenuName(menuName);
+		mustEatPlaceMenu.setPrice(price);
+		
+		int result = adminDAO.saveMenuInfo(mustEatPlaceMenu);
+		
+		return result;
+	}
+
+	@Override
+	public int removeMenuByName(String menuName) {
+		// TODO Auto-generated method stub
+		int result = adminDAO.removeMenuByName(menuName);
+		return result;
+	}
+	
+	@Override
+	public List<MainMustEatPlaceMenuInfo> findMustEatPlaceMenuById(int id) {
+		// TODO Auto-generated method stub
+		List<MainMustEatPlaceMenuInfo> mainMustEatPlaceMenuInfo = adminDAO.findMustEatPlaceMenuById(id);
+		return mainMustEatPlaceMenuInfo;
 	}
 
 //	주문 =================

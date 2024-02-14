@@ -1,18 +1,24 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html lang="ko">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
-    <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    
-    <style>
+<html>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
         *{
             padding: 0px;
             box-sizing: border-box;
             margin: 0px;
             color: gray;
+        }
+        
+        body {
+        	overflow-x:hiedden;
+        	overflow-y:auto;
         }
 
         
@@ -69,8 +75,6 @@
         .material-icons:hover {
             color: #555;
         }
-
-      
 
         .footer {
             background-color: #f2f2f2;
@@ -141,154 +145,74 @@
         align-items: center; /* 세로 내용 중앙 정렬 */
         flex-direction: column; /* 요소들을 세로로 배치 */
         margin-top: 30px;
-}
-img{
-    width: 200px;
-    height: 100px;
-    object-fit: cover;
-}
-
-/*  */
-.body{
-    padding: 30px;
-    background-color: #f2f2f2;
-    border-bottom: 1px solid rgb(189, 189, 189);
-    border-top: 1px solid rgb(189, 189, 189);
-}
-
-.listBox{
-    width: 1200px;
-    height: 300px;;
-    background-color: rgb(230, 207, 207);
-    border: 1px solid black;
-    border-radius: 3px;
-    margin-bottom: 10px;
-    display: flex;
-    flex-direction: column;
-}
-
-.listBoxHeader{
-    height: 50px;
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 15px;
-    background-color: #555;
-    font-weight: bolder;
-    color: white;
-}
-
-.fontWhite{
-    color: white;
-}
-
-.listImg{
-    width: 180px;
-    height: 180px;
-    border: 1px solid black;
-    background-color: white;
-}
-
-.listInfo{
-    width: 250px;
-    height: 250px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    background-color: #333;
-}
-
-.listText{
-    height: 30px;
-    display: flex;
-    align-items: center;
-    padding-top: 10px;
-}
-
-.listInfoBox{
-    display: flex;
-    justify-content: space-between;
-}
-
-</style>
+		}
+		img{
+			object-fit:cover;
+		    width: 200px;
+		    height: 100px;
+		}
+		
+		a {
+			text-decoration:none;
+			color:black;
+		}
+		
+		.mustEatPlace-info-korean {
+			display:inline-block;
+		}
+      </style>
 </head>
 <body>
 
     <header class="header">
         <div class="logo">
-            <img src="../image/LOGO.jpg">
+            <a href="/main"><img src="../image/mainlogo.png"></a>
         </div>
         <ul class="nav-menu">
-            <li>레시피</li>
-            <li>맛집</li>
-            <li>스토어</li>
+            <li><a href="/recipe">레시피</a></li>
+            <li><a href="/must/register">맛집</a></li>
+            <li><a href="/product">스토어</a></li>
             <li>랭킹</li>
             <li>EVENT</li>
         </ul>
         <div class="header-icons">
             <span class="material-icons">검색</span>
             <span class="material-icons">장바구니</span>
-            <span class="material-icons">계정</span>
+            <a href="/login"><span class="material-icons">계정</span></a>
         </div>
     </header>
-
-    <!--  -->
-    <div class="body">
-        <div class="recipe listBox">
-            <div class="listBoxHeader">
-                <div class="fontWhite">TasttyTrove Recipe</div>
-                <a>더보기</a>
-            </div>
-
-            <div class="listInfoBox">
-                <div class="listInfo">
-                    <!-- 이미지 -->
-                    <img class="listImg">
-                    <div class="listText">
-                        <div class="text">텍스트 넣는곳</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="product listBox">
-            <div class="listBoxHeader">
-                <div class="fontWhite">TasttyTrove Product</div>
-                <a>더보기</a>
-            </div>
-
-            <div class="listInfoBox">
-                <div class="listInfo">
-                    <!-- 이미지 -->
-                    <img class="listImg">
-                    <div class="listText">
-                        <div class="text">텍스트 넣는곳</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="mustEatPlace listBox">
-            <div class="listBoxHeader">
-                <div class="fontWhite">TasttyTrove MustEatPlace</div>
-                <a>더보기</a>
-            </div>
-
-            <div class="listInfoBox">
-                <div class="listInfo">
-                    <!-- 이미지 -->
-                    <img class="listImg">
-                    <div class="listText">
-                        <div class="text">텍스트 넣는곳</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--  -->
+    
+    <div class="mustEatPlace-gallery" style="overflow-x: auto; white-space: nowrap; ">
+    	<h2># 한식</h2>
+	    <c:forEach var="mustEatPlaceItem" items="${mainMustEatPlace}">
+			<div class="mustEatPlace-info-korean" style="margin-left:10%;">
+				<c:if test="${mustEatPlaceItem.type.equals('한식')}">
+				<p class="restaurant-name" onclick="moveToLocation('${mustEatPlaceItem.place}')" style="font-weight:bold; font-size:1.2rem; cursor:pointer; margin-top:10px; margin-bottom:10px;">${mustEatPlaceItem.restaurantName}</p>
+	            <c:if test="${mustEatPlaceItem.representativeMenuImage == null}">
+	            	<img src="<c:url value="/image/noPhoto.PNG"/>" onclick="location.href='/main/mustEatPlaceInfo?id=${mustEatPlaceItem.id}'" style="width:200px; height:200px; cursor:pointer; object-fit:cover;"><br>
+	            </c:if>
+	            <c:if test="${mustEatPlaceItem.representativeMenuImage != null}">
+	            	<img src="data:image/jpg;base64,${mustEatPlaceItem.representativeMenuImage}" onclick="location.href='/main/mustEatPlaceInfo?id=${mustEatPlaceItem.id}'" style="width:200px; height:200px; cursor:pointer; border-radius:13px; object-fit:cover;">
+	            </c:if>
+	            </c:if>
+			</div>
+		</c:forEach>
+	</div>
 
 
+	<c:forEach var="mustEatPlaceItem" items="${mainMustEatPlace}">
+		<div class="mustEatPlace-info-Japanese">
+			<c:if test="${mustEatPlaceItem.type.equals('일식')}">
+			<p class="restaurant-name" onclick="moveToLocation('${mustEatPlaceItem.place}')" style="font-weight:bold; font-size:1.2rem; cursor:pointer; margin-top:10px; margin-bottom:10px;">${mustEatPlaceItem.restaurantName}</p>
+            <c:if test="${mustEatPlaceItem.representativeMenuImage == null}">
+            	<img src="<c:url value="/image/noPhoto.PNG"/>" onclick="location.href='/main/mustEatPlaceInfo?id=${mustEatPlaceItem.id}'" style="width:200px; height:200px; cursor:pointer; object-fit:cover;"><br>
+            </c:if>
+            <c:if test="${mustEatPlaceItem.representativeMenuImage != null}">
+            	<img src="data:image/jpg;base64,${mustEatPlaceItem.representativeMenuImage}" onclick="location.href='/main/mustEatPlaceInfo?id=${mustEatPlaceItem.id}'" style="width:200px; height:200px; cursor:pointer; border-radius:13px; object-fit:cover;"><br>
+            </c:if>
+            </c:if>
+		</div>
+	</c:forEach>
 
     <footer class="footer">
         <div class="footer-container">

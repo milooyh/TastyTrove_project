@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Param;
 
 import com.app.dto.delivery.Delivery;
 import com.app.dto.delivery.DeliverySearchCondition;
+import com.app.dto.mustEatPlace.MainMustEatPlace;
+import com.app.dto.mustEatPlace.MainMustEatPlaceMenuInfo;
 import com.app.dto.mustEatPlace.MustEatPlace;
 import com.app.dto.mustEatPlace.MustEatPlaceSearchCondition;
 import com.app.dto.order.Order;
@@ -57,19 +59,26 @@ public interface AdminService {
 	public int saveProduct(Product product);
 
 //	맛집 ==============================
-	public List<MustEatPlace> findMustEatPlaceList();
 
-	public MustEatPlace findMustEatPlaceByPlaceId(int placeId);
-
-	public List<MustEatPlace> findMustEatPlaceListBySearchCondition(
-			MustEatPlaceSearchCondition mustEatPlaceSeartchCondition);
-
-	public int saveMustEatPlace(MustEatPlace mustEatPlace);
-
-	public int modifyMustEatPlace(MustEatPlace mustEatPlace);
 
 	public int removeMustEatPlace(int placeId);
 
+	public List<MainMustEatPlace> findMustEatPlaceList();
+	public MainMustEatPlace findMustEatPlaceByPlaceId(int placeId);
+	public List<MainMustEatPlace> findMustEatPlaceListBySearchCondition(MustEatPlaceSearchCondition mustEatPlaceSeartchCondition);
+	
+	public int saveMustEatPlace(MainMustEatPlace mustEatPlace);
+	
+	public int modifyMustEatPlace(MainMustEatPlace mustEatPlace);
+		
+	public int updateImageData(MainMustEatPlace mustEatPlace);
+
+	public int saveMenuInfo(int mustEatPlaceId, String menuName, int price);
+	
+	public int removeMenuByName(String menuName);
+	
+	public List<MainMustEatPlaceMenuInfo> findMustEatPlaceMenuById(int id);
+	
 //	주문 ===============================
 	public List<Order> findOrderList();
 

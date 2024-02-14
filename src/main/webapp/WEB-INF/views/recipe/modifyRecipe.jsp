@@ -13,49 +13,195 @@
 <script src="/summernote/summernote-lite.js"></script>
 <script src="/summernote/lang/summernote-ko-KR.js"></script>
 <link rel="stylesheet" href="/summernote/summernote-lite.css">
+<style>
+	* {
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+	}
+	
+	html, body {
+		height: 100%;
+		background-color: #F2F2F2;
+	}
+	
+	.container {
+		display: flex;
+		justify-content: center;
+		width: 100%;
+		padding: 30px;
+	}
+	
+	.title {
+		height: 70px;
+	}
+	
+	.modifBox{
+		width: 1200px;
+		height: 100%;
+		padding: 30px;
+		background-color: white;
+		border-radius: 10px;
+		border: 1px solid gray;
+	}
+	
+	.infoBox1{
+		width: 100%;
+		height: 115px;
+	}
+	
+	.infoBox2{
+		width: 100%;
+		height: 100px;
+		border: 2px solid gray;
+		border-radius: 5px;
+		padding: 10px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	
+	.infoBox3{
+		width: 650px;
+	}
+	
+	.infoBox4{
+		height: 100%;
+		width: 350px;
+		padding: 10px 0px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+	
+	.category{
+		margin-bottom: 10px;
+	}
+	
+	.titleInput{
+		width: 100%;
+		height: 40px;
+		padding-left: 10px;
+		border-radius: 5px;
+		border: 1px solid gray;
+		font-size: 16px;
+	}
+	
+	
+	.Btn {
+		width: 200px;
+		height: 40px;
+		background: #151B1B;
+		border: none;
+		border-radius: 30px;
+		color: white;
+		font-weight: bolder;
+		font-size: 15px;
+		cursor: pointer;
+		margin-top: 15px;
+	}
+	
+	.bold{
+		font-weight: bold;
+	}
+	
+	.categorySelect{
+		width: 100px;
+		height: 25px;
+	}
+		
+
+</style>
+
+
+
 </head>
 <body>
 <%
-	String member = (String)session.getAttribute("memberId");
+	String member = (String)session.getAttribute("userId");
 	System.out.println(member);
 %>
+	<div class="container">
+		<div class="modifBox">
+			<h1 class="title">레시피 수정</h1>
+			<!--  -->
+			<form action="" method="post" enctype="multipart/form-data" id="recipeForm">
+				<div class="infoBox1">
+					<div class="infoBox2">
+						<div class="infoBox3">
+							<div class="category">
+								<span class="bold">카테고리</span> 
+								<select id="category" name="recipeType" class="categorySelect">
+									<option name="category" value="KOR">한식</option>
+									<option name="category" value="CHI">중식</option>
+									<option name="category" value="WST">양식</option>
+									<option name="category" value="JPN">일식</option>
+									<option name="category" value="DRT">디저트</option>
+								</select>
+							</div>
+							<input type="text"name="recipeTitle" id="title" value="${recipeTitle}" class="titleInput" placeholder="제목을 입력해주세요"> 
+						</div>
+						<div class="infoBox4">
+							
+							<div class="bold">대표 이미지로 등록할 사진을 선택하세요</div>
+							<div><input type="file" name="recipeImage" id="fileCheck"></div>
+							
+						</div>
+					</div>
+				</div>
+		
+				<textarea id="summernote" name="recipeContent">${recipeContent}</textarea>
+				
+				
+				<button class="Btn" onclick="modifyProc()" type="button" id="modifyBtn">수정완료</button>
+				<button type="button" onclick='postCancle()' class="Btn">취소</button>
 
-	<h1>레시피 수정 화면</h1>
-	<!-- 임시작성 -->
-	<form action="" method="post" enctype="multipart/form-data">
-		제목 <input type="text"name="recipeTitle" value="${recipeTitle}"> 
-		카테고리 
-		<select id="category" name="recipeType">
-			<option name="category" value="KOR">한식</option>
-			<option name="category" value="CHI">중식</option>
-			<option name="category" value="WST">양식</option>
-			<option name="category" value="JPN">일식</option>
-			<option name="category" value="DRT">디저트</option>
-		</select>
-
-		<textarea id="summernote" name="recipeContent">${recipeContent}</textarea>
-		대표 이미지로 등록할 사진을 선택하세요 <br>
-		<input type="file" name="recipeImage"> <br><br>
-		<input type="hidden" name="recipeFileId" value="${recipeFileId }">
-
-		<button>수정완료</button>
-		<button type="button" onclick='postCancle()'>취소</button>
-	</form>
+			</form>
+		</div>
+	
+	</div>
 
 	<script>
+	
+		var sessionId = '<%=(String)session.getAttribute("userId")%>';
+		var recipeFrom = document.getElementById("recipeForm");
+		var title = document.getElementById("title");
+		var summernote = document.getElementById("summernote");
+		
+		
+		function modifyProc() {
+			console.log(sessionId);
+			if(sessionId == null || sessionId == "null"){
+				alert('로그인 후 이용 가능한 서비스입니다.')
+				location.href = "/login"
+			}else if(title.value.trim() == null || title.value.trim() == ""){
+				console.log('제목입력 요청')
+				alert('제목을 입력해주세요!')
+				title.focus();
+			}else if (summernote.value.trim() == null || summernote.value.trim() == ""){
+				console.log('본문입력 요청')
+				alert('내용을 입력해주세요!')
+				summernote.focus();
+			}else{
+					console.log('submit 실행');
+					recipeFrom.submit();
+					alert('레시피 수정이 완료되었습니다!');
+				}	
+			}
+		
 
 		$('#summernote').summernote(
 				{
 					height : 500, // 에디터 높이
-					minHeight : null, // 최소 높이
-					maxHeight : null, // 최대 높이
+					minHeight : 500, // 최소 높이
+					maxHeight : 500, // 최대 높이
 					focus : true, // 에디터 로딩후 포커스를 맞출지 여부
 					lang : "ko-KR", // 한글 설정
 					placeholder : '자신의 레시피를 작성하고 공유해보세요!', //placeholder 설정
 				});
 		
 		function postCancle(){
-			location.href = "/recipe"
+			history.back();
 		}
 
 	</script>
