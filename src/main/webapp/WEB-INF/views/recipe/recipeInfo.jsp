@@ -123,8 +123,8 @@
 	}
 	
 	.recipeTitle{
-/* 		width: 750px; */
-		font-size: 30px;
+ 		width: 750px; 
+ 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
@@ -156,7 +156,7 @@
 			<div class="recipeHeader">
 					<div class="imgBox"> <img src="${fullRecipeFilePath}" class="img"> </div>
 					<div class="recipeInfo">
-					<div class="recipeTitle"> <span class="recipeTitle"> ${recipeTitle} </span></div>
+					<div class="recipeTitle"> <h1 class="recipeTitle"> ${recipeTitle} </h1></div>
 					<div class="recipeInfo2">
 						<table>
 							
