@@ -208,7 +208,7 @@ public class AdminDAOImpl implements AdminDAO {
 		// TODO Auto-generated method stub
 		System.out.println("adminDAO findMustEatPlaceByPlaceId 불림");
 		System.out.println("DAO : " + placeId);
-		MustEatPlace mustEatPlace = sqlSessionTemplate.selectOne("admin_mapper.findMustEatPlaceByPlaceId", placeId);
+		MainMustEatPlace mustEatPlace = sqlSessionTemplate.selectOne("admin_mapper.findMustEatPlaceByPlaceId", placeId);
 
 		return mustEatPlace;
 	}

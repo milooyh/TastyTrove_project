@@ -18,10 +18,9 @@ import com.app.service.User.UserService;
 
 @Controller
 public class UserController {
-	
+
 	@Autowired
 	UserService userService;
-	
 
 //	로그인 =====================================
 //	관리자
@@ -29,7 +28,7 @@ public class UserController {
 	public String admin(HttpSession session) {
 		return "admin/adminHome";
 	}
-	
+
 //	로그인
 	@GetMapping("/login")
 	public String login() {
@@ -65,10 +64,13 @@ public class UserController {
 				return "redirect:/main";
 			}
 		}
+		
+		return "user/login";
+	}
 
-	
 //	로그아웃
 	@RequestMapping("/logout")
+
 	public String logout(HttpSession session) {
 		session.invalidate();
 		System.out.println("로그아웃 완");
@@ -136,17 +138,17 @@ public class UserController {
 	@PostMapping("/signup/checktel")
 	@ResponseBody
 	public String checkTel(@RequestParam String tel1, @RequestParam String tel2, @RequestParam String tel3, User user) {
-		
+
 //		 전화번호 하나로 합치기
 		String userTel = (tel1.length() == 2 ? "0" + tel1 : tel1) + "-" + (tel2.length() == 3 ? "0" + tel2 : tel2) + "-"
 				+ (tel3.length() == 3 ? "0" + tel3 : tel3);
-		
+
 		user.setUserTel(userTel);
 		System.out.println("userTel : " + userTel);
-		
+
 		user = userService.findUserByUserTel(userTel);
 		System.out.println(user);
-		
+
 		if (user == null) {
 			System.out.println("전번 사용 가능");
 			return "0";
@@ -155,16 +157,16 @@ public class UserController {
 		}
 		return "1";
 	}
-	
+
 //	이메일 있나 확인
 	@PostMapping("/signup/checkemail")
 	@ResponseBody
 	public String checkAddress(@RequestParam String userEmail) {
 		System.out.println("email 컨트롤러 불림");
-		
+
 		User user = userService.findUserByUserEmail(userEmail);
 		System.out.println(userEmail);
-		
+
 		if (user == null) {
 			System.out.println("이메일 사용 가능");
 			return "0";
