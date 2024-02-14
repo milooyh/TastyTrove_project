@@ -7,10 +7,16 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+* {
+		margin: 0px;
+		padding: 0px;
+		box-sizing: border-box;
+	}
     body {
         font-family: 'Arial', sans-serif;
-        background-color: #f5f5f5;
+        background-color:#F0F0F0; 
         margin: 0;
+        
         padding: 20px;
     }
     h1 {
@@ -19,6 +25,7 @@
     form {
         background-color: #fff;
         padding: 20px;
+        
         border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         max-width: 500px;
@@ -57,7 +64,7 @@
 <body>
 
 <%@include file="../main/header.jsp"%>
-	
+	<p></p>
 	<form action="/modifyProduct" method="post" enctype="multipart/form-data">
     <input type="hidden" name="productId" value="${product.productId}"> 
     <div class="form-group">
