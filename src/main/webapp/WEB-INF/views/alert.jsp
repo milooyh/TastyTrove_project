@@ -14,9 +14,9 @@
 	    alert(msg);
 	    location.href = url;
 	    
-	    var url1 = "<c:out value='${url1}'/>";
+	    /* var url1 = "<c:out value='${url1}'/>";
 	    alert(msg);
-	    location.href = url1;
+	    location.href = url1; */
 	</script>
 </body>
 </html>
