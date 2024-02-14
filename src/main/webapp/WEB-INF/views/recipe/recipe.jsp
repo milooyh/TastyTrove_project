@@ -179,6 +179,22 @@
 	.black{
 		color: black;
 	}
+	
+	.recipeTitle{
+		width: 240px;
+		height: 25px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	
+	.userNick{
+		width: 240px;
+		height: 25px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
 
 
 </style>
@@ -226,8 +242,8 @@
 							<a href="/recipe/recipeInfo?id=${recipeItem.recipeId}"
 								class="recipe2"> <img
 								src="${recipeItem.recipeFilePath}${recipeItem.recipeFileName}"
-								class="img"> <br> ${recipeItem.recipeTitle} <br>
-								${recipeItem.userNickname}
+								class="img"> <br> <div class="recipeTitle"> ${recipeItem.recipeTitle} </div>
+								<div class="userNick">${recipeItem.userNickname}</div>
 							</a>
 						</div>
 					</c:forEach>
