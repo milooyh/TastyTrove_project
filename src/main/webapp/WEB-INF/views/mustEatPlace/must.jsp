@@ -191,25 +191,40 @@
 	    </div>
 	</div>
 	
-	<c:forEach var="mustEatPlaceItem" items="${mustEatPlaces}">
-		<div class="mustEatPlace-info">
-			<p class="restaurant-name" onclick="moveToLocation('${mustEatPlaceItem.place}')" style="font-weight:bold; font-size:1.2rem; cursor:pointer; margin-top:10px; margin-bottom:10px;">${mustEatPlaceItem.restaurantName} <img src="<c:url value="/image/click.png"/>" style="width:25px; height:30px; padding-top:5px;"/></p>
-            <c:if test="${mustEatPlaceItem.representativeMenuImage == null}">
-            	<img src="<c:url value="/image/noPhoto.PNG"/>" onclick="location.href='/must/upload?id=${mustEatPlaceItem.id}'" style="width:200px; height:200px; cursor:pointer; object-fit:cover;"><br>
-            </c:if>
-            <c:if test="${mustEatPlaceItem.representativeMenuImage != null}">
-            	<img src="data:image/jpg;base64,${mustEatPlaceItem.representativeMenuImage}" onclick="location.href='/must/upload?id=${mustEatPlaceItem.id}'" style="width:200px; height:200px; cursor:pointer; border-radius:13px; object-fit:cover;"><br>
-            </c:if>
-            <p style="margin-top:10px;">${mustEatPlaceItem.place}</p><br>
-			<p>${mustEatPlaceItem.review}</p><br>
-			<p>${mustEatPlaceItem.asterion}점</p><br>
-			<button onclick="removeMustEatPlace(${mustEatPlaceItem.id})" class="btn btn-blue">삭제</button>
-			<button onclick="location.href='/must/modify?id=${mustEatPlaceItem.id}'" class="btn btn-blue">수정</button>
-			<button onclick="location.href='/must/registerMenu?id=${mustEatPlaceItem.id}'" class="btn btn-blue">메뉴 추가</button>
-			<button onclick="location.href='/must/modifyMenu?id=${mustEatPlaceItem.id}'" class="btn btn-blue">메뉴 삭제</button>
-			<br><br>
+		<c:forEach var="mustEatPlaceItem" items="${mustEatPlaces}">
+			<div class="mustEatPlace-info" style="display: ${loop.index < 5 ? 'inline-block' : 'none'};">
+				<p class="restaurant-name" onclick="moveToLocation('${mustEatPlaceItem.place}')" style="font-weight:bold; font-size:1.2rem; cursor:pointer; margin-top:10px; margin-bottom:10px;">${mustEatPlaceItem.restaurantName} <img src="<c:url value="/image/click.png"/>" style="width:25px; height:30px; padding-top:5px;"/></p>
+	            <c:if test="${mustEatPlaceItem.representativeMenuImage == null}">
+	            	<img src="<c:url value="/image/noPhoto.PNG"/>" onclick="location.href='/must/upload?id=${mustEatPlaceItem.id}'" style="width:200px; height:200px; cursor:pointer; object-fit:cover;"><br>
+	            </c:if>
+	            <c:if test="${mustEatPlaceItem.representativeMenuImage != null}">
+	            	<img src="data:image/jpg;base64,${mustEatPlaceItem.representativeMenuImage}" onclick="location.href='/must/upload?id=${mustEatPlaceItem.id}'" style="width:200px; height:200px; cursor:pointer; border-radius:13px; object-fit:cover;"><br>
+	            </c:if>
+	            <p style="margin-top:10px;">${mustEatPlaceItem.place}</p><br>
+				<p>${mustEatPlaceItem.review}</p><br>
+				<p>${mustEatPlaceItem.asterion}점</p><br>
+				<button onclick="removeMustEatPlace(${mustEatPlaceItem.id})" class="btn btn-blue">삭제</button>
+				<button onclick="location.href='/must/modify?id=${mustEatPlaceItem.id}'" class="btn btn-blue">수정</button>
+				<button onclick="location.href='/must/registerMenu?id=${mustEatPlaceItem.id}'" class="btn btn-blue">메뉴 추가</button>
+				<button onclick="location.href='/must/modifyMenu?id=${mustEatPlaceItem.id}'" class="btn btn-blue">메뉴 삭제</button>
+				<br><br>
 			</div>
 		</c:forEach>
+		
+		<button id="loadMoreButton" onclick="loadMoreData()" class="btn btn-blue">더 보기</button>
+
+	<script>
+		document.getElementById('loadMoreButton').addEventListener('click', function() {
+		    var hiddenDivs = document.querySelectorAll('.mustEatPlace-info[style="display: none;"]');
+		    for (var i = 0; i < 5 && i < hiddenDivs.length; i++) {
+		        hiddenDivs[i].style.display = 'inline-block';
+		    }
+		    // 더 이상 숨겨진 데이터가 없다면 '더 보기' 버튼을 숨김
+		    if (document.querySelectorAll('.mustEatPlace-info[style="display: none;"]').length === 0) {
+		        document.getElementById('loadMoreButton').style.display = 'none';
+		    }
+		});
+	</script>
 
 	<div class="modal">
         <div class="modal_body">
