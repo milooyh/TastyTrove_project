@@ -22,7 +22,7 @@
 	
 	html, body {
 		height: 100%;
-		background-color: #F2F2F2;
+		background-color: #F0F0F0;
 	}
 	
 	.container {
@@ -42,6 +42,8 @@
 		padding: 30px;
 		background-color: white;
 		border-radius: 10px;
+		padding: 30px;
+		background-color: white;
 		border: 1px solid #6aafe6;
 	}
 	
@@ -99,6 +101,11 @@
 		font-size: 15px;
 		cursor: pointer;
 		margin-top: 15px;
+		box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+	}
+	
+	.Btn:hover{
+		background-color: #0056b3;
 	}
 	
 	.bold{
@@ -109,6 +116,10 @@
 		width: 100px;
 		height: 25px;
 	}
+	
+	.cate{
+		margin: 0px 5px; 
+	}
 		
 
 </style>
@@ -118,6 +129,7 @@
 	String member = (String)session.getAttribute("userId");
 	System.out.println(member);
 %>
+	<%@include file="../main/header.jsp" %>
 	<div class="container">
 		<div class="postBox">
 			<h1 class="title">나만의 레시피를 등록하세요!</h1>
@@ -127,7 +139,7 @@
 					<div class="infoBox2">
 						<div class="infoBox3">
 							<div class="category">
-								<span class="bold">카테고리</span> 
+								<span class="bold cate">카테고리</span> 
 								<select id="category" name="recipeType" class="categorySelect">
 									<option name="category" value="KOR">한식</option>
 									<option name="category" value="CHI">중식</option>
@@ -155,6 +167,7 @@
 			</form>
 		</div>
 	</div>
+	<%@include file="../main/footer.jsp" %>
 
 	<script>
 	

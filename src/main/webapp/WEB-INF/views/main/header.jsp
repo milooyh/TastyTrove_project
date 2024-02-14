@@ -37,6 +37,7 @@
 	background-color: #fff;
 	color: #333;
 	font-family: 'Arial', sans-serif;
+	border-bottom: 1px solid rgb(189, 189, 189);
 }
 
 .logo {
@@ -59,11 +60,12 @@
 }
 
 .nav-menu li:hover {
-	text-decoration: underline;
+/* 	text-decoration: underline; */
 }
 
 .header-icons {
 	font-size: 24px;
+	display: flex;
 }
 
 .material-icons {
@@ -72,7 +74,7 @@
 }
 
 .material-icons:hover {
-	color: #555;
+	color: #6aafe6;
 }
 
 img {
@@ -84,7 +86,29 @@ img {
 a {
 	text-decoration: none;
 	color: black;
+	font-weight: bolder;
+	font-size: 18px;
 }
+
+.sizeM{
+	font-size: 18px;
+	font-weight: bolder;
+}
+
+
+a:hover
+{
+    text-decoration: none;
+    outline: none;
+    color: #6aafe6;
+    text-decoration-color: #6aafe6;
+
+}
+
+.menu{
+	margin: 0px 30px;
+}
+
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -95,24 +119,27 @@ a {
 			<a href="/main"><img src="../image/mainlogo.png"></a>
 		</div>
 		<ul class="nav-menu">
-			<li><a href="/recipe">레시피</a></li>
-			<li><a href="/must/register">맛집</a></li>
-			<li><a href="/product">스토어</a></li>
+			<li class="menu"><a href="/recipe">레시피</a></li>
+			<li class="menu"><a href="/must/register">맛집</a></li>
+			<li class="menu"><a href="/product">스토어</a></li>
 		</ul>
 		<div class="header-icons">
 			<span class="material-icons">검색</span> <a href="/cart"><span class="material-icons">장바구니</span></a>
 			<c:choose>
 				<c:when test="${not empty userId}">
 					<!-- 사용자가 로그인한 경우 -->
-					<p>${userId}님</p>
+					<p class="sizeM">&nbsp;&nbsp;&nbsp; ${userId}님</p>
 				</c:when>
 				<c:otherwise>
 					<!-- 사용자가 로그인하지 않은 경우 -->
-					<a href="/login"><span class="material-icons">로그인</span></a>
+					<a href="/login"><span class="material-icons sizeM">로그인</span></a>
 				</c:otherwise>
 			</c:choose>
-
-			<a href="/logout"><span class="material-icons">로그아웃</span></a>
+			<c:choose>
+				<c:when test="${userId != null}">
+				<a href="/logout"><span class="material-icons sizeM">로그아웃</span></a>
+				</c:when>
+			</c:choose>
 		</div>
 	</header>
 
