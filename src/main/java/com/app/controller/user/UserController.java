@@ -74,7 +74,7 @@ public class UserController {
 	public String logout(HttpSession session) {
 		session.invalidate();
 		System.out.println("로그아웃 완");
-		return "redirect:/";
+		return "redirect:/main";
 	}
 
 //	회원가입 ====================================

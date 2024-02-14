@@ -253,12 +253,11 @@ a:hover, a:visited, a:link, a:active
 			<li>레시피</li>
 			<li>맛집</li>
 			<li>스토어</li>
-			<li>랭킹</li>
-			<li>EVENT</li>
 		</ul>
 		<div class="header-icons">
 			<span class="material-icons">검색</span> <span class="material-icons">장바구니</span>
-			<span class="material-icons">계정</span>
+			<span class="material-icons">로그인</span>
+			<span class="material-icons"><button onclick="/logout">로그아웃</button></span>
 		</div>
 	</header>
 

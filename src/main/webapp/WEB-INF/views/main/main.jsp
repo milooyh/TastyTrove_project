@@ -178,7 +178,8 @@
         <div class="header-icons">
             <span class="material-icons">검색</span>
             <span class="material-icons">장바구니</span>
-            <a href="/login"><span class="material-icons">계정</span></a>
+            <a href="/login"><span class="material-icons">로그인</span></a>
+            <a href="/logout"><span class="material-icons">로그아웃</span></a>
         </div>
     </header>
     
