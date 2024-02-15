@@ -54,9 +54,6 @@ public class PostRecipeController {
 		
 		System.out.println(requestForm);
 
-//		if(requestForm.getRecipeImage().getSize() == 0) {
-//			return "redirect:/recipe/post";
-//		}
 
 		try {
 			RecipeFileInfo recipeFileInfo = recipeFileManager.storeFile(requestForm.getRecipeImage());

@@ -22,6 +22,7 @@
 		display: flex;
 		justify-content: center;
 		width: 100%;
+		padding: 30px;
 	}
 
 
@@ -43,7 +44,6 @@
 		width: 1200px;
 		background-color: white;
 		border-radius: 10px;
- 		margin: 30px;
 		padding: 30px;
 		background-color: white;
 		border: 1px solid #6aafe6;
@@ -62,6 +62,7 @@
 		cursor: pointer;
 		margin-top: 15px;
 		box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+		transition: all 0.2s;
 	}
 	
 	.Btn:hover{
@@ -84,6 +85,7 @@
 		cursor: pointer;
 		margin-top: 15px;
 		box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+		transition: all 0.2s;
 	}
 	
 	.btnBox{
@@ -116,9 +118,6 @@
 		border: 1px solid gray;		
 	}
 	
-	.recipeTitle{
-		height: 150px;
-	}
 	
 	.recipeContent{
 		width: 100%;
@@ -126,14 +125,15 @@
 	}
 	
 	.recipeTitle{
- 		width: 750px; 
+ 		width: 100%; 
+ 		height: 150px;
  		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 	}
 	
 	.recipeInfo2{
-		width: 750px;
+		width: 100%;
 	}
 	
 	hr{
@@ -142,6 +142,14 @@
   	  	border:0;
   	  	margin-bottom: 50px;
 	}
+	
+
+	@media (max-width: 1240px){		
+		.recipeInfoBox{
+			width: 1120px;
+		}
+	}
+	
 	
 </style>
 

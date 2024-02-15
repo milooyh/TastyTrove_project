@@ -34,6 +34,7 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
+            padding: 0px 30px;
         }
         .footer-left,
         .footer-right {
@@ -80,16 +81,18 @@
         .copyright {
             margin-top: 10px;
             font-size: 12px;
-            justify-content: center; /* 가로 내용 중앙 정렬 */        
+            justify-content: center; /* 가로 내용 중앙 정렬 */       
+            padding: 0px 60px; 
+            margin: 0 auto;
             
         }
         .contact-center {
-        text-align: center; /* 텍스트 중앙 정렬 */
-        display: flex;
-        justify-content: center; /* 가로 내용 중앙 정렬 */
-        align-items: center; /* 세로 내용 중앙 정렬 */
-        flex-direction: column; /* 요소들을 세로로 배치 */
-        margin-top: 30px;
+	        text-align: center; /* 텍스트 중앙 정렬 */
+	        display: flex;
+	        justify-content: center; /* 가로 내용 중앙 정렬 */
+	        align-items: center; /* 세로 내용 중앙 정렬 */
+	        flex-direction: column; /* 요소들을 세로로 배치 */
+	        margin-top: 30px;
 		}
 </style>
 <meta charset="UTF-8">

@@ -37,15 +37,15 @@
 				WHERE 1=1
 				AND r.recipe_file_id = i.recipe_file_id
 				AND r.member_id = m.user_id
-			<if test="recipeType != null and recipeType != ''">
-				AND r.recipe_type = #{recipeType}
-			</if>
-			<if test="searchKeyword != null and searchKeyword != ''">
-				AND r.recipe_title LIKE '%'||#{searchKeyword}||'%'
-			</if>
-			ORDER BY recipeid desc
-			) a  )b
-			WHERE rnum between #{firstRow} and #{lastRow}
+ 				<if test="recipeType != null and recipeType != ''"> 
+				AND r.recipe_type = #{recipeType} 
+ 				</if> 
+ 				<if test="searchKeyword != null and searchKeyword != ''"> 
+ 				AND r.recipe_title LIKE '%'||#{searchKeyword}||'%' 
+ 				</if> 
+				ORDER BY recipeid desc
+				) a )b
+				WHERE rnum between #{firstRow} and #{lastRow}
 	</select>
 	
 	
