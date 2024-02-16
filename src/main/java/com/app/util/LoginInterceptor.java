@@ -20,8 +20,6 @@ public class LoginInterceptor implements HandlerInterceptor {
 		System.out.println("prehandle");
 
 		HttpSession session = request.getSession();
-		System.out.println(session.getAttribute("userId"));
-		System.out.println(session.getAttribute("userType"));
 
 		if (session.getAttribute("userId") == null || session.getAttribute("userType") == null
 				|| !session.getAttribute("userType").equals(CommonCode.USER_USERTYPE_ADMIN)) {
@@ -29,20 +27,6 @@ public class LoginInterceptor implements HandlerInterceptor {
 			return false; // 요청 처리 중단
 		}
 		return HandlerInterceptor.super.preHandle(request, response, handler);
-	}
-
-	@Override
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-			ModelAndView modelAndView) throws Exception {
-		System.out.println("postHandler");
-		HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
-	}
-
-	@Override
-	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
-			throws Exception {
-		System.out.println("afterCompletion");
-		HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
 	}
 
 }

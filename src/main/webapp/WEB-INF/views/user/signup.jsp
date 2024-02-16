@@ -24,23 +24,24 @@
 						required style="width: 70%">
 					<button type="button" id="idChk_btn" name="idChk_btn"
 						class="searchButton">확인</button>
-					<div class="content-item">
-						<div id="idAvailabilityMessage"></div>
-					</div>
+				</div>
+				<div class="content-item">
+					<div id="idAvailabilityMessage"></div>
 				</div>
 				<div class="content-item">
 					<label>비밀번호 : </label><input type="password" id="userPassword"
 						name="userPassword" required style="width: 80%">
 				</div>
+
 				<div class="content-item">
 					<label>비밀번호 확인 : </label><input type="password"
 						id="userPasswordChk" name="userPasswordChk" required
 						style="width: 56%">
 					<button type="button" id="pwChk_btn" name="pwChk_btn"
 						class="searchButton">확인</button>
-					<div class="content-item">
-						<div id="pwAvailabilityMessage"></div>
-					</div>
+				</div>
+				<div class="content-item">
+					<div id="pwAvailabilityMessage"></div>
 				</div>
 
 				<div class="content-item">
@@ -52,9 +53,9 @@
 						name="userNickname" style="width: 73%">
 					<button type="button" id="nicknameChk_btn" name="nicknameChk_btn"
 						required class="searchButton">확인</button>
-					<div class="content-item">
-						<div id="nickNameAvailabilityMessage"></div>
-					</div>
+				</div>
+				<div class="content-item">
+					<div id="nickNameAvailabilityMessage"></div>
 				</div>
 
 				<div class="content-item">
@@ -87,19 +88,19 @@
 						type="text" id="tel3" name="tel3" required style="width: 20%">
 					<button type="button" id="telChk_btn" name="telChk_btn"
 						class="searchButton">확인</button>
-					<div class="content-item">
-						<div id="telAvailabilityMessage"></div>
-					</div>
+				</div>
+				<div class="content-item">
+					<div id="telAvailabilityMessage"></div>
 				</div>
 				<div class="content-item">
 					<label>주소 : </label> <input type="text" id="userAddress"
-						name="userAddress" required style="width: 76%">< <input
+						name="userAddress" required style="width: 76%"><input
 						type="button" a onclick="sample5_execDaumPostcode()" value="확인"
 						class="searchButton">
-					<div class="content-item">
-						<div id="map"
-							style="width: 300px; height: 300px; margin-top: 10px; display: none"></div>
-					</div>
+				</div>
+				<div class="content-item">
+					<div id="map"
+						style="width: 300px; height: 300px; margin-top: 10px; display: none"></div>
 				</div>
 
 				<div class="content-item">
@@ -107,9 +108,9 @@
 						name="userEmail" required style="width: 70%">
 					<button type="button" id="emailChk_btn" name="emailChk_btn"
 						class="searchButton">확인</button>
-					<div class="content-item">
-						<div id="emailAvailabilityMessage"></div>
-					</div>
+				</div>
+				<div class="content-item">
+					<div id="emailAvailabilityMessage"></div>
 				</div>
 				<div class="content-item">
 					<button type="submit" style="text-align: center;">회원가입하기</button>
