@@ -64,7 +64,7 @@ public class PostRecipeServiceImpl implements PostRecipeService {
 		return result;
 	}
 
-	//구현중
+	
 	@Override
 	public int getTotal(RecipeSearchCondition recipeSearchCondition) {
 		// TODO Auto-generated method stub

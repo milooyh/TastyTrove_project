@@ -24,7 +24,7 @@
 		ORDER BY board_date desc
 	</select>
 
-<!--  페이징 -->
+<!--  페이징 + 검색 -->
 	<select id = "findRecipeListBySearchCondition" resultType="PostRecipe" parameterType="RecipeSearchCondition">
 			SELECT * FROM 
 			(SELECT a.*,rownum AS rnum FROM (
