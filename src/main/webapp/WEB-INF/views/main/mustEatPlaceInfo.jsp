@@ -93,7 +93,7 @@
 	<div class="ment2">오늘도 배불리 먹기위해 달려보자</div>
 	<div class="container">
 		<div class="restaurant-info">
-			<img src="<c:url value="/image/godeung.jpg"/>" style="width:300px; height:300px; margin-top:5px; ">
+			<img src="data:image/jpg;base64,${mainMustEatPlaceById.representativeMenuImage}" style="width:300px; height:300px; margin-top:5px; object-fit:cover;">
 			<h1>${mainMustEatPlaceById.restaurantName}</h1>
 			<input type="hidden" name="id" value="${mainMustEatPlaceById.id}">
 			<p><img src="<c:url value="/image/map-marker.png"/>" style="width:15px; height:15px;"> ${mainMustEatPlaceById.place}</p>
