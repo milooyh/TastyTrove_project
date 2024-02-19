@@ -14,8 +14,19 @@
 	
 	.restaurant-info, .menu-info, .review, .business-status {
 	    margin-bottom: 20px;
+	    padding:30px;
 	    background-color:#ffffff;
-	    width:660px;
+	    width:700px;
+	    border-radius:10px;
+        font-family: "paybooc-Light", sans-serif;
+		box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+		text-decoration: none;
+	}
+	
+	.reviews {
+		border:0.5px solid #f0f0f3;
+		padding:15px;
+		margin-bottom:15px;
 	}
 	
 	.restaurant-info {
@@ -46,10 +57,30 @@
 			font-size:0.8rem;
 			text-align:center;
 		}
+		
+		.btn {
+		    position: relative;
+		    border: none;
+		    display: inline-block;
+		    padding: 7px 15px;
+		    border-radius: 15px;
+		    font-family: "paybooc-Light", sans-serif;
+		    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+		    text-decoration: none;
+		    font-weight: 600;
+		    transition: 0.25s;
+		    cursor:pointer;
+		    margin-top:2%;
+		}
+		
+		.btn-blue {
+		    background-color: #6aafe6;
+		    color: #d4dfe6;
+		}
 	
-	body {
-		background-color:#f0f0f3;
-	}
+		body {
+			background-color:#f0f0f3;
+		}
 </style>
 <jsp:include page="../main/header.jsp"></jsp:include>
 <meta charset="UTF-8">
@@ -61,14 +92,15 @@
 	</div>
 	<div class="ment2">오늘도 배불리 먹기위해 달려보자</div>
 	<div class="container">
-		<h1>${mainMustEatPlaceById.restaurantName}</h1>
 		<div class="restaurant-info">
+			<img src="<c:url value="/image/godeung.jpg"/>" style="width:300px; height:300px; margin-top:5px; ">
+			<h1>${mainMustEatPlaceById.restaurantName}</h1>
 			<input type="hidden" name="id" value="${mainMustEatPlaceById.id}">
-			<p>주소:${mainMustEatPlaceById.place}</p>
-			<p>전화번호:${mainMustEatPlaceById.telephoneNumber}</p>
-			<p>평점:${mainMustEatPlaceById.rating}
-			<p>${mainMustEatPlaceById.type}</p>
-			<button onclick="location.href='/main/mustEatPlaceInfo/review?id=${mainMustEatPlaceById.id}'">평가하기</button>
+			<p><img src="<c:url value="/image/map-marker.png"/>" style="width:15px; height:15px;"> ${mainMustEatPlaceById.place}</p>
+			<p><img src="<c:url value="/image/telephone.png"/>" style="width:15px; height:15px; margin-top:5px;"> ${mainMustEatPlaceById.telephoneNumber}</p>
+			<p><img src="<c:url value="/image/star.png"/>" style="width:15px; height:15px;"> ${mainMustEatPlaceById.rating}
+			<p><img src="<c:url value="/image/menu.png"/>" style="width:15px; height:15px;"> ${mainMustEatPlaceById.type}</p>
+			<button onclick="location.href='/main/mustEatPlaceInfo/review?id=${mainMustEatPlaceById.id}'" class="btn btn-blue">평가하기</button>
 		</div>
 		<div class="business-status">
 			<h2>영업시간</h2>
@@ -79,12 +111,13 @@
 		<div class="menu-info">
 		<h2>메뉴정보</h2>
 		<c:forEach var="mainMustEatPlaceMenuInfoByIdItem" items="${mainMustEatPlaceMenuInfoById}">
-			<p>${mainMustEatPlaceMenuInfoByIdItem.menuName} ${mainMustEatPlaceMenuInfoByIdItem.price}</p>
+			<p>${mainMustEatPlaceMenuInfoByIdItem.menuName} -- ${mainMustEatPlaceMenuInfoByIdItem.price}원</p>
 		</c:forEach>
 		</div>
 		
 		<div class="review">
 		<c:forEach var="mainMustEatPlaceReviewByIdItem" items="${mainMustEatPlaceReviewById}">
+			<div class="reviews">
 			<h3>${mainMustEatPlaceReviewByIdItem.userId}</h3>
 			<div class="rating">
 		        <script>
@@ -95,8 +128,9 @@
 		    </div>
 			<p>${mainMustEatPlaceReviewByIdItem.review}</p>
 			<c:if test="${mainMustEatPlaceReviewByIdItem.userId eq userId}">
-			<button onclick="removeReview('${mainMustEatPlaceReviewByIdItem.review}')" class="btn btn-blue">메뉴 삭제</button>
+			<button onclick="removeReview('${mainMustEatPlaceReviewByIdItem.review}')" class="btn btn-blue">리뷰 삭제</button><br><br>
 			</c:if>
+			</div>
 		</c:forEach>
 		</div>
 	</div>

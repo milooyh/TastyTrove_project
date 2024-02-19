@@ -607,7 +607,7 @@ public class AdminController {
 		}
 	}
 	
-	@GetMapping("/musteatplace/reomoveMenu")
+	@GetMapping("/musteatplace/removeMenu")
 	public String modifyMenu(@RequestParam String id, Model model) {
 		
 		int intId = Integer.parseInt(id);
@@ -629,7 +629,7 @@ public class AdminController {
 		if(result > 0 ) {
 			return "redirect:/admin/musteatplace";
 		} else {
-			return "/home";
+			return "/main";
 		}
 	}
 	

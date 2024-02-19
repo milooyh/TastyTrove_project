@@ -71,6 +71,8 @@
 .material-icons {
 	cursor: pointer;
 	margin-left: 20px;
+	font-size: 18px;
+	font-weight: bolder;
 }
 
 .material-icons:hover {
