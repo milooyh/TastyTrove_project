@@ -21,5 +21,5 @@ public interface PostRecipeDAO {
 	
 	public int removeRecipeById(int recipeId);
 	
-	public int getTotal(RecipeSearchCondition recipeSearchCondition);//구현중
+	public int getTotal(RecipeSearchCondition recipeSearchCondition);
 }

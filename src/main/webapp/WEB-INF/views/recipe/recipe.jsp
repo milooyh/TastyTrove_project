@@ -85,6 +85,7 @@
 		font-size: 15px;
 		cursor: pointer;
 	    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+	    transition: all 0.2s;
 	}
 	
 	.postBtn:hover{
@@ -126,6 +127,7 @@
 		margin: 2px 0px;
 		font-weight: bolder;
 		box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+		transition: all 0.2s;
 	}
 	
 	.recipeSearchBtn:hover{

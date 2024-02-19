@@ -30,7 +30,7 @@ body {
 
 .listBox {
 	width: 1200px;
-	height: 330px;
+	height: 320px;
 	background-color: white;
 	margin-bottom: 50px;
 	display: flex;
@@ -47,6 +47,7 @@ body {
 	height: 60px;
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 	padding: 10px 15px;
 	background-color: #6aafe6;
 	font-weight: bolder;

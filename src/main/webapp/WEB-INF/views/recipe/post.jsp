@@ -42,7 +42,6 @@
 		padding: 30px;
 		background-color: white;
 		border-radius: 10px;
-		padding: 30px;
 		background-color: white;
 		border: 1px solid #6aafe6;
 	}
@@ -102,6 +101,7 @@
 		cursor: pointer;
 		margin-top: 15px;
 		box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+		transition: all 0.2s;
 	}
 	
 	.Btn:hover{
@@ -120,8 +120,74 @@
 	.cate{
 		margin: 0px 5px; 
 	}
+	
+	.fileCuide{
+		width: 314px;
+	}
+	
 		
+	@media (max-width: 1180px){
+		.titleInput{
+			width: 500px;
+		}
 
+	}
+	
+	@media (max-width: 1130px){		
+		.postBox{
+			width: 100%;
+		}
+
+	}
+	
+	
+	@media (max-width: 1010px){
+		.titleInput{
+			width: 400px;
+		}
+
+	}
+	
+	@media (max-width: 900px){
+
+		.infoBox1{
+			height: 180px;
+			margin-bottom: 10px;
+		}
+
+		.infoBox2{
+			width: 100%;
+			height: 100%;
+			flex-direction: column;
+			align-items: flex-start;
+		}
+		
+		.infoBox3, .infoBox4{
+			
+		}
+		
+		.postBox{
+			width: 100%;
+		}
+		
+		
+		.titleInput{
+			width: 100%;
+		}
+
+	}
+	
+	@media (max-width: 815px){
+		.infoBox1{
+			width: 675px;
+		}
+		
+		.postBox{
+			width: 763px;
+			
+		}
+	}
+	
 </style>
 </head>
 <body>
@@ -153,7 +219,7 @@
 						</div>
 						<div class="infoBox4">
 							
-							<div class="bold">대표 이미지로 등록할 사진을 선택하세요</div>
+							<div class="bold fileCuide">대표 이미지로 등록할 사진을 선택하세요</div>
 							<div><input type="file" name="recipeImage" id="fileCheck"></div>
 							
 						</div>

@@ -38,11 +38,18 @@
 	color: #333;
 	font-family: 'Arial', sans-serif;
 	border-bottom: 1px solid rgb(189, 189, 189);
+	height: 130px;
 }
 
 .logo {
 	font-size: 24px;
 	font-weight: bold;
+}
+
+.logoImg{
+	margin-top: 6px;
+ 	width: 175px; 
+ 	height: 120px; 
 }
 
 .nav-menu {
@@ -93,8 +100,13 @@ a {
 }
 
 .sizeM{
+	width: 100px;
 	font-size: 18px;
 	font-weight: bolder;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	color: black;
 }
 
 
@@ -102,13 +114,33 @@ a:hover
 {
     text-decoration: none;
     outline: none;
-    color: #6aafe6;
     text-decoration-color: #6aafe6;
 
 }
 
 .menu{
-	margin: 0px 30px;
+	margin: 0px 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+}
+
+.menuBox{
+	width: 0px;
+	height: 3px;
+	background-color: #6aafe6;	
+	transition: all 0.5s;
+}
+
+.menu:hover .menuBox{
+	width: 60px;
+	color: red;
+}
+
+
+
+	
 }
 
 </style>
@@ -118,19 +150,19 @@ a:hover
 <body>
 	<header class="header">
 		<div class="logo">
-			<a href="/main"><img src="../image/mainlogo.png"></a>
+			<a href="/main"><img src="../image/mainlogo.png" class="logoImg"></a>
 		</div>
 		<ul class="nav-menu">
-			<li class="menu"><a href="/recipe">레시피</a></li>
-			<li class="menu"><a href="/must/register">맛집</a></li>
-			<li class="menu"><a href="/product">스토어</a></li>
+			<li class="menu"><a href="/recipe" class="sizeM">레시피</a><div class="menuBox"></div> </li>
+			<li class="menu"><a href="/must/register" class="sizeM">맛집</a><div class="menuBox"></li>
+			<li class="menu"><a href="/product" class="sizeM">스토어</a><div class="menuBox"></li>
 		</ul>
 		<div class="header-icons">
-			<span class="material-icons">검색</span> <a href="/cart"><span class="material-icons">장바구니</span></a>
+			<span class="material-icons sizeM">검색</span> <a href="/cart" class="sizeM"><span class="material-icons">장바구니</span></a>
 			<c:choose>
 				<c:when test="${not empty userId}">
 					<!-- 사용자가 로그인한 경우 -->
-					<p class="sizeM">&nbsp;&nbsp;&nbsp; ${userId}님</p>
+					<p class="sizeM"><span>${userId}님</span></p>
 				</c:when>
 				<c:otherwise>
 					<!-- 사용자가 로그인하지 않은 경우 -->
