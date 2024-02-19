@@ -79,6 +79,8 @@
 						<td>${place.openingHours}</td>
 						<td>${place.closingHours}</td>
 						<td>${place.type}</td>
+						<td><button onclick="location.href='/admin/musteatplace/registerMenu?id=${place.id}'" class="btn btn-blue">메뉴 추가</button></td>
+						<td><button onclick="location.href='/admin/musteatplace/removeMenu?id=${place.id}'" class="btn btn-blue">메뉴 삭제</button></td>
 					</tr>
 				</c:forEach>
 			</tbody>

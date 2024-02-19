@@ -118,8 +118,15 @@
 
 	<script>
 	function goToPage(pageNumber) {
-	    location.href = '/admin/member?page=' + pageNumber + '&pageSize=${pageSize}';
-	}
+		 fetch('/admin/member?page=' + pageNumber + '&pageSize=${pageSize}')
+         .then(response => response.text())
+         .then(data => {
+             document.body.innerHTML = data;
+         })
+         .catch(error => {
+             console.error('데이터를 불러오는 중 오류가 발생했습니다:', error);
+         });
+ }
 
     function confirmDelete(memberId) {
         var result = confirm("정말 삭제하시겠습니까?");

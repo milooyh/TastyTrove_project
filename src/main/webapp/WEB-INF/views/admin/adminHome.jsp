@@ -194,10 +194,13 @@
 								<th>매출액</th>
 							</tr>
 						</thead>
+						
 						<tbody id="salesTableBody">
+						
 						</tbody>
 					</table>
 				</div>
+				
 			</div>
 		</div>
 		<div></div>

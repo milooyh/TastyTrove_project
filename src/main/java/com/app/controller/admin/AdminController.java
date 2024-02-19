@@ -75,10 +75,10 @@ public class AdminController {
 //	관리자메인 ======================
 	@GetMapping("")
 	public String adminHome(Visitor visitor, Model model) {
-		System.out.println("관리자메인 컨트롤러");
 
 		// 방문자수 반영
 		int visitCnt = adminService.getVisitorCount("/");
+		
 		int userCnt = adminService.getUserCount();
 		int recipeCnt = adminService.getRecipeCount();
 		int placeCnt = adminService.getPlaceCount();
@@ -105,7 +105,6 @@ public class AdminController {
 	// 캘린더 일정 추가
 	@PostMapping("/addschedule")
 	public String addSchedule(@ModelAttribute Schedule schedule) {
-
 		adminService.saveSchedule(schedule);
 		return "redirect:/admin";
 	}
@@ -117,7 +116,6 @@ public class AdminController {
 		Map<String, Integer> count = new HashMap<>();
 		count.put("cusCount", adminService.getUserCountByUserType("CUS"));
 		count.put("admCount", adminService.getUserCountByUserType("ADM"));
-		System.out.println(count);
 		return count;
 	}
 
@@ -126,7 +124,6 @@ public class AdminController {
 	@ResponseBody
 	public List<Map<String, Object>> monthlySales() {
 		List<Map<String, Object>> map = adminService.getTotalAmountByMonth();
-		System.out.println("월매출 !!! : " + map);
 		return map;
 	}
 
@@ -134,7 +131,6 @@ public class AdminController {
 	@GetMapping("/member")
 	public String adminMemberList(Model model, @RequestParam(defaultValue = "1") int page,
 			@RequestParam(defaultValue = "10") int pageSize) {
-		System.out.println("adminController 회원 정보 부르기");
 
 		int startRow = (page - 1) * pageSize + 1;
 		int endRow = startRow + pageSize - 1;
@@ -142,16 +138,12 @@ public class AdminController {
 		Map<String, Integer> params = new HashMap<>();
 		params.put("startRow", startRow);
 		params.put("endRow", endRow);
-		System.out.println(params);
 
 		List<User> userList = adminService.findUserListByPage(params);
 		model.addAttribute("userList", userList);
 
 		int userCount = adminService.getUserCount();
 		int totalPages = (int) Math.ceil((double) userCount / pageSize);
-
-		System.out.println("User count: " + userCount);
-		System.out.println("Total pages: " + totalPages);
 
 		model.addAttribute("currentPage", page);
 		model.addAttribute("totalPages", totalPages);
@@ -164,23 +156,14 @@ public class AdminController {
 	@GetMapping("/member/details")
 	@ResponseBody
 	public User getUserDetails(@RequestParam String memberId) {
-		System.out.println("ajax멤버아이디" + memberId);
-		System.out.println("getUserDatil 호출됨 ㅜㅜㅜ");
-
 		int intMemberId = Integer.parseInt(memberId);
-		System.out.println("ajax멤버아이디" + intMemberId);
 		User user = adminService.findUserByMemberId(intMemberId);
-		System.out.println("ussssssssss=============" + user);
 		return user;
 	}
 
 //	조건에 따른 회원 검색
 	@GetMapping("/member/search")
 	public String findMemberListProcess(Model model, UserSearchCondition userSearchCondition) {
-
-		System.out.println("adminController 회원 검색 정보 부르기");
-
-		System.out.println("선택한 월" + userSearchCondition.getBirthMonth());
 
 //		10월보다 작으면 앞에 0 붙여주기 ..
 		String birthMonthWithZero = null;
@@ -233,8 +216,6 @@ public class AdminController {
 			@RequestParam("tel1") String tel1, @RequestParam("tel2") String tel2, @RequestParam("tel3") String tel3,
 			Model model) {
 
-		System.out.println("adminController 관리자 추가");
-
 		user.setUserId(userId);
 		user.setUserPassword(userPassword);
 		user.setUserName(userName);
@@ -259,10 +240,8 @@ public class AdminController {
 
 		int result = adminService.saveMember(user);
 		if (result > 0) {
-			System.out.println("관리자 등록 성공");
 			return "redirect:/admin/adminMember/member";
 		} else {
-			System.out.println("관리자 등록 실패");
 			return "/admin/adminMember/saveMember";
 		}
 
@@ -282,8 +261,6 @@ public class AdminController {
 	@PostMapping("/member/update")
 	public String modifyMemberProcess(User user) {
 
-		System.out.println("adminController 회원 정보 수정");
-
 		int result = adminService.modifyMember(user);
 		if (result > 0) {
 			return "redirect:/admin/member";
@@ -299,10 +276,8 @@ public class AdminController {
 
 		int result = adminService.removeMember(intMemberId);
 		if (result > 0) {
-			System.out.println("회원 삭제 성공");
 			return "redirect:/admin/member";
 		} else {
-			System.out.println("회원 삭제 실패");
 			return "admin/adminMember/member";
 		}
 	}
@@ -319,7 +294,6 @@ public class AdminController {
 		count.put("wtnCount", adminService.getRecipeCountByRecipeType("WTN"));
 		count.put("drtCount", adminService.getRecipeCountByRecipeType("DRT"));
 		count.put("etcCount", adminService.getRecipeCountByRecipeType("ETC"));
-		System.out.println(count);
 		return count;
 	}
 
@@ -328,7 +302,6 @@ public class AdminController {
 	@ResponseBody
 	public List<Map<String, Object>> postRecipeUserCount() {
 		List<Map<String, Object>> map = adminService.getUserCountByRecipe();
-		System.out.println("map ::::::::::: " + map);
 		return map;
 	}
 
@@ -336,7 +309,6 @@ public class AdminController {
 	@GetMapping("/recipeboard")
 	public String findRecipeList(Model model, @RequestParam(defaultValue = "1") int page,
 			@RequestParam(defaultValue = "10") int pageSize) {
-		System.out.println("adminController 레시피 정보 부르기");
 
 		int startRow = (page - 1) * pageSize + 1;
 		int endRow = startRow + pageSize - 1;
@@ -344,7 +316,6 @@ public class AdminController {
 		Map<String, Integer> params = new HashMap<>();
 		params.put("startRow", startRow);
 		params.put("endRow", endRow);
-		System.out.println(params);
 
 		List<PostRecipe> postRecipeList = adminService.findRecipeListByPage(params);
 		model.addAttribute("postRecipeList", postRecipeList);
@@ -375,7 +346,6 @@ public class AdminController {
 	@GetMapping("/recipeboard/details")
 	@ResponseBody
 	public PostRecipe getRecipeDetails(@RequestParam String recipeId) {
-		System.out.println("레시피 getUserDatil 호출됨 ㅜㅜㅜ");
 		int intRecipeId = Integer.parseInt(recipeId);
 		PostRecipe recipe = adminService.findPostRecipeById(intRecipeId);
 		return recipe;
@@ -384,7 +354,6 @@ public class AdminController {
 //	레시피 카테고리 수정
 	@GetMapping("/recipeboard/update")
 	public String updateRecipeType(@RequestParam String recipeId, Model model, PostRecipe postRecipe) {
-		System.out.println("recipeId : " + recipeId);
 
 		int intRecipeId = Integer.parseInt(recipeId);
 		postRecipe.setRecipeId(intRecipeId);
@@ -399,14 +368,11 @@ public class AdminController {
 	@PostMapping("/recipeboard/update")
 	public String updateRecipeTypeProcess(PostRecipe postRecipe) {
 
-		System.out.println("adminController 레시피 카테고리 수정하기");
 		int result = adminService.modifyRecipeType(postRecipe);
 
 		if (result > 0) {
-			System.out.println("레시피 카테고리 변경 성공");
 			return "redirect:/admin/recipeboard";
 		} else {
-			System.out.println("레시피 카레토리 변경 실패");
 			return "admin/adminPostRecipe/adminRecipeBoard";
 		}
 	}
@@ -425,17 +391,14 @@ public class AdminController {
 //	레시피 삭제
 	@GetMapping("/recipe/remove")
 	public String removePostRecipe(@RequestParam String recipeId) {
-		System.out.println("adminController 레시피 삭제하기");
 
 		int intRecipeId = Integer.parseInt(recipeId);
 
 		int result = adminService.removePostRecipe(intRecipeId);
 
 		if (result > 0) {
-			System.out.println("레세피 삭제 성공");
 			return "redirect:/admin/recipeboard"; // 이상해
 		} else {
-			System.out.println("회원 삭제 실패");
 			return "admin/adminPostRecipe/adminRecipeBoard";
 		}
 	}
@@ -444,8 +407,6 @@ public class AdminController {
 //	상품 목록
 	@GetMapping("/product")
 	public String findProductList(Model model,ProductSearchCondition productSearchCondition) {
-		//List<Product> productList = adminService.findProductList();
-		//model.addAttribute("productList", productList);
 		List<Product> productList = productSerive.findProductListBySearchCondition(productSearchCondition);
 		model.addAttribute("productList", productList);
 		return "admin/adminProduct/adminProduct";
@@ -507,16 +468,12 @@ public class AdminController {
 		Map<String, Integer> params = new HashMap<>();
 		params.put("startRow", startRow);
 		params.put("endRow", endRow);
-		System.out.println(params);
 
 		List<MainMustEatPlace> placeList = adminService.findPlaceListByPage(params);
 		model.addAttribute("placeList", placeList);
 		
 		int placeCount = adminService.getPlaceCount();
 		int totalPages = (int) Math.ceil((double) placeCount / pageSize);
-
-		System.out.println("User count: " + placeCount);
-		System.out.println("Total pages: " + totalPages);
 
 		model.addAttribute("currentPage", page);
 		model.addAttribute("totalPages", totalPages);
@@ -529,14 +486,10 @@ public class AdminController {
 	@GetMapping("/musteatplace/details")
 	@ResponseBody
 	public MainMustEatPlace getMustDetails(@RequestParam String placeId) {
-		System.out.println(placeId);
-		System.out.println("맛집 getUserDatil 호출됨 ㅜㅜㅜ");
-		
+
 	    int intPlaceId = Integer.parseInt(placeId);
-	    System.out.println(intPlaceId);
 	    
 	    MainMustEatPlace mustEatPlace = adminService.findMustEatPlaceByPlaceId(intPlaceId);
-	    System.out.println(mustEatPlace);
 	    
 	    return mustEatPlace;
 	}
@@ -563,10 +516,8 @@ public class AdminController {
 	public String saveMustEatPlaceProcess(MainMustEatPlace mustEatPlace, HttpSession session) {
 
 		int result = adminService.saveMustEatPlace(mustEatPlace);
-		System.out.println("adminController result : " + result);
 
 		if (result > 0) {
-			System.out.println("맛집 저장 성공");
 			return "redirect:/admin/musteatplace"; // 경로에 nullpoint예외가 .. ?
 		} else {
 			return "/admin/adminMustEatPlace/saveMustEatPlace";
@@ -577,7 +528,6 @@ public class AdminController {
 	@GetMapping("/musteatplace/search")
 	public String findMustEatPlaceBySearchCondition(MustEatPlaceSearchCondition mustEatPlaceSearchCondition,
 			Model model) {
-		System.out.println("adminController findMustEatPlaceListBySearchCondition 불림");
 
 		List<MainMustEatPlace> placeList = adminService.findMustEatPlaceListBySearchCondition(mustEatPlaceSearchCondition);
 		model.addAttribute("placeList", placeList);
@@ -599,15 +549,13 @@ public class AdminController {
 	public String modifyMustEatPlaceProcess(MainMustEatPlace mustEatPlace) {
 		int result = adminService.modifyMustEatPlace(mustEatPlace);
 		if (result > 0) {
-			System.out.println("맛집 수정 성공");
 			return "redirect:/admin/musteatplace";
 		} else {
-			System.out.println("맛집 수정 실패");
 			return "/admin/musteatplace/modify";
 		}
 	}
 	
-	@GetMapping("/musteatplace/reomoveMenu")
+	@GetMapping("/musteatplace/removeMenu")
 	public String modifyMenu(@RequestParam String id, Model model) {
 		
 		int intId = Integer.parseInt(id);
@@ -623,13 +571,11 @@ public class AdminController {
 	@RequestMapping("/musteatplace/reomoveMenuName")
 	public String removeMenuProcess(@RequestParam String menuName) {
 		int result = adminService.removeMenuByName(menuName);
-		
-		System.out.println(menuName);
-		
+				
 		if(result > 0 ) {
 			return "redirect:/admin/musteatplace";
 		} else {
-			return "/home";
+			return "/main";
 		}
 	}
 	
@@ -647,10 +593,10 @@ public class AdminController {
 		
 		int result = adminService.saveMenuInfo(id, mustEatPlaceMenu.getMenuName(), mustEatPlaceMenu.getPrice());
 		
-		if(result > 0) { //저장이 성공
-			return "redirect:/admin/musteatplace";  //main 요청 경로
-		} else { //저장 실패
-			return "/home"; //view 파일경로
+		if(result > 0) { 
+			return "redirect:/admin/musteatplace"; 
+		} else {
+			return "/home"; 
 		}
 	}
 
@@ -663,22 +609,15 @@ public class AdminController {
 			System.out.println("맛집 삭제 성공");
 			return "redirect:/admin/musteatplace";
 		} else {
-			System.out.println("맛집 삭제 실패");
 			return "/admin/musteatplace";
 		}
 	}
 	
 	@GetMapping("/musteatplace/upload")
 	public String fileUpload(@RequestParam int id, Model model) {
-		
-		//int intId = Integer.parseInt(id);
-		
-		MainMustEatPlace mustEatPlace = adminService.findMustEatPlaceByPlaceId(id);
-		
-		System.out.println(id);
-		
+				
+		MainMustEatPlace mustEatPlace = adminService.findMustEatPlaceByPlaceId(id);		
 		model.addAttribute("mustEatPlace", mustEatPlace);
-		
 		return "/admin/adminMustEatPlace/imageUpload";
 	}
 	
@@ -749,7 +688,6 @@ public class AdminController {
 		Map<String, Integer> params = new HashMap<>();
 		params.put("startRow", startRow);
 		params.put("endRow", endRow);
-		System.out.println(params);
 
 		List<Order> orderList = adminService.findOrderListByPage(params);
 		model.addAttribute("orderList", orderList);
@@ -807,14 +745,11 @@ public class AdminController {
 //	개별 주문 정보 수정
 	@GetMapping("/order/orderitem/update")
 	public String modifyOrderItem(@RequestParam String orderItemId, Model model, OrderItem orderItem) {
-		System.out.println("adminController modifyOrderItem  불림");
-		System.out.println("~~~~~~~~~~~~~ orderItemId" + orderItemId);
 		int intOrderItemId = Integer.parseInt(orderItemId);
 		orderItem.setOrderItemId(intOrderItemId);
 		orderItem = adminService.findOrderItemByOrderItemId(intOrderItemId);
 
 		model.addAttribute("orderItem", orderItem);
-		System.out.println("orderItem : " + orderItem);
 
 		return "/admin/adminOrder/modifyOrderItem";
 	}
@@ -822,11 +757,7 @@ public class AdminController {
 	@PostMapping("/order/orderitem/update")
 	public String modifyOrderItemProcess(@RequestParam String orderItemCount, @RequestParam String orderItemId,
 			@RequestParam String orderId, OrderItem orderItem) {
-		System.out.println("adminController modifyOrderItemProc 불림");
-
-		System.out
-				.println("orderItemId : " + orderItemId + "orderItemCount : " + orderItemCount + "orderId :" + orderId);
-
+		
 		int intOrderItemCount = Integer.parseInt(orderItemCount);
 		int intOrderItemId = Integer.parseInt(orderItemId);
 		int intOrderId = Integer.parseInt(orderId);
@@ -835,19 +766,15 @@ public class AdminController {
 		orderItem.setOrderItemCount(intOrderItemCount);
 		orderItem.setOrderId(intOrderId);
 
-		System.out.println("!!!!!!!!!!!!!!" + orderItem);
-
+	
 		int result1 = adminService.modifyOrderItem(orderItem);
 		int result2 = adminService.modifyTotalPrice(intOrderId);
 		int result3 = adminService.modifyPaymentAmount(intOrderId);
 
-		System.out.println(result3);
 
 		if (result1 > 0 && result2 > 0 && result3 > 0) {
-			System.out.println("개별 주문 수정 성공");
 			return "redirect:/admin/order";
 		} else {
-			System.out.println("개별 주문 수정 실패");
 			return "/admin/order/orderitem/update";
 		}
 	}
@@ -858,27 +785,20 @@ public class AdminController {
 //	주문 상태 수정
 	@GetMapping("/order/update")
 	public String modifyOrderStatus(@RequestParam String orderId, Model model, Order order) {
-		System.out.println("admin controller modifyOrderStauts 불림");
 		int intOrderId = Integer.parseInt(orderId);
 		order.setOrderId(intOrderId);
 		order = adminService.findOrderByOrderId(intOrderId);
 
 		model.addAttribute("order", order);
-		System.out.println("model : " + model);
 		return "/admin/adminOrder";
 	}
 
 	@PostMapping("/order/update")
 	public String modifyOrderStatusProcess(Order order) {
-		System.out.println("admin controller modifyOrderStatusProcess 불림");
-		System.out.println(order);
 		int result = adminService.modifyOrderStatus(order);
-		System.out.println("result : " + result);
 		if (result > 0) {
-			System.out.println("주문상태 수정 성공");
 			return "redirect:/admin/order";
 		} else {
-			System.out.println("주문상태 수정 실패");
 			return "/admin/adminOrder/adminOrder";
 		}
 	}
@@ -894,7 +814,6 @@ public class AdminController {
 		Map<String, Integer> params = new HashMap<>();
 		params.put("startRow", startRow);
 		params.put("endRow", endRow);
-		System.out.println(params);
 
 		List<Payment> paymentList = adminService.findPaymentListByPage(params);
 		model.addAttribute("paymentList", paymentList);
@@ -935,13 +854,10 @@ public class AdminController {
 
 	@PostMapping("/payment/update")
 	public String modifyPaymentProc(Payment payment) {
-		System.out.println("adminController modifyPaymentMethod 불림");
 		int result = adminService.modifyPaymentMethod(payment);
 		if (result > 0) {
-			System.out.println("결제 방법 변경 셩공");
 			return "redirect:/admin/payment";
 		} else {
-			System.out.println("결제 방법 변경 실패");
 			return "/admin/adminPayment/adminPayment";
 		}
 	}
@@ -957,7 +873,6 @@ public class AdminController {
 		Map<String, Integer> params = new HashMap<>();
 		params.put("startRow", startRow);
 		params.put("endRow", endRow);
-		System.out.println(params);
 
 		List<Delivery> deliveryList = adminService.findDeliveryListByPage(params);
 		model.addAttribute("deliveryList", deliveryList);
@@ -983,7 +898,6 @@ public class AdminController {
 //	배송 상태 변경
 	@GetMapping("/delivery/update")
 	public String modifyDeliveryStatus(@RequestParam String deliveryId, Model model, Delivery delivery) {
-		System.out.println("adminController modifyDeliveryStatus 불림");
 
 		int intDeliveryId = Integer.parseInt(deliveryId);
 		delivery.setDeliveryId(intDeliveryId);
@@ -996,14 +910,11 @@ public class AdminController {
 
 	@PostMapping("/delivery/update")
 	public String modifyDeliveryStatusProc(Delivery delivery) {
-		System.out.println("admin Controller modifyDeliveryStatus 불림");
 
 		int result = adminService.modifyDeliveryStatus(delivery);
 		if (result > 0) {
-			System.out.println("배송 상태 변경 셩공");
 			return "redirect:/admin/delivery";
 		} else {
-			System.out.println("배송 상ㄴ태 변경 실패");
 			return "/admin/adminDelivery/adminDelivery";
 		}
 	}

@@ -13,10 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -68,35 +66,6 @@ public class MustEatPlaceController {
 		}
 	}
 	
-	/*
-	@GetMapping("/modifyMenu")
-	public String modifyMenu(@RequestParam String id, Model model) {
-		
-		int intId = Integer.parseInt(id);
-		
-		List<MustEatPlaceMenu> mustEatPlaceMenu = mustEatPlaceService.findMustEatPlaceMenuById(intId);
-		
-		model.addAttribute("mustEatPlaceMenu", mustEatPlaceMenu);
-		
-		return "mustEatPlace/menuList";
-		
-	}
-	
-	@PostMapping("/modifyMenu")
-	public String modifyMenuProcess(@ModelAttribute("menu")MustEatPlaceMenu menu, Model model) {
-		
-		MustEatPlaceMenu existingMenu  = mustEatPlaceService.getMenuByIdAndName(menu.getMenu_id(), menu.getMenu_name());
-		
-		System.out.println(menu.getMenu_id());
-		System.out.println(menu.getMenu_name());
-		
-		if (existingMenu != null) {
-			mustEatPlaceService.modifyMenu(menu);
-            return "redirect:/mustEatPlace/must"; // Redirect to success page
-        } else {
-            return "/home"; // Show error page
-        }
-	}*/
 	
 	@GetMapping("/modifyMenu")
 	public String modifyMenu(@RequestParam String id, Model model) {
@@ -208,8 +177,6 @@ public class MustEatPlaceController {
 	@GetMapping("/upload")
 	public String fileUpload(@RequestParam int id, Model model) {
 		
-		//int intId = Integer.parseInt(id);
-		
 		MustEatPlace mustEatPlace = mustEatPlaceService.findMustEatPlaceById(id);
 		
 		System.out.println(id);
@@ -223,12 +190,6 @@ public class MustEatPlaceController {
 	    public String fileUploadProcess(@RequestParam("representativeMenuImage") MultipartFile file,
 	                                    @RequestParam("id") int id,
 	                                    RedirectAttributes redirectAttributes) {
-			/*
-	        if (file.isEmpty()) {
-	            redirectAttributes.addFlashAttribute("message", "Please select a file to upload.");
-	            return "redirect:/uploadResult";
-	        }
-	        */
 
 	        try {
 	            byte[] imageData = file.getBytes();

@@ -1,4 +1,3 @@
-console.log("js 연결됨");
 
 // 지도 ================================
 var mapContainer = document.getElementById('map');
@@ -15,7 +14,6 @@ $.ajax({
 	url: '/admin/userTypeCount',
 	type: 'GET',
 	success: function(data) {
-		console.log("admin/userTypecount 불림");
 
 		var canvas = document.getElementById('userDonutChart');
 		var ctx = canvas.getContext('2d'); // 차트 그릴 거
@@ -45,7 +43,6 @@ $.ajax({
 	url: '/admin/recipeTypeCount',
 	type: 'GET',
 	success: function(data) {
-		console.log("admin/recipeTypecount 불림");
 
 		var canvas = document.getElementById('recipeDonutChart');
 		var ctx = canvas.getContext('2d'); // 차트 그릴 거
@@ -73,7 +70,6 @@ $.ajax({
 // 레시피 작성 순위 타입
 // 서버에서 데이터를 가져와 차트를 그리는 함수
 function drawChart(data) {
-	// 데이터 가공
 	var labels = [];
 	var counts = [];
 
@@ -130,11 +126,10 @@ $.ajax({
 	url: '/admin/postRecipeUserCount', // 서버 URL
 	type: 'GET',
 	success: function(data) {
-		console.log("Data received:", data);
 		drawChart(data); // 데이터를 받아서 차트를 그리는 함수 호출
 	},
 	error: function(error) {
-		console.error("Error fetching data:", error);
+		console.error(error);
 	}
 });
 
@@ -143,45 +138,33 @@ $.ajax({
 	url: '/admin/monthlySales',
 	type: 'GET',
 	success: function(data) {
-		console.log("ajax 월매출 데이터:", data);
 		displayMonthlySales(data);
 	},
 	error: function(error) {
-		console.error("Error fetching data:", error);
+		console.error(error);
 	}
 });
 
 function displayMonthlySales(data) {
-	console.log("월매출 함수 데이터 : ", data);
 	var salesTableBody = document.getElementById('salesTableBody');
-	salesTableBody.innerHTML = ''; // 테이블을 비웁니다.
+	salesTableBody.innerHTML = ''; 
 
 	data.forEach(function(item) {
-		console.log("달", item.MONTH);
-		console.log("월매출", item.TOTALAMOUNT);
-
 		var row = document.createElement('tr');
 		row.innerHTML = '<td>' + item.MONTH + '</td><td>' + item.TOTALAMOUNT + '</td>';
 		salesTableBody.appendChild(row);
-		console.log(salesTableBody);
 	});
 }
-
-
-
-
 
 
 
 // 캘린더 ===============================
 // scheduleList를 캘린더에 렌더링하는 함수
 function fetchAndRenderSchedule() {
-	console.log("fetchAndRenderSchedule()");
 	$.ajax({
 		url: '/admin/schedulelist',
 		type: 'GET',
 		success: function(response) {
-			console.log("resoponse " + response);
 			var events = convertScheduleListToEvents(response);
 			renderCalendar(events); // 캘린더에 일정 데이터 렌더링
 		},
@@ -193,34 +176,25 @@ function fetchAndRenderSchedule() {
 
 // schedultList를 events로 변환
 function convertScheduleListToEvents(scheduleList) {
-	console.log("convertScheduleListToEvents");
 	var events = [];
 	for (var i = 0; i < scheduleList.length; i++) {
 		var schedule = scheduleList[i];
-		console.log(schedule);
 		events.push({
 			title: schedule.subject,
 			start: schedule.startDate,
 			end: schedule.endDate
 		});
-		console.log("events[" + i + "].title: " + events[i].title);
-		console.log("events[" + i + "].start: " + events[i].start);
-		console.log("events[" + i + "].end: " + events[i].end);
-		console.log("events[" + i + "]: ", events[i]);
-	}
-	console.log("return event ", events);
+			}
 	return events;
 
 }
 
 // events를 캘린더에 렌더링하는 함수
 function renderCalendar(events) {
-	console.log("renderCalendar");
 	var calendarEl = document.getElementById('calendar');
 	var calendar = new FullCalendar.Calendar(calendarEl, {
 		events: events
 	});
-	console.log("랜더링 이벤트 : " + events);
 	calendar.render();
 }
 
